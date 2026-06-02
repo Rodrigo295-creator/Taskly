@@ -81,7 +81,7 @@ const FAQS = [
     answer: 'Após a confirmação do cliente, o valor líquido (descontada a taxa de 7%) é transferido para a conta cadastrada pelo profissional em até 1 dia útil.',
   },
   {
-    question: 'O Job4You opera fora de São Paulo?',
+    question: 'O Taskly opera fora de São Paulo?',
     answer: 'Estamos em expansão. Atualmente operamos em São Paulo, Campinas e Grande ABC. Novas cidades são adicionadas mensalmente.',
   },
 ];

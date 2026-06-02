@@ -13,4 +13,4 @@ gh auth status >/dev/null 2>&1 || gh auth login
 
 git branch -M main
 git push -u origin main --force
-echo "OK: https://github.com/Rodrigo295-creator/Job4You"
+echo "OK: https://github.com/Rodrigo295-creator/Taskly"

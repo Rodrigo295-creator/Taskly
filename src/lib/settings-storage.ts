@@ -1,12 +1,14 @@
+import { migrateLocalStorageKey } from './storage-migrate';
+
 export type Theme = 'light' | 'dark' | 'system';
 export type FontSize = 'sm' | 'md' | 'lg';
 export type Currency = 'BRL' | 'USD' | 'EUR';
 
-const THEME_KEY = 'job4you-theme';
-const FONT_KEY = 'job4you-font-size';
-const CURRENCY_KEY = 'job4you-currency';
-const NOTIF_KEY = 'job4you-notif-prefs';
-const PRIVACY_KEY = 'job4you-privacy-prefs';
+const THEME_KEY = 'taskly-theme';
+const FONT_KEY = 'taskly-font-size';
+const CURRENCY_KEY = 'taskly-currency';
+const NOTIF_KEY = 'taskly-notif-prefs';
+const PRIVACY_KEY = 'taskly-privacy-prefs';
 
 export type NotificationPrefs = {
   push: boolean;
@@ -74,7 +76,19 @@ function writeJson(key: string, value: unknown) {
   }
 }
 
+function migrateSettingsKeys() {
+  migrateLocalStorageKey('job4you-theme', THEME_KEY);
+  migrateLocalStorageKey('job4you-font-size', FONT_KEY);
+  migrateLocalStorageKey('job4you-currency', CURRENCY_KEY);
+  migrateLocalStorageKey('job4you-notif-prefs', NOTIF_KEY);
+  migrateLocalStorageKey('job4you-privacy-prefs', PRIVACY_KEY);
+  migrateLocalStorageKey('job4you-pro-plan', 'taskly-pro-plan');
+  migrateLocalStorageKey('job4you-a11y', 'taskly-a11y');
+  migrateLocalStorageKey('job4you-sidebar-collapsed', 'taskly-sidebar-collapsed');
+}
+
 export function readStoredTheme(): Theme {
+  migrateSettingsKeys();
   const v = localStorage.getItem(THEME_KEY);
   return v === 'dark' || v === 'system' || v === 'light' ? v : 'light';
 }

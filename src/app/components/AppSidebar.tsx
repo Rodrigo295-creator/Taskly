@@ -25,7 +25,7 @@ import type { AuthUserType } from '@/lib/auth-session';
 import { Logo, LogoMark } from './Logo';
 import { useAppSettings } from '../context/AppSettings';
 
-const SIDEBAR_STORAGE_KEY = 'job4you-sidebar-collapsed';
+const SIDEBAR_STORAGE_KEY = 'taskly-sidebar-collapsed';
 
 export function readSidebarCollapsed(): boolean {
   try {

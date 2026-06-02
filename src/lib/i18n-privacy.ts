@@ -26,7 +26,7 @@ export const PRIVACY_SECTIONS = [
 export const PRIVACY_PT: Record<string, string> = {
   'privacy.title': 'Política de Privacidade',
   'privacy.subtitle':
-    'Como a Job4You trata seus dados pessoais na plataforma. Toque em cada tópico para ver os detalhes.',
+    'Como a Taskly trata seus dados pessoais na plataforma. Toque em cada tópico para ver os detalhes.',
   'privacy.updated': 'Última atualização: maio de 2026',
   'privacy.back': 'Voltar para Segurança e garantias',
   'privacy.button': 'Política de Privacidade',
@@ -35,9 +35,9 @@ export const PRIVACY_PT: Record<string, string> = {
     'Esta política complementa os Termos de Uso e descreve o tratamento de dados conforme a Lei nº 13.709/2018 (LGPD).',
 
   'privacy.s1.title': '1. Controlador de dados',
-  'privacy.s1.summary': 'A Job4You é a controladora dos dados pessoais coletados na plataforma.',
+  'privacy.s1.summary': 'A Taskly é a controladora dos dados pessoais coletados na plataforma.',
   'privacy.s1.d1':
-    'A Job4You, na pessoa de [NOME DA EMPRESA], inscrita no CNPJ sob o nº [●], com sede em [●], atua como controladora dos dados pessoais tratados no âmbito da plataforma digital Job4You.',
+    'A Taskly, na pessoa de [NOME DA EMPRESA], inscrita no CNPJ sob o nº [●], com sede em [●], atua como controladora dos dados pessoais tratados no âmbito da plataforma digital Taskly.',
   'privacy.s1.d2':
     'Como controladora, define as finalidades e os meios do tratamento, responde pelas decisões relativas aos dados pessoais dos usuários (Clientes, Profissionais e visitantes) e designa canais para exercício de direitos do titular.',
   'privacy.s1.d3':
@@ -142,7 +142,7 @@ export const PRIVACY_PT: Record<string, string> = {
   'privacy.s9.title': '9. Alterações',
   'privacy.s9.summary': 'Esta política pode ser atualizada periodicamente com publicação na plataforma.',
   'privacy.s9.d1':
-    'A Job4You pode revisar esta Política de Privacidade para refletir mudanças legais, tecnológicas ou de funcionalidades do produto.',
+    'A Taskly pode revisar esta Política de Privacidade para refletir mudanças legais, tecnológicas ou de funcionalidades do produto.',
   'privacy.s9.d2':
     'A versão vigente será publicada na plataforma com indicação da data de atualização; alterações relevantes podem ser comunicadas por e-mail ou notificação in-app.',
   'privacy.s9.d3':
@@ -164,7 +164,7 @@ export const PRIVACY_PT: Record<string, string> = {
   'privacy.s11.title': '11. Consentimento',
   'privacy.s11.summary': 'Ao utilizar a plataforma, o usuário declara ciência e concordância com esta política.',
   'privacy.s11.d1':
-    'Ao criar conta, acessar ou utilizar funcionalidades da Job4You, você declara ter lido e compreendido esta Política de Privacidade.',
+    'Ao criar conta, acessar ou utilizar funcionalidades da Taskly, você declara ter lido e compreendido esta Política de Privacidade.',
   'privacy.s11.d2':
     'Consentimentos específicos (localização, marketing, cookies não essenciais) são solicitados de forma destacada e podem ser gerenciados nas configurações de privacidade.',
   'privacy.s11.d3':
@@ -175,7 +175,7 @@ export const PRIVACY_PT: Record<string, string> = {
 
 export const PRIVACY_EN: Record<string, string> = {
   'privacy.title': 'Privacy Policy',
-  'privacy.subtitle': 'How Job4You handles your personal data. Tap each topic for details.',
+  'privacy.subtitle': 'How Taskly handles your personal data. Tap each topic for details.',
   'privacy.updated': 'Last updated: May 2026',
   'privacy.back': 'Back to Security & guarantees',
   'privacy.button': 'Privacy Policy',
@@ -184,9 +184,9 @@ export const PRIVACY_EN: Record<string, string> = {
     'This policy complements the Terms of Use and describes processing under Brazilian Law No. 13.709/2018 (LGPD).',
 
   'privacy.s1.title': '1. Data controller',
-  'privacy.s1.summary': 'Job4You is the controller of personal data collected on the platform.',
+  'privacy.s1.summary': 'Taskly is the controller of personal data collected on the platform.',
   'privacy.s1.d1':
-    'Job4You, through [COMPANY NAME], CNPJ [●], acts as the controller of personal data processed on the Job4You platform.',
+    'Taskly, through [COMPANY NAME], CNPJ [●], acts as the controller of personal data processed on the Taskly platform.',
   'privacy.s1.d2':
     'As controller, it defines purposes and means of processing and provides channels for data subject rights.',
   'privacy.s1.d3':
@@ -272,7 +272,7 @@ export const PRIVACY_EN: Record<string, string> = {
 
   'privacy.s9.title': '9. Changes',
   'privacy.s9.summary': 'This policy may be updated periodically with publication on the platform.',
-  'privacy.s9.d1': 'Job4You may revise this policy for legal, technical, or product changes.',
+  'privacy.s9.d1': 'Taskly may revise this policy for legal, technical, or product changes.',
   'privacy.s9.d2': 'The current version is published with the update date; material changes may be notified by email or in-app.',
   'privacy.s9.d3':
     'Continued use indicates awareness of the updated policy; you may close the account or revoke optional consents.',
@@ -289,7 +289,7 @@ export const PRIVACY_EN: Record<string, string> = {
   'privacy.s11.title': '11. Consent',
   'privacy.s11.summary': 'Using the platform means you acknowledge and agree to this policy.',
   'privacy.s11.d1':
-    'By creating an account or using Job4You, you declare that you have read and understood this Privacy Policy.',
+    'By creating an account or using Taskly, you declare that you have read and understood this Privacy Policy.',
   'privacy.s11.d2':
     'Specific consents (location, marketing, non-essential cookies) are requested clearly and managed in privacy settings.',
   'privacy.s11.d3':
@@ -301,7 +301,7 @@ export const PRIVACY_EN: Record<string, string> = {
 export const PRIVACY_ES: Record<string, string> = {
   'privacy.title': 'Política de Privacidad',
   'privacy.subtitle':
-    'Cómo Job4You trata sus datos personales. Toca cada tema para ver los detalles.',
+    'Cómo Taskly trata sus datos personales. Toca cada tema para ver los detalles.',
   'privacy.updated': 'Última actualización: mayo de 2026',
   'privacy.back': 'Volver a Seguridad y garantías',
   'privacy.button': 'Política de Privacidad',
@@ -310,9 +310,9 @@ export const PRIVACY_ES: Record<string, string> = {
     'Esta política complementa los Términos de Uso y describe el tratamiento según la Ley nº 13.709/2018 (LGPD).',
 
   'privacy.s1.title': '1. Responsable del tratamiento',
-  'privacy.s1.summary': 'Job4You es el responsable de los datos personales recogidos en la plataforma.',
+  'privacy.s1.summary': 'Taskly es el responsable de los datos personales recogidos en la plataforma.',
   'privacy.s1.d1':
-    'Job4You, a través de [NOMBRE DE LA EMPRESA], CNPJ [●], actúa como responsable del tratamiento en la plataforma.',
+    'Taskly, a través de [NOMBRE DE LA EMPRESA], CNPJ [●], actúa como responsable del tratamiento en la plataforma.',
   'privacy.s1.d2':
     'Define finalidades y medios del tratamiento y ofrece canales para los derechos del titular.',
   'privacy.s1.d3':
@@ -402,7 +402,7 @@ export const PRIVACY_ES: Record<string, string> = {
 
   'privacy.s9.title': '9. Alteraciones',
   'privacy.s9.summary': 'La política puede actualizarse periódicamente con publicación en la plataforma.',
-  'privacy.s9.d1': 'Job4You puede revisar esta política por cambios legales, técnicos o de producto.',
+  'privacy.s9.d1': 'Taskly puede revisar esta política por cambios legales, técnicos o de producto.',
   'privacy.s9.d2':
     'La versión vigente se publica con fecha; cambios relevantes pueden notificarse por correo o in-app.',
   'privacy.s9.d3':
@@ -420,7 +420,7 @@ export const PRIVACY_ES: Record<string, string> = {
   'privacy.s11.title': '11. Consentimiento',
   'privacy.s11.summary': 'Al usar la plataforma, el usuario acepta esta política.',
   'privacy.s11.d1':
-    'Al registrarse o usar Job4You, declara haber leído y comprendido esta Política de Privacidad.',
+    'Al registrarse o usar Taskly, declara haber leído y comprendido esta Política de Privacidad.',
   'privacy.s11.d2':
     'Consentimientos específicos (ubicación, marketing, cookies) se gestionan en configuración de privacidad.',
   'privacy.s11.d3':

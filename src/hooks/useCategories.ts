@@ -22,7 +22,7 @@ export function useCategories(): {
       .order('sort_order', { ascending: true });
 
     if (error) {
-      console.warn('[Job4You] Supabase categories:', error.message);
+      console.warn('[Taskly] Supabase categories:', error.message);
       setCategoriesList(HOME_CATEGORIES);
       setLoading(false);
       return;

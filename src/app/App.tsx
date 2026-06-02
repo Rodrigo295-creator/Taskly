@@ -25,6 +25,7 @@ import { ProReviewsScreen } from './components/ProReviewsScreen';
 import { AccountScreen } from './components/AccountScreen';
 import { SettingsScreen, screenToSettingsTab } from './components/SettingsScreen';
 import { AuthScreen } from './components/AuthScreen';
+import { LandingPage } from './components/LandingPage';
 import { AppSettingsProvider, useAppSettings } from './context/AppSettings';
 import { PlansScreen } from './components/PlansScreen';
 import { OrdersScreen } from './components/OrdersScreen';
@@ -38,16 +39,20 @@ import { TermsOfUseScreen } from './components/TermsOfUseScreen';
 import { PrivacyPolicyScreen } from './components/PrivacyPolicyScreen';
 import {
   clearAuthSession,
+  consumeForceLoginQuery,
+  hasForceLoginQuery,
   readAuthSession,
   setLoginIntent,
   writeAuthSession,
   type AuthSession,
+  type AuthUserType,
 } from '@/lib/auth-session';
 import {
   getSupabaseAuthSession,
   sessionFromSupabaseUser,
   signOutSupabase,
   ensureOAuthUserType,
+  enrichSessionWithProfile,
   supabaseConfigured,
 } from '@/lib/auth-supabase';
 import { supabase } from '@/lib/supabase';
@@ -73,39 +78,65 @@ function isStandaloneScreen(screen: string) {
   return STANDALONE_SCREENS.has(screen) || screen.startsWith('settings-');
 }
 
+type PublicAuthView = 'landing' | 'auth';
+
 function AppInner() {
   const [authSession, setAuthSession] = useState<AuthSession | null>(null);
   const [authReady, setAuthReady] = useState(false);
+  const [publicAuthView, setPublicAuthView] = useState<PublicAuthView>(() =>
+    hasForceLoginQuery() ? 'auth' : 'landing',
+  );
 
   useEffect(() => {
+    const forceLogin = consumeForceLoginQuery();
+
     if (!supabaseConfigured || !supabase) {
-      setAuthSession(readAuthSession());
+      if (forceLogin) clearAuthSession();
+      setAuthSession(forceLogin ? null : readAuthSession());
       setAuthReady(true);
       return;
     }
 
     let cancelled = false;
+    let clearingSessionForLogin = forceLogin;
 
     const applyUser = async (user: import('@supabase/supabase-js').User) => {
       const synced = await ensureOAuthUserType(user);
       const provider =
         (synced.app_metadata?.provider as AuthSession['provider'] | undefined) ?? 'email';
-      const session = sessionFromSupabaseUser(synced, provider);
+      const session = await enrichSessionWithProfile(
+        synced,
+        sessionFromSupabaseUser(synced, provider),
+      );
       writeAuthSession(session);
       if (!cancelled) setAuthSession(session);
     };
 
-    void getSupabaseAuthSession().then(async (session) => {
+    const finishReady = () => {
+      if (!cancelled) setAuthReady(true);
+    };
+
+    void (async () => {
+      if (forceLogin) {
+        clearAuthSession();
+        await signOutSupabase();
+        clearingSessionForLogin = false;
+        if (!cancelled) setAuthSession(null);
+        finishReady();
+        return;
+      }
+
+      const session = await getSupabaseAuthSession();
       if (cancelled) return;
       if (session) {
         writeAuthSession(session);
         setAuthSession(session);
       }
-      setAuthReady(true);
-    });
+      finishReady();
+    })();
 
     const { data } = supabase.auth.onAuthStateChange((_event, sbSession) => {
-      if (cancelled) return;
+      if (cancelled || clearingSessionForLogin) return;
       if (sbSession?.user) {
         void applyUser(sbSession.user);
       } else {
@@ -130,12 +161,19 @@ function AppInner() {
     void signOutSupabase();
     clearAuthSession();
     setAuthSession(null);
+    setPublicAuthView('landing');
   };
 
   const startProLogin = (mode: 'login' | 'signup' = 'login') => {
     setLoginIntent({ userType: 'pro', mode });
     clearAuthSession();
     setAuthSession(null);
+    setPublicAuthView('auth');
+  };
+
+  const goToAuth = (userType: AuthUserType, mode: 'login' | 'signup' = 'signup') => {
+    setLoginIntent({ userType, mode });
+    setPublicAuthView('auth');
   };
 
   if (!authReady) {
@@ -143,6 +181,14 @@ function AppInner() {
   }
 
   if (!authSession) {
+    if (publicAuthView === 'landing') {
+      return (
+        <LandingPage
+          onSignIn={() => goToAuth('client', 'login')}
+          onStart={goToAuth}
+        />
+      );
+    }
     return <AuthScreen onAuthenticated={handleAuthenticated} />;
   }
 

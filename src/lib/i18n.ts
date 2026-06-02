@@ -5,10 +5,11 @@ import { TOPBAR_EN, TOPBAR_ES, TOPBAR_PT } from './i18n-topbar';
 import { SETTINGS_EXT_EN, SETTINGS_EXT_ES, SETTINGS_EXT_PT } from './i18n-settings-ext';
 import { TERMS_EN, TERMS_ES, TERMS_PT } from './i18n-terms';
 import { PRIVACY_EN, PRIVACY_ES, PRIVACY_PT } from './i18n-privacy';
+import { LANDING_EN, LANDING_ES, LANDING_PT } from './i18n-landing';
 
 export type AppLocale = 'pt-BR' | 'en-US' | 'es-ES';
 
-export const LOCALE_STORAGE_KEY = 'job4you-locale';
+export const LOCALE_STORAGE_KEY = 'taskly-locale';
 
 export type TranslateParams = Record<string, string | number>;
 
@@ -16,6 +17,7 @@ const PT_BR: Record<string, string> = {
   ...SCREEN_PT,
   ...SETTINGS_EXT_PT,
   ...AUTH_PT,
+  ...LANDING_PT,
   ...TOPBAR_PT,
   ...NAV_EXT_PT,
   ...TERMS_PT,
@@ -56,7 +58,7 @@ const PT_BR: Record<string, string> = {
   'home.noPros': 'Nenhum profissional encontrado no momento.',
   'footer.tagline':
     'Conectamos você a profissionais de confiança para serviços sob demanda.',
-  'footer.demo': '© {year} Job4You — demonstração',
+  'footer.demo': '© {year} Taskly — demonstração',
   'common.close': 'Fechar',
   'settings.edit': 'Editar',
   'settings.account': 'Conta',
@@ -128,6 +130,7 @@ const EN_US: Record<string, string> = {
   ...SCREEN_EN,
   ...SETTINGS_EXT_EN,
   ...AUTH_EN,
+  ...LANDING_EN,
   ...TOPBAR_EN,
   ...NAV_EXT_EN,
   ...TERMS_EN,
@@ -168,7 +171,7 @@ const EN_US: Record<string, string> = {
   'home.noPros': 'No professionals found at the moment.',
   'footer.tagline':
     'We connect you with trusted professionals for on-demand services.',
-  'footer.demo': '© {year} Job4You — demo',
+  'footer.demo': '© {year} Taskly — demo',
   'common.close': 'Close',
   'settings.edit': 'Edit',
   'settings.account': 'Account',
@@ -240,6 +243,7 @@ const ES_ES: Record<string, string> = {
   ...SCREEN_ES,
   ...SETTINGS_EXT_ES,
   ...AUTH_ES,
+  ...LANDING_ES,
   ...TOPBAR_ES,
   ...NAV_EXT_ES,
   ...TERMS_ES,
@@ -280,7 +284,7 @@ const ES_ES: Record<string, string> = {
   'home.noPros': 'No se encontraron profesionales por el momento.',
   'footer.tagline':
     'Te conectamos con profesionales de confianza para servicios bajo demanda.',
-  'footer.demo': '© {year} Job4You — demostración',
+  'footer.demo': '© {year} Taskly — demostración',
   'common.close': 'Cerrar',
   'settings.edit': 'Editar',
   'settings.account': 'Cuenta',
@@ -376,6 +380,11 @@ export function translate(
 
 export function readStoredLocale(): AppLocale {
   try {
+    const legacy = localStorage.getItem('job4you-locale');
+    if (legacy && !localStorage.getItem(LOCALE_STORAGE_KEY)) {
+      localStorage.setItem(LOCALE_STORAGE_KEY, legacy);
+      localStorage.removeItem('job4you-locale');
+    }
     const stored = localStorage.getItem(LOCALE_STORAGE_KEY);
     if (stored === 'pt-BR' || stored === 'en-US' || stored === 'es-ES') {
       return stored;

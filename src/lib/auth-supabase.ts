@@ -1,28 +1,58 @@
 import type { AuthError, Session, User } from '@supabase/supabase-js';
-import type { AuthProvider, AuthSession, AuthUserType } from '@/lib/auth-session';
+import type { AuthProvider, AuthSession, AuthUserType, ProfileRole } from '@/lib/auth-session';
+import { applyAdminMasterPlan } from '@/lib/pro-plan-session';
+import { isOAuthProviderEnabled, type OAuthProvider } from '@/lib/auth-oauth-config';
 import { supabase, supabaseConfigured } from '@/lib/supabase';
 
 const USER_TYPE_KEY = 'user_type';
+const PROFILE_ROLE_KEY = 'role';
 
 function parseUserType(value: unknown): AuthUserType {
   return value === 'pro' ? 'pro' : 'client';
 }
 
-export function sessionFromSupabaseUser(
-  user: User,
-  provider: AuthProvider,
-): AuthSession {
+function parseProfileRole(value: unknown): ProfileRole | undefined {
+  if (value === 'admin_master' || value === 'professional' || value === 'client') {
+    return value;
+  }
+  return undefined;
+}
+
+function buildSession(user: User, provider: AuthProvider, profileRole?: ProfileRole): AuthSession {
   const meta = user.user_metadata ?? {};
-  return {
+  const roleFromMeta = parseProfileRole(meta[PROFILE_ROLE_KEY]);
+  const role = profileRole ?? roleFromMeta;
+  const isAdminMaster = role === 'admin_master';
+  const session: AuthSession = {
     userId: user.id,
-    userType: parseUserType(meta[USER_TYPE_KEY]),
+    userType: isAdminMaster ? 'pro' : parseUserType(meta[USER_TYPE_KEY]),
     provider,
     email: user.email ?? undefined,
     name:
       (typeof meta.full_name === 'string' && meta.full_name.trim()) ||
       (typeof meta.name === 'string' && meta.name.trim()) ||
       undefined,
+    profileRole: role,
+    isAdminMaster,
   };
+  if (isAdminMaster) applyAdminMasterPlan();
+  return session;
+}
+
+export function sessionFromSupabaseUser(
+  user: User,
+  provider: AuthProvider,
+): AuthSession {
+  return buildSession(user, provider);
+}
+
+/** Sincroniza `profiles.role` do banco na sessão (ex.: admin_master). */
+export async function enrichSessionWithProfile(user: User, session: AuthSession): Promise<AuthSession> {
+  if (!supabase || !user.id) return session;
+  const { data } = await supabase.from('profiles').select('role').eq('id', user.id).maybeSingle();
+  const role = parseProfileRole(data?.role);
+  if (!role) return session;
+  return buildSession(user, session.provider, role);
 }
 
 export function sessionFromSupabaseSession(
@@ -43,6 +73,13 @@ export function authErrorKey(error: AuthError | null): string {
   }
   if (msg.includes('email not confirmed')) return 'auth.error.emailNotConfirmed';
   if (msg.includes('password')) return 'auth.error.passwordWeak';
+  if (
+    msg.includes('not enabled') ||
+    msg.includes('unsupported provider') ||
+    msg.includes('validation_failed')
+  ) {
+    return 'auth.error.oauthNotEnabled';
+  }
   return 'auth.error.generic';
 }
 
@@ -52,7 +89,8 @@ export async function getSupabaseAuthSession(): Promise<AuthSession | null> {
   if (error || !data.session?.user) return null;
   const provider =
     (data.session.user.app_metadata?.provider as AuthProvider | undefined) ?? 'email';
-  return sessionFromSupabaseSession(data.session, provider);
+  const base = sessionFromSupabaseSession(data.session, provider);
+  return enrichSessionWithProfile(data.session.user, base);
 }
 
 export async function signInWithEmail(
@@ -63,7 +101,9 @@ export async function signInWithEmail(
   const { data, error } = await supabase.auth.signInWithPassword({ email, password });
   if (error) return { session: null, error };
   if (!data.session) return { session: null, error: null };
-  return { session: sessionFromSupabaseSession(data.session, 'email'), error: null };
+  const base = sessionFromSupabaseSession(data.session, 'email');
+  const session = await enrichSessionWithProfile(data.session.user, base);
+  return { session, error: null };
 }
 
 export async function signUpWithEmail(
@@ -87,32 +127,50 @@ export async function signUpWithEmail(
   if (!data.session) {
     return { session: null, error: null, needsConfirmation: true };
   }
-  return {
-    session: sessionFromSupabaseSession(data.session, 'email'),
-    error: null,
-  };
+  const base = sessionFromSupabaseSession(data.session, 'email');
+  const session = await enrichSessionWithProfile(data.session.user, base);
+  return { session, error: null };
 }
 
-export async function signInWithOAuth(provider: 'google' | 'apple', userType: AuthUserType) {
+function oauthNotEnabledError(): AuthError {
+  return {
+    name: 'AuthApiError',
+    message: 'Unsupported provider: provider is not enabled',
+    status: 400,
+  } as AuthError;
+}
+
+export async function signInWithOAuth(provider: OAuthProvider, userType: AuthUserType) {
   if (!supabase) return { error: null };
+  if (!(await isOAuthProviderEnabled(provider))) {
+    return { error: oauthNotEnabledError() };
+  }
   try {
-    sessionStorage.setItem('job4you-oauth-user-type', userType);
+    sessionStorage.setItem('taskly-oauth-user-type', userType);
   } catch {
     /* ignore */
   }
-  const { error } = await supabase.auth.signInWithOAuth({
+  const { data, error } = await supabase.auth.signInWithOAuth({
     provider,
     options: {
       redirectTo: `${window.location.origin}/`,
+      skipBrowserRedirect: true,
       queryParams: provider === 'google' ? { prompt: 'select_account' } : undefined,
     },
   });
-  return { error };
+  if (error) return { error };
+  if (data?.url) {
+    window.location.assign(data.url);
+  }
+  return { error: null };
 }
 
 export function consumeOAuthUserType(): AuthUserType {
   try {
-    const v = sessionStorage.getItem('job4you-oauth-user-type');
+    const v =
+      sessionStorage.getItem('taskly-oauth-user-type') ??
+      sessionStorage.getItem('job4you-oauth-user-type');
+    sessionStorage.removeItem('taskly-oauth-user-type');
     sessionStorage.removeItem('job4you-oauth-user-type');
     return v === 'pro' ? 'pro' : 'client';
   } catch {

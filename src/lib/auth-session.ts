@@ -1,5 +1,7 @@
 export type AuthUserType = 'client' | 'pro';
 export type AuthProvider = 'email' | 'google' | 'apple';
+/** Papel em `public.profiles.role` (Supabase) */
+export type ProfileRole = 'client' | 'professional' | 'admin_master';
 
 export interface AuthSession {
   userType: AuthUserType;
@@ -8,19 +10,28 @@ export interface AuthSession {
   name?: string;
   /** Supabase Auth user id when using backend auth */
   userId?: string;
+  profileRole?: ProfileRole;
+  /** Acesso master: painel pro, plano premium e rotas administrativas */
+  isAdminMaster?: boolean;
 }
 
-const AUTH_STORAGE_KEY = 'job4you-auth';
-/** Legacy key from older builds that used localStorage */
-const LEGACY_AUTH_STORAGE_KEY = 'job4you-auth-local';
-const LOGIN_INTENT_KEY = 'job4you-login-intent';
+import { migrateSessionStorageKey } from './storage-migrate';
+
+const AUTH_STORAGE_KEY = 'taskly-auth';
+const LOGIN_INTENT_KEY = 'taskly-login-intent';
+const LEGACY_LOGIN_INTENT_KEY = 'job4you-login-intent';
 
 function clearLegacyAuth() {
   try {
-    localStorage.removeItem(LEGACY_AUTH_STORAGE_KEY);
+    localStorage.removeItem('job4you-auth-local');
   } catch {
     /* ignore */
   }
+}
+
+function migrateAuthKeys() {
+  migrateSessionStorageKey('job4you-auth', AUTH_STORAGE_KEY);
+  migrateSessionStorageKey(LEGACY_LOGIN_INTENT_KEY, LOGIN_INTENT_KEY);
 }
 
 export interface LoginIntent {
@@ -51,6 +62,7 @@ export function consumeLoginIntent(): LoginIntent | null {
 
 /** Returns session only for the current browser tab; new visit requires login again. */
 export function readAuthSession(): AuthSession | null {
+  migrateAuthKeys();
   clearLegacyAuth();
   try {
     const raw = sessionStorage.getItem(AUTH_STORAGE_KEY);
@@ -77,5 +89,31 @@ export function clearAuthSession() {
     sessionStorage.removeItem(AUTH_STORAGE_KEY);
   } catch {
     /* ignore */
+  }
+}
+
+/** Dev shortcut: `/?login=1` (also `?login` or `?login=true`) forces the login screen. */
+export function hasForceLoginQuery(): boolean {
+  try {
+    const raw = new URLSearchParams(window.location.search).get('login');
+    if (raw === null) return false;
+    return raw === '' || raw === '1' || raw === 'true';
+  } catch {
+    return false;
+  }
+}
+
+export function consumeForceLoginQuery(): boolean {
+  try {
+    if (!hasForceLoginQuery()) return false;
+    const params = new URLSearchParams(window.location.search);
+    params.delete('login');
+    const qs = params.toString();
+    const next =
+      window.location.pathname + (qs ? `?${qs}` : '') + window.location.hash;
+    window.history.replaceState({}, '', next || '/');
+    return true;
+  } catch {
+    return false;
   }
 }

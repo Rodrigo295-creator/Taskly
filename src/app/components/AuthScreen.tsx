@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Check, Loader2, User, Briefcase } from 'lucide-react';
-import { Logo, LogoMark } from './Logo';
+import { BrandName, Logo, LogoMark } from './Logo';
 import { useAppSettings } from '../context/AppSettings';
 import { consumeLoginIntent, type AuthProvider, type AuthSession, type AuthUserType } from '@/lib/auth-session';
 import {
@@ -211,10 +211,7 @@ export function AuthScreen({ onAuthenticated }: Props) {
           <div className="flex items-center gap-3 mb-8 lg:mb-12">
             <LogoMark size={44} />
             <div>
-              <span className="text-xl font-black tracking-tight">
-                <span className="text-[#F97316]">Job</span>
-                <span className="text-white">4You</span>
-              </span>
+              <BrandName size="md" onDark className="text-xl" />
               <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-400 mt-0.5">
                 {t('brand.tagline')}
               </p>

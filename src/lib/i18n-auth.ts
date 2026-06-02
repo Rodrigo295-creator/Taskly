@@ -32,7 +32,7 @@ export const AUTH_PT: Record<string, string> = {
   'auth.submit.signup': 'Criar conta',
   'auth.forgotPassword': 'Esqueceu a senha?',
   'auth.terms':
-    'Ao continuar, você concorda com os Termos de Uso e a Política de Privacidade do Job4You.',
+    'Ao continuar, você concorda com os Termos de Uso e a Política de Privacidade do Taskly.',
   'auth.error.passwordMismatch': 'As senhas não coincidem.',
   'auth.error.passwordShort': 'A senha deve ter pelo menos 8 caracteres.',
   'auth.error.required': 'Preencha todos os campos obrigatórios.',
@@ -43,9 +43,12 @@ export const AUTH_PT: Record<string, string> = {
   'auth.error.passwordWeak': 'Senha fraca. Use pelo menos 8 caracteres.',
   'auth.error.confirmEmail': 'Conta criada. Verifique seu e-mail para confirmar o cadastro.',
   'auth.error.forgotUnavailable': 'Informe seu e-mail para recuperar a senha.',
+  'auth.error.oauthNotEnabled':
+    'Login social ainda não está ativo. Use e-mail e senha ou peça ao administrador para habilitar Google/Apple no Supabase.',
   'auth.resetEmailSent': 'Enviamos um link de recuperação para o seu e-mail.',
   'auth.demoNote': 'Demonstração: login simulado sem backend.',
   'auth.demoNoteSupabase': 'Conta segura com Supabase Auth (e-mail, Google ou Apple).',
+  'auth.demoNoteSupabaseEmail': 'Entre com e-mail e senha (Supabase Auth).',
 };
 
 export const AUTH_EN: Record<string, string> = {
@@ -80,7 +83,7 @@ export const AUTH_EN: Record<string, string> = {
   'auth.submit.signup': 'Create account',
   'auth.forgotPassword': 'Forgot password?',
   'auth.terms':
-    'By continuing, you agree to Job4You’s Terms of Use and Privacy Policy.',
+    'By continuing, you agree to Taskly’s Terms of Use and Privacy Policy.',
   'auth.error.passwordMismatch': 'Passwords do not match.',
   'auth.error.passwordShort': 'Password must be at least 8 characters.',
   'auth.error.required': 'Please fill in all required fields.',
@@ -91,9 +94,12 @@ export const AUTH_EN: Record<string, string> = {
   'auth.error.passwordWeak': 'Weak password. Use at least 8 characters.',
   'auth.error.confirmEmail': 'Account created. Check your email to confirm.',
   'auth.error.forgotUnavailable': 'Enter your email to reset your password.',
+  'auth.error.oauthNotEnabled':
+    'Social sign-in is not active yet. Use email and password, or ask an admin to enable Google/Apple in Supabase.',
   'auth.resetEmailSent': 'We sent a recovery link to your email.',
   'auth.demoNote': 'Demo: simulated sign-in without a backend.',
   'auth.demoNoteSupabase': 'Secure accounts with Supabase Auth (email, Google, or Apple).',
+  'auth.demoNoteSupabaseEmail': 'Sign in with email and password (Supabase Auth).',
 };
 
 export const AUTH_ES: Record<string, string> = {
@@ -128,7 +134,7 @@ export const AUTH_ES: Record<string, string> = {
   'auth.submit.signup': 'Crear cuenta',
   'auth.forgotPassword': '¿Olvidaste tu contraseña?',
   'auth.terms':
-    'Al continuar, aceptas los Términos de Uso y la Política de Privacidad de Job4You.',
+    'Al continuar, aceptas los Términos de Uso y la Política de Privacidad de Taskly.',
   'auth.error.passwordMismatch': 'Las contraseñas no coinciden.',
   'auth.error.passwordShort': 'La contraseña debe tener al menos 8 caracteres.',
   'auth.error.required': 'Completa todos los campos obligatorios.',
@@ -139,7 +145,10 @@ export const AUTH_ES: Record<string, string> = {
   'auth.error.passwordWeak': 'Contraseña débil. Usa al menos 8 caracteres.',
   'auth.error.confirmEmail': 'Cuenta creada. Revisa tu correo para confirmar.',
   'auth.error.forgotUnavailable': 'Introduce tu correo para recuperar la contraseña.',
+  'auth.error.oauthNotEnabled':
+    'El inicio social aún no está activo. Usa correo y contraseña o pide habilitar Google/Apple en Supabase.',
   'auth.resetEmailSent': 'Enviamos un enlace de recuperación a tu correo.',
   'auth.demoNote': 'Demostración: inicio de sesión simulado sin backend.',
   'auth.demoNoteSupabase': 'Cuentas seguras con Supabase Auth (correo, Google o Apple).',
+  'auth.demoNoteSupabaseEmail': 'Entra con correo y contraseña (Supabase Auth).',
 };

@@ -26,7 +26,7 @@ export function AccountScreen({ onLogout }: Props) {
     email: 'lucas.ferreira@email.com',
     phone: '(11) 91234-5678',
     city: 'São Paulo, SP',
-    bio: 'Cliente Job4You desde 2025. Adoro resolver coisas em casa com ajuda de bons profissionais.',
+    bio: 'Cliente Taskly desde 2025. Adoro resolver coisas em casa com ajuda de bons profissionais.',
   });
   const [modal, setModal] = useState<'personal' | 'password' | null>(null);
   const [appleLinked, setAppleLinked] = useState(false);

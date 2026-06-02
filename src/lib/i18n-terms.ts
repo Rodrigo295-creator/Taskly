@@ -46,7 +46,7 @@ export const TERMS_SECTIONS = [
 export const TERMS_PT: Record<string, string> = {
   'terms.title': 'Termos de Uso',
   'terms.subtitle':
-    'Leia as regras que regem o uso da plataforma Job4You. Toque em cada tópico para ver os detalhes.',
+    'Leia as regras que regem o uso da plataforma Taskly. Toque em cada tópico para ver os detalhes.',
   'terms.updated': 'Última atualização: maio de 2026',
   'terms.back': 'Voltar para Segurança e garantias',
   'terms.button': 'Termos de Uso',
@@ -57,9 +57,9 @@ export const TERMS_PT: Record<string, string> = {
 
   'terms.s1.title': '1. Identificação',
   'terms.s1.summary':
-    'Estes Termos regulam a plataforma Job4You, de titularidade da empresa indicada no cadastro societário.',
+    'Estes Termos regulam a plataforma Taskly, de titularidade da empresa indicada no cadastro societário.',
   'terms.s1.d1':
-    'Estes Termos de Uso (“Termos”) regulam o acesso e a utilização da plataforma digital denominada “Job4You”, de titularidade de [NOME DA EMPRESA], pessoa jurídica de direito privado, inscrita no CNPJ sob o nº [●] (“Job4You”, “nós” ou “plataforma”).',
+    'Estes Termos de Uso (“Termos”) regulam o acesso e a utilização da plataforma digital denominada “Taskly”, de titularidade de [NOME DA EMPRESA], pessoa jurídica de direito privado, inscrita no CNPJ sob o nº [●] (“Taskly”, “nós” ou “plataforma”).',
   'terms.s1.d2':
     'O endereço da sede, canais oficiais de contato e dados de representação legal constam na área “Sobre” do aplicativo e no site institucional, e podem ser atualizados mediante comunicação na plataforma.',
   'terms.s1.d3':
@@ -71,9 +71,9 @@ export const TERMS_PT: Record<string, string> = {
   'terms.s2.summary':
     'A plataforma intermedia o contato entre Clientes e Profissionais autônomos para contratação de serviços.',
   'terms.s2.d1':
-    'O Job4You tem como finalidade intermediar o contato entre usuários contratantes (“Clientes”) e prestadores de serviços autônomos (“Profissionais”), por meio de ferramentas digitais de busca, comunicação, proposta, contratação e acompanhamento.',
+    'O Taskly tem como finalidade intermediar o contato entre usuários contratantes (“Clientes”) e prestadores de serviços autônomos (“Profissionais”), por meio de ferramentas digitais de busca, comunicação, proposta, contratação e acompanhamento.',
   'terms.s2.d2':
-    'Os serviços efetivamente prestados são de responsabilidade do Profissional contratado; o Job4You fornece infraestrutura tecnológica e recursos de apoio descritos nestes Termos e nas políticas complementares.',
+    'Os serviços efetivamente prestados são de responsabilidade do Profissional contratado; o Taskly fornece infraestrutura tecnológica e recursos de apoio descritos nestes Termos e nas políticas complementares.',
   'terms.s2.d3':
     'Funcionalidades específicas (pagamento retido, contratos digitais, verificação de perfil, planos) podem variar conforme disponibilidade, perfil do usuário e região, sendo descritas na própria interface.',
   'terms.s2.d4':
@@ -81,15 +81,15 @@ export const TERMS_PT: Record<string, string> = {
 
   'terms.s3.title': '3. Natureza da relação',
   'terms.s3.summary':
-    'O Job4You é intermediador tecnológico e não é parte na relação contratual entre Cliente e Profissional.',
+    'O Taskly é intermediador tecnológico e não é parte na relação contratual entre Cliente e Profissional.',
   'terms.s3.d1':
-    'O Job4You atua exclusivamente como intermediador tecnológico, não participando da execução dos serviços contratados entre usuários.',
+    'O Taskly atua exclusivamente como intermediador tecnológico, não participando da execução dos serviços contratados entre usuários.',
   'terms.s3.d2':
-    'Não há vínculo empregatício, societário, de representação comercial ou de subordinação entre o Job4You e os Profissionais cadastrados, nem entre o Job4You e os Clientes, em razão do uso da plataforma.',
+    'Não há vínculo empregatício, societário, de representação comercial ou de subordinação entre o Taskly e os Profissionais cadastrados, nem entre o Taskly e os Clientes, em razão do uso da plataforma.',
   'terms.s3.d3':
     'O contrato de prestação de serviços é celebrado diretamente entre Cliente e Profissional; cláusulas, preço, prazo e escopo são definidos pelas partes, com apoio dos recursos disponíveis no aplicativo.',
   'terms.s3.d4':
-    'O Job4You pode oferecer mediação em conflitos e ferramentas de segurança conforme políticas publicadas, sem assumir a posição de árbitro vinculante, salvo disposição legal ou acordo expresso em caso concreto.',
+    'O Taskly pode oferecer mediação em conflitos e ferramentas de segurança conforme políticas publicadas, sem assumir a posição de árbitro vinculante, salvo disposição legal ou acordo expresso em caso concreto.',
 
   'terms.s4.title': '4. Cadastro e elegibilidade',
   'terms.s4.summary':
@@ -103,7 +103,7 @@ export const TERMS_PT: Record<string, string> = {
   'terms.s4.d4':
     'O usuário deve manter credenciais de acesso em sigilo e comunicar imediatamente suspeita de uso não autorizado da conta pelos canais de segurança.',
   'terms.s4.d5':
-    'O Job4You pode recusar, suspender ou encerrar cadastros que não atendam critérios de elegibilidade, integridade ou conformidade com estes Termos.',
+    'O Taskly pode recusar, suspender ou encerrar cadastros que não atendam critérios de elegibilidade, integridade ou conformidade com estes Termos.',
 
   'terms.s5.title': '5. Responsabilidades dos Profissionais',
   'terms.s5.summary':
@@ -117,7 +117,7 @@ export const TERMS_PT: Record<string, string> = {
   'terms.s5.d4':
     'O Profissional deve observar a legislação aplicável à sua atividade, incluindo normas de segurança, licenças, alvarás e regulamentações profissionais, quando exigidas.',
   'terms.s5.d5':
-    'Obrigações fiscais, previdenciárias e trabalhistas decorrentes da sua atividade autônoma são de exclusiva responsabilidade do Profissional, sem repasse de encargos de vínculo ao Job4You.',
+    'Obrigações fiscais, previdenciárias e trabalhistas decorrentes da sua atividade autônoma são de exclusiva responsabilidade do Profissional, sem repasse de encargos de vínculo ao Taskly.',
   'terms.s5.d6':
     'Conteúdos publicados no perfil (fotos, descrições, preços) devem ser licitos e não violar direitos de terceiros; avaliações devem refletir conduta real na plataforma.',
 
@@ -137,11 +137,11 @@ export const TERMS_PT: Record<string, string> = {
 
   'terms.s7.title': '7. Pagamentos e transações',
   'terms.s7.summary':
-    'A plataforma pode ou não intermediar pagamentos; transações diretas entre as partes ficam fora da ingerência do Job4You.',
+    'A plataforma pode ou não intermediar pagamentos; transações diretas entre as partes ficam fora da ingerência do Taskly.',
   'terms.s7.d1':
-    'O Job4You poderá, conforme funcionalidades ativas, intermediar pagamentos com retenção até confirmação do serviço, repasse ao Profissional e cobrança de taxas de plataforma conforme plano.',
+    'O Taskly poderá, conforme funcionalidades ativas, intermediar pagamentos com retenção até confirmação do serviço, repasse ao Profissional e cobrança de taxas de plataforma conforme plano.',
   'terms.s7.d2':
-    'Quando o pagamento for realizado diretamente entre Cliente e Profissional, sem passagem pela plataforma, o Job4You não possui ingerência sobre valores, chargebacks, inadimplência ou disputas financeiras entre as partes.',
+    'Quando o pagamento for realizado diretamente entre Cliente e Profissional, sem passagem pela plataforma, o Taskly não possui ingerência sobre valores, chargebacks, inadimplência ou disputas financeiras entre as partes.',
   'terms.s7.d3':
     'Taxas, comissões e condições de planos são informadas antes da contratação do plano ou do serviço, conforme exibido na interface vigente à data da transação.',
   'terms.s7.d4':
@@ -151,9 +151,9 @@ export const TERMS_PT: Record<string, string> = {
 
   'terms.s8.title': '8. Limitação de responsabilidade',
   'terms.s8.summary':
-    'O Job4You não responde por danos da execução dos serviços, perdas financeiras ou relações entre usuários.',
+    'O Taskly não responde por danos da execução dos serviços, perdas financeiras ou relações entre usuários.',
   'terms.s8.d1':
-    'Na máxima extensão permitida pela lei, o Job4You não se responsabiliza por danos decorrentes da execução ou não execução dos serviços contratados entre Cliente e Profissional.',
+    'Na máxima extensão permitida pela lei, o Taskly não se responsabiliza por danos decorrentes da execução ou não execução dos serviços contratados entre Cliente e Profissional.',
   'terms.s8.d2':
     'Não há responsabilidade por perdas financeiras, lucros cessantes ou danos indiretos relacionados a acordos celebrados fora dos mecanismos oficiais de pagamento da plataforma.',
   'terms.s8.d3':
@@ -167,7 +167,7 @@ export const TERMS_PT: Record<string, string> = {
   'terms.s9.summary':
     'Conteúdo da plataforma protegido por lei; reprodução não autorizada é vedada.',
   'terms.s9.d1':
-    'Marcas, logotipos, layout, software, textos institucionais e demais conteúdos da plataforma são de titularidade do Job4You ou de licenciadores, protegidos pela legislação de propriedade intelectual.',
+    'Marcas, logotipos, layout, software, textos institucionais e demais conteúdos da plataforma são de titularidade do Taskly ou de licenciadores, protegidos pela legislação de propriedade intelectual.',
   'terms.s9.d2':
     'É vedada a reprodução, distribuição, engenharia reversa ou exploração comercial não autorizada de qualquer elemento da plataforma.',
   'terms.s9.d3':
@@ -179,7 +179,7 @@ export const TERMS_PT: Record<string, string> = {
   'terms.s10.summary':
     'Contas podem ser suspensas ou excluídas em caso de violação dos Termos, conduta inadequada ou fraude.',
   'terms.s10.d1':
-    'O Job4You poderá suspender ou excluir contas, temporária ou definitivamente, em caso de violação destes Termos, das políticas complementares ou da legislação aplicável.',
+    'O Taskly poderá suspender ou excluir contas, temporária ou definitivamente, em caso de violação destes Termos, das políticas complementares ou da legislação aplicável.',
   'terms.s10.d2':
     'Conduta inadequada inclui, sem limitação: fraude, assédio, discriminação, uso de dados de terceiros sem consentimento, manipulação de avaliações ou evasão de taxas devidas à plataforma.',
   'terms.s10.d3':
@@ -228,7 +228,7 @@ export const TERMS_PT: Record<string, string> = {
 
 export const TERMS_EN: Record<string, string> = {
   'terms.title': 'Terms of Use',
-  'terms.subtitle': 'Rules governing use of the Job4You platform. Tap each topic for details.',
+  'terms.subtitle': 'Rules governing use of the Taskly platform. Tap each topic for details.',
   'terms.updated': 'Last updated: May 2026',
   'terms.back': 'Back to Security & guarantees',
   'terms.button': 'Terms of Use',
@@ -239,9 +239,9 @@ export const TERMS_EN: Record<string, string> = {
 
   'terms.s1.title': '1. Identification',
   'terms.s1.summary':
-    'These Terms govern the Job4You platform, owned by the company listed in corporate records.',
+    'These Terms govern the Taskly platform, owned by the company listed in corporate records.',
   'terms.s1.d1':
-    'These Terms of Use (“Terms”) govern access to and use of the digital platform “Job4You”, owned by [COMPANY NAME], CNPJ [●] (“Job4You”, “we”, or “platform”).',
+    'These Terms of Use (“Terms”) govern access to and use of the digital platform “Taskly”, owned by [COMPANY NAME], CNPJ [●] (“Taskly”, “we”, or “platform”).',
   'terms.s1.d2':
     'Registered office, official contact channels, and legal representative data are listed in the About section and on the institutional website.',
   'terms.s1.d3':
@@ -253,9 +253,9 @@ export const TERMS_EN: Record<string, string> = {
   'terms.s2.summary':
     'The platform connects Clients and independent Professionals for on-demand services.',
   'terms.s2.d1':
-    'Job4You connects contracting users (“Clients”) and independent service providers (“Professionals”) through search, messaging, proposals, booking, and tracking tools.',
+    'Taskly connects contracting users (“Clients”) and independent service providers (“Professionals”) through search, messaging, proposals, booking, and tracking tools.',
   'terms.s2.d2':
-    'Services are performed by the hired Professional; Job4You provides technology and support described in these Terms and complementary policies.',
+    'Services are performed by the hired Professional; Taskly provides technology and support described in these Terms and complementary policies.',
   'terms.s2.d3':
     'Specific features (held payments, digital contracts, verification, plans) may vary by profile, region, and availability as shown in the interface.',
   'terms.s2.d4':
@@ -263,15 +263,15 @@ export const TERMS_EN: Record<string, string> = {
 
   'terms.s3.title': '3. Nature of the relationship',
   'terms.s3.summary':
-    'Job4You is a technology intermediary and is not a party to the contract between Client and Professional.',
+    'Taskly is a technology intermediary and is not a party to the contract between Client and Professional.',
   'terms.s3.d1':
-    'Job4You acts solely as a technology intermediary and does not perform the services contracted between users.',
+    'Taskly acts solely as a technology intermediary and does not perform the services contracted between users.',
   'terms.s3.d2':
-    'No employment, partnership, agency, or subordination relationship exists between Job4You and Professionals or Clients by reason of platform use.',
+    'No employment, partnership, agency, or subordination relationship exists between Taskly and Professionals or Clients by reason of platform use.',
   'terms.s3.d3':
     'The service agreement is between Client and Professional; price, scope, and deadlines are set by the parties using in-app tools.',
   'terms.s3.d4':
-    'Job4You may offer dispute mediation and safety tools per published policies, without acting as a binding arbitrator unless required by law.',
+    'Taskly may offer dispute mediation and safety tools per published policies, without acting as a binding arbitrator unless required by law.',
 
   'terms.s4.title': '4. Registration and eligibility',
   'terms.s4.summary': 'Truthful, complete, and up-to-date information; users are responsible for accuracy.',
@@ -284,7 +284,7 @@ export const TERMS_EN: Record<string, string> = {
   'terms.s4.d4':
     'Users must keep credentials confidential and promptly report suspected unauthorized account use.',
   'terms.s4.d5':
-    'Job4You may refuse, suspend, or terminate accounts that fail eligibility, integrity, or compliance requirements.',
+    'Taskly may refuse, suspend, or terminate accounts that fail eligibility, integrity, or compliance requirements.',
 
   'terms.s5.title': '5. Professional responsibilities',
   'terms.s5.summary':
@@ -317,11 +317,11 @@ export const TERMS_EN: Record<string, string> = {
 
   'terms.s7.title': '7. Payments and transactions',
   'terms.s7.summary':
-    'The platform may or may not process payments; direct transactions between parties are outside Job4You control.',
+    'The platform may or may not process payments; direct transactions between parties are outside Taskly control.',
   'terms.s7.d1':
-    'Job4You may process payments with hold until service confirmation and charge platform fees per the active plan.',
+    'Taskly may process payments with hold until service confirmation and charge platform fees per the active plan.',
   'terms.s7.d2':
-    'For direct Client–Professional payments, Job4You has no control over amounts, chargebacks, or financial disputes.',
+    'For direct Client–Professional payments, Taskly has no control over amounts, chargebacks, or financial disputes.',
   'terms.s7.d3': 'Fees and plan conditions are disclosed in the interface before purchase or booking.',
   'terms.s7.d4':
     'Refunds and cancellations follow payment policy and the agreement between parties when platform processing applies.',
@@ -329,9 +329,9 @@ export const TERMS_EN: Record<string, string> = {
 
   'terms.s8.title': '8. Limitation of liability',
   'terms.s8.summary':
-    'Job4You is not liable for service performance damages, financial losses, or user-to-user relationships.',
+    'Taskly is not liable for service performance damages, financial losses, or user-to-user relationships.',
   'terms.s8.d1':
-    'To the maximum extent permitted by law, Job4You is not liable for damages from performance or non-performance of user contracts.',
+    'To the maximum extent permitted by law, Taskly is not liable for damages from performance or non-performance of user contracts.',
   'terms.s8.d2':
     'No liability for indirect losses or agreements outside official platform payment flows.',
   'terms.s8.d3':
@@ -343,7 +343,7 @@ export const TERMS_EN: Record<string, string> = {
   'terms.s9.title': '9. Intellectual property',
   'terms.s9.summary': 'Platform content is legally protected; unauthorized reproduction is prohibited.',
   'terms.s9.d1':
-    'Brands, software, layout, and institutional content belong to Job4You or licensors and are protected by IP law.',
+    'Brands, software, layout, and institutional content belong to Taskly or licensors and are protected by IP law.',
   'terms.s9.d2': 'Unauthorized reproduction, distribution, reverse engineering, or commercial exploitation is prohibited.',
   'terms.s9.d3':
     'User-submitted content remains their responsibility; users grant the license needed to operate the service.',
@@ -353,7 +353,7 @@ export const TERMS_EN: Record<string, string> = {
   'terms.s10.summary':
     'Accounts may be suspended or removed for Terms violations, misconduct, or fraud.',
   'terms.s10.d1':
-    'Job4You may suspend or delete accounts for violations of these Terms, other policies, or applicable law.',
+    'Taskly may suspend or delete accounts for violations of these Terms, other policies, or applicable law.',
   'terms.s10.d2':
     'Misconduct includes fraud, harassment, discrimination, data misuse, review manipulation, or fee evasion.',
   'terms.s10.d3':
@@ -396,7 +396,7 @@ export const TERMS_EN: Record<string, string> = {
 export const TERMS_ES: Record<string, string> = {
   'terms.title': 'Términos de Uso',
   'terms.subtitle':
-    'Reglas de uso de la plataforma Job4You. Toca cada tema para ver los detalles.',
+    'Reglas de uso de la plataforma Taskly. Toca cada tema para ver los detalles.',
   'terms.updated': 'Última actualización: mayo de 2026',
   'terms.back': 'Volver a Seguridad y garantías',
   'terms.button': 'Términos de Uso',
@@ -407,9 +407,9 @@ export const TERMS_ES: Record<string, string> = {
 
   'terms.s1.title': '1. Identificación',
   'terms.s1.summary':
-    'Estos Términos regulan la plataforma Job4You, titularidad de la empresa indicada en el registro societario.',
+    'Estos Términos regulan la plataforma Taskly, titularidad de la empresa indicada en el registro societario.',
   'terms.s1.d1':
-    'Estos Términos de Uso regulan el acceso y uso de la plataforma digital “Job4You”, titularidad de [NOMBRE DE LA EMPRESA], CNPJ [●].',
+    'Estos Términos de Uso regulan el acceso y uso de la plataforma digital “Taskly”, titularidad de [NOMBRE DE LA EMPRESA], CNPJ [●].',
   'terms.s1.d2':
     'Domicilio social, canales oficiales y representación legal figuran en “Acerca de” y en el sitio institucional.',
   'terms.s1.d3':
@@ -421,9 +421,9 @@ export const TERMS_ES: Record<string, string> = {
   'terms.s2.summary':
     'La plataforma intermedia el contacto entre Clientes y Profesionales autónomos para contratar servicios.',
   'terms.s2.d1':
-    'Job4You conecta usuarios contratantes (“Clientes”) y prestadores autónomos (“Profesionales”) mediante herramientas digitales.',
+    'Taskly conecta usuarios contratantes (“Clientes”) y prestadores autónomos (“Profesionales”) mediante herramientas digitales.',
   'terms.s2.d2':
-    'Los servicios los presta el Profesional contratado; Job4You aporta infraestructura y recursos descritos en estos Términos.',
+    'Los servicios los presta el Profesional contratado; Taskly aporta infraestructura y recursos descritos en estos Términos.',
   'terms.s2.d3':
     'Funciones específicas pueden variar según perfil, región y disponibilidad en la interfaz.',
   'terms.s2.d4':
@@ -431,15 +431,15 @@ export const TERMS_ES: Record<string, string> = {
 
   'terms.s3.title': '3. Naturaleza de la relación',
   'terms.s3.summary':
-    'Job4You es intermediario tecnológico y no es parte del contrato entre Cliente y Profesional.',
+    'Taskly es intermediario tecnológico y no es parte del contrato entre Cliente y Profesional.',
   'terms.s3.d1':
-    'Job4You actúa exclusivamente como intermediario tecnológico sin ejecutar los servicios contratados.',
+    'Taskly actúa exclusivamente como intermediario tecnológico sin ejecutar los servicios contratados.',
   'terms.s3.d2':
-    'No hay vínculo laboral, societario ni de subordinación entre Job4You y usuarios por el uso de la plataforma.',
+    'No hay vínculo laboral, societario ni de subordinación entre Taskly y usuarios por el uso de la plataforma.',
   'terms.s3.d3':
     'El contrato de prestación es entre Cliente y Profesional; precio, plazo y alcance los definen las partes.',
   'terms.s3.d4':
-    'Job4You puede ofrecer mediación según políticas publicadas, sin ser árbitro vinculante salvo ley o acuerdo expreso.',
+    'Taskly puede ofrecer mediación según políticas publicadas, sin ser árbitro vinculante salvo ley o acuerdo expreso.',
 
   'terms.s4.title': '4. Registro y elegibilidad',
   'terms.s4.summary':
@@ -453,7 +453,7 @@ export const TERMS_ES: Record<string, string> = {
   'terms.s4.d4':
     'Mantenga credenciales en secreto y reporte uso no autorizado de la cuenta.',
   'terms.s4.d5':
-    'Job4You puede rechazar, suspender o cerrar cuentas que no cumplan elegibilidad o estos Términos.',
+    'Taskly puede rechazar, suspender o cerrar cuentas que no cumplan elegibilidad o estos Términos.',
 
   'terms.s5.title': '5. Responsabilidades de los Profesionales',
   'terms.s5.summary':
@@ -487,11 +487,11 @@ export const TERMS_ES: Record<string, string> = {
 
   'terms.s7.title': '7. Pagos y transacciones',
   'terms.s7.summary':
-    'La plataforma puede o no intermediar pagos; transacciones directas quedan fuera del control de Job4You.',
+    'La plataforma puede o no intermediar pagos; transacciones directas quedan fuera del control de Taskly.',
   'terms.s7.d1':
-    'Job4You puede retener pagos hasta confirmación del servicio y cobrar comisiones según el plan.',
+    'Taskly puede retener pagos hasta confirmación del servicio y cobrar comisiones según el plan.',
   'terms.s7.d2':
-    'En pagos directos entre partes, Job4You no controla montos, contracargos ni disputas financieras.',
+    'En pagos directos entre partes, Taskly no controla montos, contracargos ni disputas financieras.',
   'terms.s7.d3': 'Comisiones y planes se informan en la interfaz antes de contratar.',
   'terms.s7.d4':
     'Reembolsos y cancelaciones siguen la política de pagos y el acuerdo entre las partes.',
@@ -500,9 +500,9 @@ export const TERMS_ES: Record<string, string> = {
 
   'terms.s8.title': '8. Limitación de responsabilidad',
   'terms.s8.summary':
-    'Job4You no responde por daños de la ejecución, pérdidas financieras ni relaciones entre usuarios.',
+    'Taskly no responde por daños de la ejecución, pérdidas financieras ni relaciones entre usuarios.',
   'terms.s8.d1':
-    'En la máxima medida legal, Job4You no responde por daños de ejecución o incumplimiento entre usuarios.',
+    'En la máxima medida legal, Taskly no responde por daños de ejecución o incumplimiento entre usuarios.',
   'terms.s8.d2':
     'Sin responsabilidad por pérdidas indirectas o acuerdos fuera de los flujos oficiales de pago.',
   'terms.s8.d3':
@@ -515,7 +515,7 @@ export const TERMS_ES: Record<string, string> = {
   'terms.s9.summary':
     'Contenido de la plataforma protegido por ley; reproducción no autorizada prohibida.',
   'terms.s9.d1':
-    'Marcas, software y contenidos institucionales pertenecen a Job4You o licenciantes.',
+    'Marcas, software y contenidos institucionales pertenecen a Taskly o licenciantes.',
   'terms.s9.d2': 'Prohibida reproducción, ingeniería inversa o explotación comercial no autorizada.',
   'terms.s9.d3':
     'Contenidos del usuario son su responsabilidad; conceden licencia para operar el servicio.',
@@ -525,7 +525,7 @@ export const TERMS_ES: Record<string, string> = {
   'terms.s10.summary':
     'Cuentas pueden suspenderse o eliminarse por violación, conducta inadecuada o fraude.',
   'terms.s10.d1':
-    'Job4You puede suspender o eliminar cuentas por violación de Términos, políticas o ley.',
+    'Taskly puede suspender o eliminar cuentas por violación de Términos, políticas o ley.',
   'terms.s10.d2':
     'Conducta inadecuada incluye fraude, acoso, discriminación, manipulación de reseñas o evasión de comisiones.',
   'terms.s10.d3':

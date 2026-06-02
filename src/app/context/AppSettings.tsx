@@ -29,7 +29,7 @@ export type A11yPrefs = {
   screenReader: boolean;
 };
 
-const A11Y_STORAGE_KEY = 'job4you-a11y';
+const A11Y_STORAGE_KEY = 'taskly-a11y';
 
 const DEFAULT_A11Y: A11yPrefs = {
   reduceMotion: false,

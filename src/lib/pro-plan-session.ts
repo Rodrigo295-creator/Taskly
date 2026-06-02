@@ -1,6 +1,6 @@
 import { PLANS, type PlanDefinition, type PlanTierId } from '@/data/plans';
 
-const PRO_PLAN_KEY = 'job4you-pro-plan';
+const PRO_PLAN_KEY = 'taskly-pro-plan';
 
 export type PaymentFrequency = 'monthly' | 'quarterly' | 'semiannual' | 'yearly';
 
@@ -51,6 +51,15 @@ export function saveProPlanSubscription(sub: ProPlanSubscription) {
   } catch {
     /* ignore */
   }
+}
+
+/** Plano premium automático para contas admin_master */
+export function applyAdminMasterPlan() {
+  saveProPlanSubscription({
+    tier: 'premium',
+    subscribedAt: new Date().toISOString(),
+    frequency: 'yearly',
+  });
 }
 
 export function getPlanByTier(tier: PlanTierId): PlanDefinition {

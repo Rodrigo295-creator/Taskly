@@ -19,7 +19,8 @@ function figmaAssetResolver() {
 export default defineConfig({
   /** Dev: http://localhost:5173 (porta padrão Vite) */
   server: {
-    host: 'localhost',
+    // true = aceita localhost, 127.0.0.1 e [::1] (evita 400/connection issues no browser)
+    host: true,
     port: 5173,
     strictPort: true,
     open: '/',

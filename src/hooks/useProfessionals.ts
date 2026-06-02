@@ -67,7 +67,7 @@ export function useProfessionals(): {
       );
 
     if (qErr) {
-      console.warn('[Job4You] Supabase professionals:', qErr.message);
+      console.warn('[Taskly] Supabase professionals:', qErr.message);
       setProfessionalList(ALL_PROFESSIONALS);
       setLoading(false);
       return;

@@ -152,7 +152,7 @@ Correção monetária:    IPCA (IBGE), após 30 dias de atraso
 Nota: O CONTRATADO é responsável pelo recolhimento de seus
 próprios tributos (ISS, IRPF/carnê-leão, INSS como contribuinte
 individual), conforme legislação vigente. A taxa de intermediação
-da plataforma Job4You (7% = R$ ${fee}) será deduzida do repasse,
+da plataforma Taskly (7% = R$ ${fee}) será deduzida do repasse,
 ficando o CONTRATADO com R$ ${net} líquido.
 
 ════════════════════════════════════════════════════════
