@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Star, CheckCircle, Clock, XCircle, ChevronDown, ChevronUp } from 'lucide-react';
 import { useAppSettings } from '../context/AppSettings';
+import { categoryChipClass } from '@/lib/categoryColors';
 
 type Status = 'concluido' | 'cancelado' | 'em_andamento';
 
@@ -107,18 +108,9 @@ const HISTORY: ServiceRecord[] = [
 const STATUS_STYLE: Record<Status, { icon: React.ElementType; color: string; bg: string; labelKey: string }> = {
   concluido:    { labelKey: 'status.completed', icon: CheckCircle, color: 'text-green-700',  bg: 'bg-green-50 border-green-100' },
   cancelado:    { labelKey: 'status.cancelled', icon: XCircle,     color: 'text-red-600',    bg: 'bg-red-50 border-red-100' },
-  em_andamento: { labelKey: 'status.inProgress', icon: Clock,       color: 'text-[#F97316]',  bg: 'bg-orange-50 border-orange-100' },
+  em_andamento: { labelKey: 'status.inProgress', icon: Clock,       color: 'text-[#FF5A12]',  bg: 'bg-orange-50 border-orange-100' },
 };
 
-const CATEGORY_COLOR: Record<string, string> = {
-  Elétrica:  'bg-yellow-50 text-yellow-700 border-yellow-100',
-  Limpeza:   'bg-blue-50 text-blue-700 border-blue-100',
-  Hidráulica:'bg-cyan-50 text-cyan-700 border-cyan-100',
-  Pintura:   'bg-purple-50 text-purple-700 border-purple-100',
-  TI:        'bg-indigo-50 text-indigo-700 border-indigo-100',
-  Construção:'bg-amber-50 text-amber-700 border-amber-100',
-  Aulas:     'bg-pink-50 text-pink-700 border-pink-100',
-};
 
 function Stars({ rating }: { rating: number }) {
   return (
@@ -126,7 +118,7 @@ function Stars({ rating }: { rating: number }) {
       {[1, 2, 3, 4, 5].map(i => (
         <Star
           key={i}
-          className={`w-3.5 h-3.5 ${i <= rating ? 'fill-[#F97316] text-[#F97316]' : 'fill-slate-200 text-slate-200'}`}
+          className={`w-3.5 h-3.5 ${i <= rating ? 'fill-[#FF5A12] text-[#FF5A12]' : 'fill-slate-200 text-slate-200'}`}
         />
       ))}
     </div>
@@ -163,7 +155,7 @@ function ServiceCard({ record }: { record: ServiceRecord }) {
 
             {/* Info row */}
             <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mt-3">
-              <span className={`text-[11px] font-medium px-2 py-0.5 rounded-full border ${CATEGORY_COLOR[record.category] ?? 'bg-slate-50 text-slate-600 border-slate-100'}`}>
+              <span className={`text-[11px] font-medium px-2 py-0.5 rounded-full border ${categoryChipClass(record.category)}`}>
                 {record.category}
               </span>
               <span className="text-xs text-slate-400">{record.date}</span>
@@ -231,8 +223,8 @@ export function HistoryScreen() {
 
         {/* Summary cards */}
         <div className="grid grid-cols-3 gap-3 mb-4">
-          <div className="bg-[#FEF0E6] rounded-xl p-3">
-            <p className="text-[10px] text-[#F97316] font-semibold uppercase tracking-wide">{t('history.totalSpent')}</p>
+          <div className="bg-[#FFF0E6] rounded-xl p-3">
+            <p className="text-[10px] text-[#FF5A12] font-semibold uppercase tracking-wide">{t('history.totalSpent')}</p>
             <p className="text-base font-bold text-slate-800 mt-1">
               {fmt(totalPaid)}
             </p>
@@ -257,8 +249,8 @@ export function HistoryScreen() {
               onClick={() => setFilter(f)}
               className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-colors border ${
                 filter === f
-                  ? 'bg-[#F97316] text-white border-[#F97316]'
-                  : 'bg-white text-slate-500 border-slate-200 hover:border-[#F97316] hover:text-[#F97316]'
+                  ? 'bg-[#FF5A12] text-white border-[#FF5A12]'
+                  : 'bg-white text-slate-500 border-slate-200 hover:border-[#FF5A12] hover:text-[#FF5A12]'
               }`}
             >
               {f === 'todos' ? t('common.all') : t(STATUS_STYLE[f].labelKey)}

@@ -2,43 +2,44 @@
 
 :root {
   --font-size: 16px;
-  --background: #F8F8F6;
+  /* Warm canvas + hot coral-orange brand (attention) + teal complement in charts */
+  --background: #F6F3EF;
   --foreground: #0F172A;
   --card: #ffffff;
   --card-foreground: #0F172A;
   --popover: #ffffff;
   --popover-foreground: #0F172A;
-  --primary: #F97316;
+  --primary: #FF5A12;
   --primary-foreground: #ffffff;
   --secondary: #0F172A;
   --secondary-foreground: #ffffff;
-  --muted: #E2E8F0;
-  --muted-foreground: #64748B;
-  --accent: #FEF0E6;
-  --accent-foreground: #F97316;
-  --destructive: #EF4444;
+  --muted: #E8E4DE;
+  --muted-foreground: #5C6570;
+  --accent: #FFF0E6;
+  --accent-foreground: #FF5A12;
+  --destructive: #E11D48;
   --destructive-foreground: #ffffff;
-  --border: #E2E8F0;
+  --border: #E5E0D8;
   --input: transparent;
-  --input-background: #F5F4F0;
+  --input-background: #F3EFEA;
   --switch-background: #cbced4;
   --font-weight-medium: 500;
   --font-weight-normal: 400;
-  --ring: #F97316;
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
+  --ring: #FF5A12;
+  --chart-1: oklch(0.68 0.22 40);
+  --chart-2: oklch(0.62 0.12 185);
+  --chart-3: oklch(0.55 0.14 250);
+  --chart-4: oklch(0.78 0.14 75);
+  --chart-5: oklch(0.65 0.16 15);
   --radius: 0.625rem;
   --sidebar: #ffffff;
   --sidebar-foreground: #0F172A;
-  --sidebar-primary: #F97316;
+  --sidebar-primary: #FF5A12;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #F8F8F6;
+  --sidebar-accent: #F6F3EF;
   --sidebar-accent-foreground: #0F172A;
-  --sidebar-border: #E2E8F0;
-  --sidebar-ring: #F97316;
+  --sidebar-border: #E5E0D8;
+  --sidebar-ring: #FF5A12;
 }
 
 .dark {
@@ -73,12 +74,12 @@
   --chart-5: oklch(0.645 0.246 16.439);
   --sidebar: #1e293b;
   --sidebar-foreground: #f1f5f9;
-  --sidebar-primary: #F97316;
+  --sidebar-primary: #FF5A12;
   --sidebar-primary-foreground: #ffffff;
   --sidebar-accent: #0f172a;
   --sidebar-accent-foreground: #f1f5f9;
   --sidebar-border: #334155;
-  --sidebar-ring: #F97316;
+  --sidebar-ring: #FF5A12;
 
   /* Tailwind background/border tokens for dark mode (surfaces stay dark, text handled by CSS rules) */
   --color-white: #1e293b;
@@ -88,7 +89,7 @@
 }
 
 /* ─── Dark mode surface overrides ─── */
-.dark .bg-\[\#F8F8F6\] { background-color: #0f172a !important; }
+.dark .bg-\[\#F6F3EF\] { background-color: #0f172a !important; }
 .dark .bg-\[\#F8F8F8\] { background-color: #0f172a !important; }
 .dark .border-slate-900 { border-color: #0f172a !important; }
 
@@ -117,9 +118,10 @@
 .dark .text-slate-300 { color: #ffffff !important; }
 .dark .text-slate-200 { color: #ffffff !important; }
 
-/* Keep orange accent texts orange */
-.dark .text-\[\#F97316\] { color: #F97316 !important; }
-.dark .text-orange-500   { color: #F97316 !important; }
+/* Keep brand accent texts vivid coral */
+.dark .text-\[\#FF5A12\],
+.dark .text-\[\#FF5A12\] { color: #FF5A12 !important; }
+.dark .text-orange-500   { color: #FF5A12 !important; }
 
 /* Keep status/semantic colors */
 .dark .text-emerald-600, .dark .text-green-600 { color: #34d399 !important; }
@@ -127,8 +129,8 @@
 .dark .text-amber-500, .dark .text-amber-400   { color: #fbbf24 !important; }
 .dark .text-blue-500, .dark .text-sky-500      { color: #60a5fa !important; }
 
-/* ─── Light mode: headings orange, body near-black ─── */
-h1, h2, h3 { color: #F97316; }
+/* ─── Light mode: headings brand coral, body near-black ─── */
+h1, h2, h3 { color: #FF5A12; }
 h4          { color: #0F172A; }
 
 /* ─── Card / input surfaces in dark ─── */
@@ -352,5 +354,40 @@ html.reduce-motion .landing-hero-slide,
 html.reduce-motion .landing-gradient-drift,
 html.reduce-motion .landing-orb,
 html.reduce-motion .landing-shimmer-text {
+  animation: none !important;
+}
+
+/* ── App screens — softer ambient background ── */
+@keyframes app-gradient-drift {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  50% { transform: translate(1%, -1.5%) rotate(0.5deg); }
+}
+
+@keyframes app-orb-float {
+  0%, 100% { transform: translateY(0) scale(1); opacity: 0.3; }
+  50% { transform: translateY(-10px) scale(1.03); opacity: 0.45; }
+}
+
+.app-gradient-drift {
+  animation: app-gradient-drift 22s ease-in-out infinite;
+}
+
+.app-orb {
+  animation: app-orb-float 14s ease-in-out infinite;
+}
+
+.app-orb-delay {
+  animation-delay: -5s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-gradient-drift,
+  .app-orb {
+    animation: none !important;
+  }
+}
+
+html.reduce-motion .app-gradient-drift,
+html.reduce-motion .app-orb {
   animation: none !important;
 }

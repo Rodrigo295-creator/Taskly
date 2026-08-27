@@ -40,8 +40,8 @@ export function PlansScreen() {
 
       {!hasPlans && (
         <div className="rounded-2xl border border-dashed border-slate-300 dark:border-slate-600 bg-white/80 dark:bg-slate-900/50 p-10 text-center max-w-lg mx-auto">
-          <div className="w-14 h-14 rounded-2xl bg-[#FEF0E6] dark:bg-[#F97316]/15 flex items-center justify-center mx-auto mb-4">
-            <Sparkles className="w-7 h-7 text-[#F97316]" />
+          <div className="w-14 h-14 rounded-2xl bg-[#FFF0E6] dark:bg-[#FF5A12]/15 flex items-center justify-center mx-auto mb-4">
+            <Sparkles className="w-7 h-7 text-[#FF5A12]" />
           </div>
           <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-2">{t('plans.emptyTitle')}</h2>
           <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">{t('plans.emptyDesc')}</p>
@@ -57,12 +57,12 @@ export function PlansScreen() {
                 key={plan.id}
                 className={`relative flex flex-col rounded-2xl border bg-white dark:bg-slate-900/80 p-6 shadow-sm ${
                   plan.popular
-                    ? 'border-[#F97316] ring-2 ring-[#F97316]/20'
+                    ? 'border-[#FF5A12] ring-2 ring-[#FF5A12]/20'
                     : 'border-slate-200/80 dark:border-slate-700/80'
                 } ${isActive ? 'ring-2 ring-emerald-500/30 border-emerald-400/50' : ''}`}
               >
                 {plan.popular && (
-                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 text-[10px] font-bold uppercase tracking-wider bg-[#F97316] text-white px-3 py-1 rounded-full">
+                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 text-[10px] font-bold uppercase tracking-wider bg-[#FF5A12] text-white px-3 py-1 rounded-full">
                     {t('plans.popular')}
                   </span>
                 )}
@@ -85,7 +85,7 @@ export function PlansScreen() {
                 </div>
 
                 <p className="mt-5 flex items-baseline gap-1">
-                  <span className="text-3xl font-black text-[#F97316]">{plan.priceLabel}</span>
+                  <span className="text-3xl font-black text-[#FF5A12]">{plan.priceLabel}</span>
                   <span className="text-sm text-slate-500">{t('plans.perMonth')}</span>
                 </p>
 
@@ -93,7 +93,7 @@ export function PlansScreen() {
                   className={`mt-4 rounded-xl px-4 py-3 text-center ${
                     plan.feePercent === 0
                       ? 'bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200/80 dark:border-emerald-800/50'
-                      : 'bg-[#FEF0E6]/80 dark:bg-[#F97316]/10 border border-[#F97316]/20'
+                      : 'bg-[#FFF0E6]/80 dark:bg-[#FF5A12]/10 border border-[#FF5A12]/20'
                   }`}
                 >
                   <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
@@ -101,7 +101,7 @@ export function PlansScreen() {
                   </p>
                   <p
                     className={`text-2xl font-black mt-0.5 ${
-                      plan.feePercent === 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-[#F97316]'
+                      plan.feePercent === 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-[#FF5A12]'
                     }`}
                   >
                     {formatFeePercent(plan.feePercent, locale)}
@@ -112,13 +112,13 @@ export function PlansScreen() {
                 <ul className="mt-6 flex-1 space-y-2.5">
                   {plan.includesPreviousKey && (
                     <li className="flex items-start gap-2 text-sm font-semibold text-slate-800 dark:text-slate-200 pb-2 border-b border-slate-100 dark:border-slate-800">
-                      <Layers className="w-4 h-4 text-[#F97316] shrink-0 mt-0.5" />
+                      <Layers className="w-4 h-4 text-[#FF5A12] shrink-0 mt-0.5" />
                       {t(plan.includesPreviousKey)}
                     </li>
                   )}
                   {plan.featureKeys.map((key) => (
                     <li key={key} className="flex items-start gap-2 text-sm text-slate-600 dark:text-slate-300">
-                      <Check className="w-4 h-4 text-[#F97316] shrink-0 mt-0.5" />
+                      <Check className="w-4 h-4 text-[#FF5A12] shrink-0 mt-0.5" />
                       {t(key)}
                     </li>
                   ))}
@@ -129,7 +129,7 @@ export function PlansScreen() {
                   onClick={() => setSubscribePlan(plan)}
                   className={`mt-6 w-full py-3 rounded-xl text-sm font-bold transition-colors ${
                     plan.popular || plan.id === 'premium'
-                      ? 'bg-[#F97316] text-white hover:bg-[#EA6C10] shadow-md shadow-[#F97316]/20'
+                      ? 'bg-[#FF5A12] text-white hover:bg-[#E04E0E] shadow-md shadow-[#FF5A12]/20'
                       : 'bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white hover:bg-slate-200 dark:hover:bg-slate-700'
                   }`}
                 >

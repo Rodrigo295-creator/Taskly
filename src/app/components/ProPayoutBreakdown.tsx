@@ -15,7 +15,7 @@ export function ProPayoutBreakdown({ gross, feePercent, compact, className = '' 
   if (compact) {
     return (
       <div className={`text-right ${className}`}>
-        <p className="text-sm font-bold text-[#F97316]">{fmt(net, { decimals: 0 })}</p>
+        <p className="text-sm font-bold text-[#FF5A12]">{fmt(net, { decimals: 0 })}</p>
         <p className="text-[10px] text-slate-500 dark:text-slate-400">
           {t('pro.payout.netOf', { gross: fmt(gross, { decimals: 0 }), percent: pct })}
         </p>

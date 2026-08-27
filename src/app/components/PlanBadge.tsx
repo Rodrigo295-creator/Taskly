@@ -42,13 +42,13 @@ export function PlanBadge({ tier, size = 28, className = '' }: Props) {
         className={className}
         aria-hidden
       >
-        <circle cx="16" cy="16" r="15" fill="#FEF0E6" stroke="#F97316" strokeWidth="1.5" />
+        <circle cx="16" cy="16" r="15" fill="#FFF0E6" stroke="#FF5A12" strokeWidth="1.5" />
         <circle cx="16" cy="16" r="11" fill="#FFF7ED" />
         <path
           d="M16 7l2.2 4.5 5 .7-3.6 3.5.9 5L16 18.2 11.5 20.7l.9-5-3.6-3.5 5-.7L16 7z"
-          fill="#F97316"
+          fill="#FF5A12"
         />
-        <circle cx="16" cy="16" r="3" fill="#EA6C10" />
+        <circle cx="16" cy="16" r="3" fill="#E04E0E" />
       </svg>
     );
   }

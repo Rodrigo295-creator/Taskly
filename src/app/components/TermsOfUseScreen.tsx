@@ -13,7 +13,7 @@ function BulletList({ items }: { items: string[] }) {
     <ul className="space-y-2.5">
       {items.map((text) => (
         <li key={text} className="flex gap-2.5 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-          <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#F97316]" aria-hidden />
+          <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#FF5A12]" aria-hidden />
           <span>{text}</span>
         </li>
       ))}
@@ -30,18 +30,18 @@ export function TermsOfUseScreen({ onBack }: Props) {
       <button
         type="button"
         onClick={onBack}
-        className="mb-6 inline-flex items-center gap-2 text-sm font-medium text-[#F97316] hover:underline"
+        className="mb-6 inline-flex items-center gap-2 text-sm font-medium text-[#FF5A12] hover:underline"
       >
         <ArrowLeft className="w-4 h-4" />
         {t('terms.back')}
       </button>
 
-      <div className="rounded-2xl border border-[#F97316]/20 bg-[#FEF0E6]/50 dark:bg-[#F97316]/10 p-5 mb-6 flex gap-4 items-start">
-        <div className="w-12 h-12 rounded-xl bg-[#F97316]/15 flex items-center justify-center shrink-0">
-          <ScrollText className="w-6 h-6 text-[#F97316]" />
+      <div className="rounded-2xl border border-[#FF5A12]/20 bg-[#FFF0E6]/50 dark:bg-[#FF5A12]/10 p-5 mb-6 flex gap-4 items-start">
+        <div className="w-12 h-12 rounded-xl bg-[#FF5A12]/15 flex items-center justify-center shrink-0">
+          <ScrollText className="w-6 h-6 text-[#FF5A12]" />
         </div>
         <div>
-          <p className="text-xs font-medium text-[#F97316] uppercase tracking-wide">{t('terms.updated')}</p>
+          <p className="text-xs font-medium text-[#FF5A12] uppercase tracking-wide">{t('terms.updated')}</p>
           <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed mt-2">{t('terms.acceptNote')}</p>
         </div>
       </div>

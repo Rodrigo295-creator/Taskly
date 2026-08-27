@@ -4,6 +4,7 @@ import {
   TrendingUp, CheckCircle, XCircle, Banknote, Timer,
 } from 'lucide-react';
 import { useAppSettings } from '../context/AppSettings';
+import { categoryChipClass } from '@/lib/categoryColors';
 
 /* ── types & data ────────────────────────────────────────────────── */
 
@@ -163,14 +164,6 @@ const RECORDS: ServiceRecord[] = [
   },
 ];
 
-const CAT_COLOR: Record<string, string> = {
-  Elétrica:   'bg-yellow-50 text-yellow-700 border-yellow-200',
-  Hidráulica: 'bg-cyan-50 text-cyan-700 border-cyan-200',
-  Limpeza:    'bg-blue-50 text-blue-700 border-blue-200',
-  Pintura:    'bg-purple-50 text-purple-700 border-purple-200',
-  TI:         'bg-indigo-50 text-indigo-700 border-indigo-200',
-  Construção: 'bg-amber-50 text-amber-700 border-amber-200',
-};
 
 function fmtDuration(min: number) {
   if (min < 60) return `${min} min`;
@@ -183,7 +176,7 @@ function Stars({ n }: { n: number }) {
   return (
     <div className="flex gap-0.5">
       {[1,2,3,4,5].map(i => (
-        <Star key={i} className={`w-3.5 h-3.5 ${i <= n ? 'fill-[#F97316] text-[#F97316]' : 'fill-slate-200 text-slate-200'}`} />
+        <Star key={i} className={`w-3.5 h-3.5 ${i <= n ? 'fill-[#FF5A12] text-[#FF5A12]' : 'fill-slate-200 text-slate-200'}`} />
       ))}
     </div>
   );
@@ -217,7 +210,7 @@ function RecordCard({ rec }: { rec: ServiceRecord }) {
 
             {/* meta row */}
             <div className="flex flex-wrap gap-x-4 gap-y-1.5 mt-3">
-              <span className={`text-[10px] font-medium px-2 py-0.5 rounded-full border ${CAT_COLOR[rec.category] ?? 'bg-slate-50 text-slate-500 border-slate-200'}`}>
+              <span className={`text-[10px] font-medium px-2 py-0.5 rounded-full border ${categoryChipClass(rec.category)}`}>
                 {rec.category}
               </span>
               <span className="flex items-center gap-1 text-xs text-slate-400">
@@ -292,7 +285,7 @@ function RecordCard({ rec }: { rec: ServiceRecord }) {
             </div>
             <div className="bg-white border border-slate-100 rounded-xl p-2 text-center">
               <p className="text-[10px] text-slate-400">Por hora</p>
-              <p className="text-xs font-bold text-[#F97316] mt-0.5">
+              <p className="text-xs font-bold text-[#FF5A12] mt-0.5">
                 {fmt(rec.charged / (rec.durationMin / 60), { decimals: 0 })}/h
               </p>
             </div>
@@ -321,7 +314,7 @@ export function ProHistoryScreen() {
   const avgHourlyRate = totalCharged / (totalMinutes / 60);
 
   return (
-    <div className="flex flex-col min-h-0 w-full -mx-4 sm:mx-0 sm:rounded-2xl sm:border sm:border-slate-200 dark:sm:border-slate-700 overflow-hidden bg-[#F8F8F6] dark:bg-slate-950/50">
+    <div className="flex flex-col min-h-0 w-full -mx-4 sm:mx-0 sm:rounded-2xl sm:border sm:border-slate-200/80 dark:sm:border-slate-700/80 overflow-hidden bg-white/50 dark:bg-slate-900/35 backdrop-blur-[2px]">
 
       {/* header + summary */}
       <div className="bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 px-5 pt-5 pb-4 flex-shrink-0">
@@ -329,10 +322,10 @@ export function ProHistoryScreen() {
 
         {/* KPI strip */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
-          <div className="bg-[#FEF0E6] rounded-2xl p-3">
+          <div className="bg-[#FFF0E6] rounded-2xl p-3">
             <div className="flex items-center gap-1.5 mb-1">
-              <Banknote className="w-3.5 h-3.5 text-[#F97316]" />
-              <p className="text-[10px] font-semibold text-[#F97316] uppercase tracking-wide">Faturado</p>
+              <Banknote className="w-3.5 h-3.5 text-[#FF5A12]" />
+              <p className="text-[10px] font-semibold text-[#FF5A12] uppercase tracking-wide">Faturado</p>
             </div>
             <p className="text-base font-extrabold text-slate-800">{fmt(totalCharged)}</p>
             <p className="text-[10px] text-slate-500 mt-0.5">Líq. {fmt(totalNet)}</p>
@@ -371,8 +364,8 @@ export function ProHistoryScreen() {
               onClick={() => setFilter(f)}
               className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-colors ${
                 filter === f
-                  ? 'bg-[#F97316] text-white border-[#F97316]'
-                  : 'bg-white text-slate-500 border-slate-200 hover:border-[#F97316] hover:text-[#F97316]'
+                  ? 'bg-[#FF5A12] text-white border-[#FF5A12]'
+                  : 'bg-white text-slate-500 border-slate-200 hover:border-[#FF5A12] hover:text-[#FF5A12]'
               }`}
             >
               {f === 'todos' ? 'Todos' : f === 'concluido' ? 'Concluídos' : 'Cancelados'}

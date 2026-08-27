@@ -147,7 +147,7 @@ function ReviewCard({ review }: { review: Review }) {
       {/* Header */}
       <div className="flex items-start justify-between gap-3">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#F97316] to-[#FB923C] flex items-center justify-center text-white font-bold text-sm shrink-0">
+          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#FF5A12] to-[#FB923C] flex items-center justify-center text-white font-bold text-sm shrink-0">
             {review.clientAvatar}
           </div>
           <div>
@@ -169,7 +169,7 @@ function ReviewCard({ review }: { review: Review }) {
         {review.comment.length > 120 && (
           <button
             onClick={() => setExpanded(!expanded)}
-            className="ml-1 text-[#F97316] text-xs font-medium"
+            className="ml-1 text-[#FF5A12] text-xs font-medium"
           >
             {expanded ? 'ver menos' : 'ver mais'}
           </button>
@@ -189,14 +189,14 @@ function ReviewCard({ review }: { review: Review }) {
 
       {/* Reply */}
       {replySaved && !showReply && (
-        <div className="bg-[#FEF0E6] border border-[#F97316]/20 rounded-xl px-3 py-2">
-          <p className="text-xs font-semibold text-[#F97316] mb-1 flex items-center gap-1">
+        <div className="bg-[#FFF0E6] border border-[#FF5A12]/20 rounded-xl px-3 py-2">
+          <p className="text-xs font-semibold text-[#FF5A12] mb-1 flex items-center gap-1">
             <MessageSquare className="w-3 h-3" /> Sua resposta
           </p>
           <p className="text-xs text-slate-700">{replyText}</p>
           <button
             onClick={() => setShowReply(true)}
-            className="text-xs text-[#F97316] mt-1 hover:underline"
+            className="text-xs text-[#FF5A12] mt-1 hover:underline"
           >
             Editar resposta
           </button>
@@ -210,7 +210,7 @@ function ReviewCard({ review }: { review: Review }) {
             value={replyText}
             onChange={(e) => setReplyText(e.target.value)}
             placeholder="Escreva sua resposta pública..."
-            className="w-full text-sm border border-slate-200 rounded-xl px-3 py-2 resize-none focus:outline-none focus:ring-2 focus:ring-[#F97316]/30"
+            className="w-full text-sm border border-slate-200 rounded-xl px-3 py-2 resize-none focus:outline-none focus:ring-2 focus:ring-[#FF5A12]/30"
           />
           <div className="flex gap-2 justify-end">
             <button
@@ -221,7 +221,7 @@ function ReviewCard({ review }: { review: Review }) {
             </button>
             <button
               onClick={saveReply}
-              className="text-xs text-white bg-[#F97316] px-3 py-1.5 rounded-lg hover:bg-[#EA6C10]"
+              className="text-xs text-white bg-[#FF5A12] px-3 py-1.5 rounded-lg hover:bg-[#E04E0E]"
             >
               Salvar resposta
             </button>
@@ -232,7 +232,7 @@ function ReviewCard({ review }: { review: Review }) {
       {!replySaved && !showReply && (
         <button
           onClick={() => setShowReply(true)}
-          className="self-start text-xs text-[#F97316] font-medium flex items-center gap-1 hover:underline"
+          className="self-start text-xs text-[#FF5A12] font-medium flex items-center gap-1 hover:underline"
         >
           <MessageSquare className="w-3.5 h-3.5" /> Responder avaliação
         </button>
@@ -279,7 +279,7 @@ export function ProReviewsScreen() {
   const sortLabels = { recent: 'Mais recentes', highest: 'Maior nota', lowest: 'Menor nota' };
 
   return (
-    <div className="flex-1 overflow-y-auto bg-[#F8F8F6]" style={{ scrollbarWidth: 'none' }}>
+    <div className="flex-1 overflow-y-auto bg-white/40 dark:bg-slate-900/30 backdrop-blur-[2px]" style={{ scrollbarWidth: 'none' }}>
       <div className="px-4 sm:px-8 pt-6 pb-8 max-w-2xl mx-auto">
 
         {/* Page title */}
@@ -321,7 +321,7 @@ export function ProReviewsScreen() {
                 </div>
               </div>
               <div className="flex items-center gap-2 bg-slate-50 rounded-xl px-3 py-2">
-                <ThumbsUp className="w-4 h-4 text-[#F97316]" />
+                <ThumbsUp className="w-4 h-4 text-[#FF5A12]" />
                 <div>
                   <p className="text-[10px] text-slate-400 leading-none">Recomendação</p>
                   <p className="text-xs font-semibold text-slate-700">
@@ -350,8 +350,8 @@ export function ProReviewsScreen() {
                 onClick={() => setFilterRating(f)}
                 className={`text-xs px-3 py-1.5 rounded-full font-medium border transition-colors ${
                   filterRating === f
-                    ? 'bg-[#F97316] text-white border-[#F97316]'
-                    : 'bg-white text-slate-600 border-slate-200 hover:border-[#F97316] hover:text-[#F97316]'
+                    ? 'bg-[#FF5A12] text-white border-[#FF5A12]'
+                    : 'bg-white text-slate-600 border-slate-200 hover:border-[#FF5A12] hover:text-[#FF5A12]'
                 }`}
               >
                 {f === 'all' ? 'Todas' : f === '1-2' ? '1–2 ★' : `${f} ★`}
@@ -374,7 +374,7 @@ export function ProReviewsScreen() {
                   <button
                     key={s}
                     onClick={() => { setSortBy(s); setShowSortMenu(false); }}
-                    className={`w-full text-left px-4 py-2 text-xs hover:bg-slate-50 ${sortBy === s ? 'text-[#F97316] font-semibold' : 'text-slate-700'}`}
+                    className={`w-full text-left px-4 py-2 text-xs hover:bg-slate-50 ${sortBy === s ? 'text-[#FF5A12] font-semibold' : 'text-slate-700'}`}
                   >
                     {sortLabels[s]}
                   </button>

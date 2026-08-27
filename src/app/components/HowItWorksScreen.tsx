@@ -115,16 +115,16 @@ function StepList({ steps, accent }: { steps: typeof CLIENT_STEPS; accent: strin
 function FaqItem({ question, answer }: { question: string; answer: string }) {
   const [open, setOpen] = useState(false);
   return (
-    <div className={`border rounded-2xl overflow-hidden transition-all ${open ? 'border-[#F97316]/30 bg-[#FEF0E6]/40' : 'border-slate-200 bg-white'}`}>
+    <div className={`border rounded-2xl overflow-hidden transition-all ${open ? 'border-[#FF5A12]/30 bg-[#FFF0E6]/40' : 'border-slate-200 bg-white'}`}>
       <button
         onClick={() => setOpen(o => !o)}
         className="w-full flex items-center justify-between px-5 py-4 text-left gap-4"
       >
-        <span className={`text-sm font-semibold leading-snug ${open ? 'text-[#F97316]' : 'text-slate-800'}`}>
+        <span className={`text-sm font-semibold leading-snug ${open ? 'text-[#FF5A12]' : 'text-slate-800'}`}>
           {question}
         </span>
         {open
-          ? <ChevronUp className="w-4 h-4 text-[#F97316] flex-shrink-0" />
+          ? <ChevronUp className="w-4 h-4 text-[#FF5A12] flex-shrink-0" />
           : <ChevronDown className="w-4 h-4 text-slate-400 flex-shrink-0" />}
       </button>
       {open && (
@@ -182,11 +182,11 @@ export function HowItWorksScreen() {
 
       {/* Hero */}
       <div className="bg-[#0F172A] px-6 py-8 relative overflow-hidden">
-        <div className="absolute -right-8 -top-8 w-40 h-40 bg-[#F97316]/10 rounded-full blur-2xl pointer-events-none" />
+        <div className="absolute -right-8 -top-8 w-40 h-40 bg-[#FF5A12]/10 rounded-full blur-2xl pointer-events-none" />
         <div className="relative z-10">
-          <div className="inline-flex items-center gap-2 bg-[#F97316]/15 border border-[#F97316]/25 rounded-full px-3 py-1 mb-4">
-            <Zap className="w-3.5 h-3.5 text-[#F97316]" />
-            <span className="text-xs font-semibold text-[#F97316]">{t('how.badge')}</span>
+          <div className="inline-flex items-center gap-2 bg-[#FF5A12]/15 border border-[#FF5A12]/25 rounded-full px-3 py-1 mb-4">
+            <Zap className="w-3.5 h-3.5 text-[#FF5A12]" />
+            <span className="text-xs font-semibold text-[#FF5A12]">{t('how.badge')}</span>
           </div>
           <h1 className="text-2xl font-extrabold text-white leading-tight mb-3">
             Como o <BrandName size="lg" onDark /><br />funciona?
@@ -204,7 +204,7 @@ export function HowItWorksScreen() {
             { icon: Star, value: '4.8', label: t('how.stat2') },
           ].map(({ icon: Icon, value, label }) => (
             <div key={label} className="bg-white/5 border border-white/10 rounded-2xl p-3 text-center">
-              <Icon className="w-4 h-4 text-[#F97316] mx-auto mb-1.5" />
+              <Icon className="w-4 h-4 text-[#FF5A12] mx-auto mb-1.5" />
               <p className="text-sm font-bold text-white">{value}</p>
               <p className="text-[10px] text-slate-400 mt-0.5">{label}</p>
             </div>
@@ -240,7 +240,7 @@ export function HowItWorksScreen() {
                 {t('how.clientSub')}
               </p>
             </div>
-            <StepList steps={clientSteps} accent="#F97316" />
+            <StepList steps={clientSteps} accent="#FF5A12" />
 
             {/* Client benefits */}
             <div className="bg-white border border-slate-200 rounded-2xl p-5 space-y-3">
@@ -252,8 +252,8 @@ export function HowItWorksScreen() {
                 { icon: Star, text: t('how.clientG4') },
               ].map(({ icon: Icon, text }) => (
                 <div key={text} className="flex items-center gap-3">
-                  <div className="w-7 h-7 rounded-lg bg-[#FEF0E6] flex items-center justify-center flex-shrink-0">
-                    <Icon className="w-3.5 h-3.5 text-[#F97316]" />
+                  <div className="w-7 h-7 rounded-lg bg-[#FFF0E6] flex items-center justify-center flex-shrink-0">
+                    <Icon className="w-3.5 h-3.5 text-[#FF5A12]" />
                   </div>
                   <span className="text-sm text-slate-600">{text}</span>
                 </div>
@@ -293,7 +293,7 @@ export function HowItWorksScreen() {
         {/* Taxa 7% */}
         <div>
           <div className="flex items-center gap-2 mb-4">
-            <Percent className="w-5 h-5 text-[#F97316]" />
+            <Percent className="w-5 h-5 text-[#FF5A12]" />
             <h2 className="text-lg font-bold text-slate-800">{t('how.feeTitleShort')}</h2>
           </div>
 
@@ -321,9 +321,9 @@ export function HowItWorksScreen() {
                   <span className="text-sm font-semibold text-green-600">{fmt(proReceives)}</span>
                 </div>
                 <div className="w-full h-px bg-slate-200" />
-                <div className="flex justify-between items-center bg-[#FEF0E6] -mx-1 px-3 py-2 rounded-lg">
+                <div className="flex justify-between items-center bg-[#FFF0E6] -mx-1 px-3 py-2 rounded-lg">
                   <span className="text-sm font-bold text-slate-800">Cliente paga</span>
-                  <span className="text-base font-extrabold text-[#F97316]">{fmt(examplePrice)}</span>
+                  <span className="text-base font-extrabold text-[#FF5A12]">{fmt(examplePrice)}</span>
                 </div>
               </div>
             </div>
@@ -351,7 +351,7 @@ export function HowItWorksScreen() {
         <div className="bg-[#0F172A] rounded-2xl p-5 text-center">
           <p className="text-white font-bold text-base mb-1">{t('how.ctaTitle')}</p>
           <p className="text-slate-400 text-xs mb-3">{t('how.ctaSub')}</p>
-          <div className="flex items-center justify-center gap-1 text-[#F97316] font-semibold text-sm">
+          <div className="flex items-center justify-center gap-1 text-[#FF5A12] font-semibold text-sm">
             <Zap className="w-4 h-4" />
             <BrandName size="sm" onDark /> {t('how.ctaTagline')}
           </div>

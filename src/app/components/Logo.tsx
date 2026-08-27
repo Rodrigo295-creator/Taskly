@@ -49,7 +49,7 @@ export function BrandName({
 
   return (
     <span className={`font-black tracking-tight leading-none ${sizeClass} ${className}`}>
-      <span className="text-[#F97316]">Task</span>
+      <span className="text-[#FF5A12]">Task</span>
       <span className={isDark ? 'text-white' : 'text-[#0F172A]'}>ly</span>
     </span>
   );

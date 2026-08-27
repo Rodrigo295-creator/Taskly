@@ -35,7 +35,7 @@ export function Section({ title, description, children }: { title: string; descr
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5 leading-relaxed break-words">{description}</p>
         )}
       </div>
-      <div className="rounded-2xl border border-slate-200/80 dark:border-slate-700/80 bg-white dark:bg-slate-900/80 shadow-sm divide-y divide-slate-100 dark:divide-slate-800 min-w-0 w-full overflow-hidden">
+      <div className="rounded-2xl border border-slate-200/80 dark:border-slate-700/80 bg-white/85 dark:bg-slate-900/70 backdrop-blur-sm shadow-sm divide-y divide-slate-100 dark:divide-slate-800 min-w-0 w-full overflow-hidden">
         {children}
       </div>
     </section>
@@ -49,7 +49,7 @@ export function Row({
   right,
   onClick,
   disabled,
-  color = 'text-[#F97316]',
+  color = 'text-[#FF5A12]',
 }: {
   icon: ElementType;
   label: string;
@@ -74,7 +74,7 @@ export function Row({
       aria-disabled={disabled || undefined}
       className={`flex flex-col gap-3 sm:flex-row sm:items-center w-full min-w-0 px-4 py-4 sm:py-3.5 text-left transition-colors ${
         interactive
-          ? 'hover:bg-slate-50 dark:hover:bg-white/5 active:bg-slate-100 dark:active:bg-white/10 cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[#F97316]'
+          ? 'hover:bg-slate-50 dark:hover:bg-white/5 active:bg-slate-100 dark:active:bg-white/10 cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[#FF5A12]'
           : disabled
             ? 'opacity-70 cursor-default'
             : ''
@@ -104,7 +104,7 @@ export function ToggleRow({
   sublabel,
   value,
   onChange,
-  color = 'text-[#F97316]',
+  color = 'text-[#FF5A12]',
 }: {
   icon: ElementType;
   label: string;
@@ -144,7 +144,7 @@ export function Toggle({ value, onChange }: { value: boolean; onChange: (v: bool
       type="button"
       onClick={() => onChange(!value)}
       className={`settings-toggle relative rounded-full transition-colors shrink-0 ${track} ${
-        value ? 'bg-[#F97316]' : 'bg-slate-200 dark:bg-slate-700'
+        value ? 'bg-[#FF5A12]' : 'bg-slate-200 dark:bg-slate-700'
       }`}
       aria-pressed={value}
       aria-label={value ? 'Ativado' : 'Desativado'}
@@ -185,7 +185,7 @@ export function ChipSelect<T extends string>({
           onClick={() => onChange(opt.value)}
           className={`w-full min-w-0 px-3 py-2.5 sm:py-2 rounded-xl sm:rounded-full text-xs sm:text-sm font-medium border transition-colors text-center break-words leading-snug ${
             value === opt.value
-              ? 'border-[#F97316] bg-[#FEF0E6] text-[#F97316] dark:bg-[#F97316]/15 dark:text-[#F97316]'
+              ? 'border-[#FF5A12] bg-[#FFF0E6] text-[#FF5A12] dark:bg-[#FF5A12]/15 dark:text-[#FF5A12]'
               : 'border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:border-slate-300 dark:hover:bg-white/5 active:bg-slate-50 dark:active:bg-white/10'
           }`}
         >

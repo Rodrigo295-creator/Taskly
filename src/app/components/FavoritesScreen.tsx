@@ -20,7 +20,7 @@ export function FavoritesScreen({ onSearch }: Props) {
             <button
               type="button"
               onClick={onSearch}
-              className="px-5 py-2.5 rounded-xl bg-[#F97316] text-white text-sm font-bold hover:bg-[#EA6C10]"
+              className="px-5 py-2.5 rounded-xl bg-[#FF5A12] text-white text-sm font-bold hover:bg-[#E04E0E]"
             >
               {t('favorites.cta.search')}
             </button>

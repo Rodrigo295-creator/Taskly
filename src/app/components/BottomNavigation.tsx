@@ -16,7 +16,7 @@ export function BottomNavigation({ screen = 'home', setScreen }: Props) {
   ];
 
   return (
-    <nav className="absolute bottom-0 left-0 w-full bg-white border-t border-[#E2E8F0] pb-6 sm:pb-3 pt-3 px-6 flex justify-between items-center z-50 sm:hidden">
+    <nav className="absolute bottom-0 left-0 w-full bg-white/90 dark:bg-[#0f172a]/90 backdrop-blur-md border-t border-[#E2E8F0] dark:border-slate-700/80 pb-6 sm:pb-3 pt-3 px-6 flex justify-between items-center z-50 sm:hidden">
       {tabs.map(({ id, label, Icon, badge }) => {
         const active = screen === id;
         return (
@@ -27,7 +27,7 @@ export function BottomNavigation({ screen = 'home', setScreen }: Props) {
               else setScreen?.(id);
             }}
             className="flex flex-col items-center gap-1 relative"
-            style={{ color: active ? '#F97316' : '#94A3B8' }}
+            style={{ color: active ? '#FF5A12' : '#94A3B8' }}
           >
             <Icon className="w-6 h-6" />
             <span className={`text-[11px] ${active ? 'font-semibold' : 'font-medium'}`}>{label}</span>

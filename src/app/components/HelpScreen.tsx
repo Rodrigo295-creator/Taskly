@@ -33,7 +33,7 @@ export function HelpScreen() {
       </Section>
 
       <Section title={t('help.contact')}>
-        <Row icon={MessageCircle} label={t('help.chat')} sublabel={t('help.chatSub')} color="text-[#F97316]" />
+        <Row icon={MessageCircle} label={t('help.chat')} sublabel={t('help.chatSub')} color="text-[#FF5A12]" />
         <Row icon={Mail} label={t('help.email')} sublabel={t('help.emailSub')} color="text-blue-500" />
         <Row icon={LifeBuoy} label={t('nav.help')} sublabel={t('help.subtitle')} color="text-teal-500" />
       </Section>

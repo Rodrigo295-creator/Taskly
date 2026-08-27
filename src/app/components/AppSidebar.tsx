@@ -153,7 +153,7 @@ export function AppSidebar({
             narrow ? 'justify-center px-2 py-2.5' : 'px-3 py-2.5'
           } ${
             active
-              ? 'bg-[#FEF0E6] text-[#F97316] dark:bg-[#F97316]/15 dark:text-[#F97316]'
+              ? 'bg-[#FFF0E6] text-[#FF5A12] dark:bg-[#FF5A12]/15 dark:text-[#FF5A12]'
               : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5 hover:text-slate-900 dark:hover:text-white'
           }`}
         >
@@ -177,7 +177,7 @@ export function AppSidebar({
           <button
             type="button"
             onClick={() => go('home')}
-            className="rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F97316]/40 min-w-0"
+            className="rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF5A12]/40 min-w-0"
           >
             {narrow ? <LogoMark size={36} /> : <Logo />}
           </button>
