@@ -41,6 +41,8 @@ import { PrivacyPolicyScreen } from './components/PrivacyPolicyScreen';
 import {
   clearAuthSession,
   consumeForceLoginQuery,
+  createGuestSession,
+  isGuestSession,
   readAuthSession,
   setLoginIntent,
   writeAuthSession,
@@ -184,7 +186,18 @@ function AppInner() {
     });
     clearAuthSession();
     setAuthSession(null);
-    navigate('/', { replace: true });
+    navigate('/app', { replace: true });
+  };
+
+  /** Open the app immediately as a guest (no login required). */
+  const goToApp = (userType: AuthUserType = 'client') => {
+    setAwaitingLogin(false);
+    if (!authSession) {
+      const guest = createGuestSession(userType);
+      writeAuthSession(guest);
+      setAuthSession(guest);
+    }
+    navigate('/app');
   };
 
   /** Landing → dedicated portal login. Clears prior session so login is not skipped. */
@@ -204,8 +217,9 @@ function AppInner() {
     beginAuthFlow('pro', mode);
   };
 
-  const goToAuth = (userType: AuthUserType, mode: 'login' | 'signup' = 'signup') => {
-    beginAuthFlow(userType, mode);
+  const goToAuth = (userType: AuthUserType, _mode: 'login' | 'signup' = 'signup') => {
+    // Enter the app without requiring an account; portals stay optional via Entrar.
+    goToApp(userType);
   };
 
   const goToAppLogin = () => {
@@ -222,7 +236,7 @@ function AppInner() {
   };
 
   const renderAuthScreen = (portal: 'client' | 'pro') =>
-    authSession && !awaitingLogin ? (
+    authSession && !awaitingLogin && !isGuestSession(authSession) ? (
       <Navigate to="/app" replace />
     ) : (
       <AuthScreen
@@ -241,6 +255,8 @@ function AppInner() {
     );
   }
 
+  const appSession = authSession && !awaitingLogin ? authSession : createGuestSession('client');
+
   return (
     <Routes>
       <Route
@@ -249,7 +265,7 @@ function AppInner() {
           <LandingPage
             onSignIn={goToAppLogin}
             onStart={goToAuth}
-            onEnterApp={goToAppLogin}
+            onEnterApp={() => goToApp('client')}
             onProPortal={goToProLogin}
           />
         }
@@ -259,15 +275,12 @@ function AppInner() {
       <Route
         path="/app"
         element={
-          authSession && !awaitingLogin ? (
-            <AuthenticatedApp
-              session={authSession}
-              onRequestProLogin={startProLogin}
-              onLogout={handleLogout}
-            />
-          ) : (
-            <Navigate to="/" replace />
-          )
+          <AuthenticatedApp
+            session={appSession}
+            onRequestProLogin={startProLogin}
+            onLogout={handleLogout}
+            onRequestLogin={goToAppLogin}
+          />
         }
       />
       <Route path="*" element={<Navigate to="/" replace />} />
@@ -279,10 +292,12 @@ function AuthenticatedApp({
   session,
   onRequestProLogin,
   onLogout,
+  onRequestLogin,
 }: {
   session: AuthSession;
   onRequestProLogin: (mode?: 'login' | 'signup') => void;
   onLogout: () => void;
+  onRequestLogin?: () => void;
 }) {
   const [screen, setScreen] = useState(session.userType === 'pro' ? 'pro-dashboard' : 'home');
   const [legalBackScreen, setLegalBackScreen] = useState('trust');
@@ -463,7 +478,12 @@ function AuthenticatedApp({
           </>
         )}
 
-        {screen === 'account' && <AccountScreen session={session} onLogout={onLogout} />}
+        {screen === 'account' && (
+          <AccountScreen
+            session={session}
+            onLogout={isGuestSession(session) ? onRequestLogin : onLogout}
+          />
+        )}
         {screen === 'plans' && <PlansScreen />}
         {screen === 'orders' && <OrdersScreen />}
         {session.userType === 'pro' && screen === 'opportunities' && <OpportunitiesScreen />}

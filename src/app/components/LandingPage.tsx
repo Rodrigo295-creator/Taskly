@@ -214,7 +214,7 @@ export function LandingPage({ onSignIn, onStart, onEnterApp, onProPortal }: Prop
             </button>
             <button
               type="button"
-              onClick={onEnterApp ?? onSignIn}
+              onClick={onSignIn}
               className="hidden sm:inline-flex px-4 py-2 text-sm font-semibold text-slate-200 hover:text-[#5EEAD4] transition-colors"
             >
               {t('landing.nav.signIn')}

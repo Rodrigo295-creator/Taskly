@@ -11,6 +11,7 @@ import {
   Smartphone,
 } from 'lucide-react';
 import type { AuthSession } from '@/lib/auth-session';
+import { isGuestSession } from '@/lib/auth-session';
 import { useAppSettings } from '../context/AppSettings';
 import { BrandName } from './Logo';
 import { SettingsPageShell, Section, Row } from './settings/SettingsUI';
@@ -33,6 +34,7 @@ function personalFromSession(session: AuthSession | null | undefined, fallbackNa
 
 export function AccountScreen({ session, onLogout }: Props) {
   const { t } = useAppSettings();
+  const guest = isGuestSession(session);
   const [personal, setPersonal] = useState<PersonalInfo>(() =>
     personalFromSession(session, t('account.pageTitle')),
   );
@@ -139,12 +141,26 @@ export function AccountScreen({ session, onLogout }: Props) {
         <button
           type="button"
           onClick={() => onLogout?.()}
-          className="flex items-center gap-3.5 px-4 py-4 w-full hover:bg-rose-50 dark:hover:bg-rose-950/30 transition-colors"
+          className={`flex items-center gap-3.5 px-4 py-4 w-full transition-colors ${
+            guest
+              ? 'hover:bg-[#ECFDF5] dark:hover:bg-teal-950/30 border-0'
+              : 'hover:bg-rose-50 dark:hover:bg-rose-950/30'
+          }`}
         >
-          <div className="w-9 h-9 rounded-xl bg-rose-50 dark:bg-rose-950/50 flex items-center justify-center shrink-0">
-            <LogOut className="w-4 h-4 text-rose-500" />
+          <div
+            className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${
+              guest ? 'bg-[#ECFDF5] dark:bg-teal-950/50' : 'bg-rose-50 dark:bg-rose-950/50'
+            }`}
+          >
+            {guest ? (
+              <User className="w-4 h-4 text-[#0D9488]" />
+            ) : (
+              <LogOut className="w-4 h-4 text-rose-500" />
+            )}
           </div>
-          <span className="text-sm font-semibold text-rose-500">{t('settings.logout')}</span>
+          <span className={`text-sm font-semibold ${guest ? 'text-[#0D9488]' : 'text-rose-500'}`}>
+            {guest ? t('landing.nav.signIn') : t('settings.logout')}
+          </span>
         </button>
       </div>
 

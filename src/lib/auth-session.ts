@@ -92,6 +92,19 @@ export function clearAuthSession() {
   }
 }
 
+/** Session used when browsing the app without signing in. */
+export function createGuestSession(userType: AuthUserType = 'client'): AuthSession {
+  return {
+    userType,
+    provider: 'email',
+    name: userType === 'pro' ? 'Profissional' : 'Visitante',
+  };
+}
+
+export function isGuestSession(session: AuthSession | null | undefined): boolean {
+  return Boolean(session && !session.userId && !session.email);
+}
+
 /** Dev shortcut: `/?login=1` (also `?login` or `?login=true`) opens `/login`. Desabilitado em produção. */
 export function hasForceLoginQuery(): boolean {
   if (import.meta.env.PROD) return false;
