@@ -36,7 +36,7 @@ interface Props {
   onSignIn: () => void;
   onStart: (userType: AuthUserType, mode: 'login' | 'signup') => void;
   onEnterApp?: () => void;
-  /** Opens the dedicated professional portal login (`/pro/login`). */
+  /** Opens the professional area without requiring login. */
   onProPortal?: () => void;
 }
 

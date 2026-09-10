@@ -192,7 +192,13 @@ function AppInner() {
   /** Open the app immediately as a guest (no login required). */
   const goToApp = (userType: AuthUserType = 'client') => {
     setAwaitingLogin(false);
-    if (!authSession) {
+    if (authSession && !isGuestSession(authSession)) {
+      if (authSession.userType !== userType) {
+        const next = { ...authSession, userType };
+        writeAuthSession(next);
+        setAuthSession(next);
+      }
+    } else {
       const guest = createGuestSession(userType);
       writeAuthSession(guest);
       setAuthSession(guest);
@@ -200,7 +206,7 @@ function AppInner() {
     navigate('/app');
   };
 
-  /** Landing → dedicated portal login. Clears prior session so login is not skipped. */
+  /** Optional email/social login (client or pro portal). */
   const beginAuthFlow = (userType: AuthUserType, mode: 'login' | 'signup' = 'login') => {
     setLoginIntent({ userType, mode });
     setAwaitingLogin(true);
@@ -213,12 +219,12 @@ function AppInner() {
     });
   };
 
-  const startProLogin = (mode: 'login' | 'signup' = 'login') => {
-    beginAuthFlow('pro', mode);
+  /** Conta profissional / portal pro — enter pro area without requiring login. */
+  const startProLogin = (_mode: 'login' | 'signup' = 'login') => {
+    goToApp('pro');
   };
 
   const goToAuth = (userType: AuthUserType, _mode: 'login' | 'signup' = 'signup') => {
-    // Enter the app without requiring an account; portals stay optional via Entrar.
     goToApp(userType);
   };
 
@@ -226,8 +232,8 @@ function AppInner() {
     beginAuthFlow('client', 'login');
   };
 
-  const goToProLogin = () => {
-    beginAuthFlow('pro', 'login');
+  const goToProPortal = () => {
+    goToApp('pro');
   };
 
   const backToLanding = () => {
@@ -255,7 +261,10 @@ function AppInner() {
     );
   }
 
-  const appSession = authSession && !awaitingLogin ? authSession : createGuestSession('client');
+  const appSession =
+    authSession && !awaitingLogin
+      ? authSession
+      : createGuestSession(authSession?.userType === 'pro' ? 'pro' : 'client');
 
   return (
     <Routes>
@@ -266,7 +275,7 @@ function AppInner() {
             onSignIn={goToAppLogin}
             onStart={goToAuth}
             onEnterApp={() => goToApp('client')}
-            onProPortal={goToProLogin}
+            onProPortal={goToProPortal}
           />
         }
       />
