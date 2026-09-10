@@ -3,7 +3,7 @@ import { useAppSettings } from '../context/AppSettings';
 import { SettingsPageShell, Section, Row } from './settings/SettingsUI';
 
 const ITEMS = [
-  { icon: CreditCard, key: 'pay', color: 'text-[#FF5A12]' },
+  { icon: CreditCard, key: 'pay', color: 'text-[#0D9488]' },
   { icon: UserCheck, key: 'verify', color: 'text-blue-500' },
   { icon: FileText, key: 'contract', color: 'text-indigo-500' },
   { icon: Scale, key: 'dispute', color: 'text-amber-600' },
@@ -68,7 +68,7 @@ function BulletList({ items }: { items: string[] }) {
     <ul className="mt-3 space-y-2">
       {items.map((text) => (
         <li key={text} className="flex gap-2.5 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-          <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#FF5A12]" aria-hidden />
+          <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#0D9488]" aria-hidden />
           <span>{text}</span>
         </li>
       ))}
@@ -100,9 +100,9 @@ export function TrustScreen({ onOpenTerms, onOpenPrivacy }: Props) {
 
   return (
     <SettingsPageShell title={t('trust.title')} subtitle={t('trust.subtitle')}>
-      <div className="rounded-2xl border border-[#FF5A12]/20 bg-[#FFF0E6]/50 dark:bg-[#FF5A12]/10 p-5 mb-6 flex gap-4 items-start">
-        <div className="w-12 h-12 rounded-xl bg-[#FF5A12]/15 flex items-center justify-center shrink-0">
-          <Shield className="w-6 h-6 text-[#FF5A12]" />
+      <div className="rounded-2xl border border-[#0D9488]/20 bg-[#ECFDF5]/50 dark:bg-[#0D9488]/10 p-5 mb-6 flex gap-4 items-start">
+        <div className="w-12 h-12 rounded-xl bg-[#0D9488]/15 flex items-center justify-center shrink-0">
+          <Shield className="w-6 h-6 text-[#0D9488]" />
         </div>
         <div>
           <p className="text-sm font-semibold text-slate-800 dark:text-slate-200">{t('trust.introTitle')}</p>
@@ -118,7 +118,7 @@ export function TrustScreen({ onOpenTerms, onOpenPrivacy }: Props) {
                 icon={ScrollText}
                 label={t('terms.button')}
                 sublabel={t('terms.buttonSub')}
-                color="text-[#FF5A12]"
+                color="text-[#0D9488]"
                 onClick={onOpenTerms}
               />
             )}

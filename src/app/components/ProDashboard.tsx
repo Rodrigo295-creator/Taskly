@@ -144,12 +144,12 @@ const NOTIFICATIONS: Notification[] = [
 
 const STATUS_CONFIG: Record<ServiceStatus, { label: string; color: string; bg: string; dot: string }> = {
   agendado:  { label: 'Agendado',  color: 'text-blue-700',    bg: 'bg-blue-50 border-blue-100',   dot: 'bg-blue-500' },
-  pendente:  { label: 'Pendente',  color: 'text-[#FF5A12]',   bg: 'bg-orange-50 border-orange-100', dot: 'bg-[#FF5A12]' },
+  pendente:  { label: 'Pendente',  color: 'text-[#0D9488]',   bg: 'bg-orange-50 border-orange-100', dot: 'bg-[#0D9488]' },
   concluido: { label: 'Concluído', color: 'text-green-700',   bg: 'bg-green-50 border-green-100',  dot: 'bg-green-500' },
 };
 
 const NOTIF_COLORS: Record<Notification['type'], string> = {
-  offer:   'bg-[#FFF0E6] text-[#FF5A12]',
+  offer:   'bg-[#ECFDF5] text-[#0D9488]',
   payment: 'bg-green-50 text-green-600',
   review:  'bg-yellow-50 text-yellow-600',
   message: 'bg-blue-50 text-blue-500',
@@ -216,7 +216,7 @@ function OfferCard({
           <div className="flex gap-2 mt-3">
             <button
               onClick={() => onAccept(offer.id)}
-              className="flex-1 bg-[#FF5A12] hover:bg-[#E04E0E] text-white text-xs font-semibold py-2 rounded-xl transition-colors"
+              className="flex-1 bg-[#0D9488] hover:bg-[#0F766E] text-white text-xs font-semibold py-2 rounded-xl transition-colors"
             >
               {t('pro.accept')}
             </button>
@@ -291,7 +291,7 @@ export function ProDashboard() {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_100%_0%,rgba(249,115,22,0.22),transparent)] pointer-events-none" />
         <div className="relative flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6">
           <div className="max-w-2xl">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FF5A12] mb-3">{t('pro.area')}</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#0D9488] mb-3">{t('pro.area')}</p>
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white mb-3">{t('pro.panelTitle')}</h1>
             <p className="text-slate-300 text-base sm:text-lg leading-relaxed">
               Olá, Roberto 👋 Eletricista Residencial · <span className="text-green-400 font-semibold">online</span>
@@ -304,7 +304,7 @@ export function ProDashboard() {
           >
             <Bell className="w-[18px] h-[18px] text-white" />
             {unreadCount > 0 && (
-              <span className="absolute -top-1 -right-1 min-w-[16px] h-4 px-1 bg-[#FF5A12] text-white text-[9px] font-bold rounded-full flex items-center justify-center">
+              <span className="absolute -top-1 -right-1 min-w-[16px] h-4 px-1 bg-[#0D9488] text-white text-[9px] font-bold rounded-full flex items-center justify-center">
                 {unreadCount}
               </span>
             )}
@@ -327,7 +327,7 @@ export function ProDashboard() {
               sub={t('pro.grossSub')}
               icon={TrendingUp}
               trend={12}
-              color="bg-[#FFF0E6] text-[#FF5A12]"
+              color="bg-[#ECFDF5] text-[#0D9488]"
             />
             <StatCard
               label={t('pro.net')}
@@ -357,14 +357,14 @@ export function ProDashboard() {
         <section className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl p-5 sm:p-6 shadow-sm dark:shadow-none">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
-              <Award className="w-5 h-5 text-[#FF5A12]" />
+              <Award className="w-5 h-5 text-[#0D9488]" />
               <h2 className="text-lg font-bold text-slate-900 dark:text-white">{t('pro.performance')}</h2>
             </div>
             <span className="text-xs text-slate-400 dark:text-slate-500">Maio 2026</span>
           </div>
           <div className="space-y-4">
             {[
-              { label: t('pro.acceptRate'), value: 78, color: 'bg-[#FF5A12]' },
+              { label: t('pro.acceptRate'), value: 78, color: 'bg-[#0D9488]' },
               { label: t('pro.onTime'), value: 95, color: 'bg-green-500' },
               { label: t('pro.satisfaction'), value: 98, color: 'bg-blue-500' },
             ].map(({ label, value, color }) => (
@@ -386,10 +386,10 @@ export function ProDashboard() {
             <section>
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-2">
-                  <Zap className="w-5 h-5 text-[#FF5A12]" />
+                  <Zap className="w-5 h-5 text-[#0D9488]" />
                   <h2 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">{t('pro.offers')}</h2>
                   {offers.length > 0 && (
-                    <span className="min-w-[22px] h-[22px] px-1.5 bg-[#FF5A12] text-white text-[11px] font-bold rounded-full flex items-center justify-center">
+                    <span className="min-w-[22px] h-[22px] px-1.5 bg-[#0D9488] text-white text-[11px] font-bold rounded-full flex items-center justify-center">
                       {offers.length}
                     </span>
                   )}
@@ -413,7 +413,7 @@ export function ProDashboard() {
             <section>
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-2">
-                  <Calendar className="w-5 h-5 text-[#FF5A12]" />
+                  <Calendar className="w-5 h-5 text-[#0D9488]" />
                   <h2 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">{t('pro.myServices')}</h2>
                 </div>
                 {upcomingJobs.length > 0 && (
@@ -433,8 +433,8 @@ export function ProDashboard() {
                     onClick={() => setJobFilter(f)}
                     className={`px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap border transition-colors ${
                       jobFilter === f
-                        ? 'bg-[#FF5A12] text-white border-[#FF5A12]'
-                        : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-600 hover:border-[#FF5A12]/60'
+                        ? 'bg-[#0D9488] text-white border-[#0D9488]'
+                        : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-600 hover:border-[#0D9488]/60'
                     }`}
                   >
                     {f === 'todos' ? t('common.all') : t(f === 'agendado' ? 'status.scheduled' : f === 'pendente' ? 'status.pending' : 'status.completed')}
@@ -456,7 +456,7 @@ export function ProDashboard() {
             <section>
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-2">
-                  <Bell className="w-5 h-5 text-[#FF5A12]" />
+                  <Bell className="w-5 h-5 text-[#0D9488]" />
                   <h2 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">{t('pro.notifications')}</h2>
                   {unreadCount > 0 && (
                     <span className="min-w-[22px] h-[22px] px-1.5 bg-[#EF4444] text-white text-[11px] font-bold rounded-full flex items-center justify-center">
@@ -465,7 +465,7 @@ export function ProDashboard() {
                   )}
                 </div>
                 {unreadCount > 0 && (
-                  <button type="button" onClick={markAllRead} className="text-xs text-[#FF5A12] font-semibold hover:underline">
+                  <button type="button" onClick={markAllRead} className="text-xs text-[#0D9488] font-semibold hover:underline">
                     {t('pro.markAllRead')}
                   </button>
                 )}
@@ -489,7 +489,7 @@ export function ProDashboard() {
                         </p>
                         <p className="text-[11px] text-slate-400 dark:text-slate-500 mt-0.5">{n.time}</p>
                       </div>
-                      {!n.read && <div className="w-2 h-2 bg-[#FF5A12] rounded-full flex-shrink-0" />}
+                      {!n.read && <div className="w-2 h-2 bg-[#0D9488] rounded-full flex-shrink-0" />}
                     </div>
                   );
                 })}
@@ -501,7 +501,7 @@ export function ProDashboard() {
               <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-1 gap-3">
                 {[
                   { label: t('pro.viewMessages'), icon: MessageCircle, sub: t('pro.unreadOne'), color: 'text-blue-500 bg-blue-50 dark:bg-blue-950/50 dark:text-blue-400' },
-                  { label: t('pro.mySchedule'), icon: Calendar, sub: t('pro.upcomingPlural', { count: upcomingJobs.length }), color: 'text-[#FF5A12] bg-[#FFF0E6] dark:bg-[#FF5A12]/15' },
+                  { label: t('pro.mySchedule'), icon: Calendar, sub: t('pro.upcomingPlural', { count: upcomingJobs.length }), color: 'text-[#0D9488] bg-[#ECFDF5] dark:bg-[#0D9488]/15' },
                   { label: t('pro.reviews'), icon: Star, sub: t('pro.avg49'), color: 'text-yellow-600 bg-yellow-50 dark:bg-yellow-950/40 dark:text-yellow-400' },
                   { label: t('pro.statement'), icon: TrendingUp, sub: t('pro.netAmount', { amount: fmt(totalNet, { decimals: 0 }) }), color: 'text-green-600 bg-green-50 dark:bg-green-950/40 dark:text-green-400' },
                 ].map(({ label, icon: Icon, sub, color }) => (

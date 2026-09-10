@@ -2,44 +2,44 @@
 
 :root {
   --font-size: 16px;
-  /* Warm canvas + hot coral-orange brand (attention) + teal complement in charts */
-  --background: #F6F3EF;
+  /* Cool white canvas + teal-green brand + sky-blue accents */
+  --background: #F8FBFC;
   --foreground: #0F172A;
   --card: #ffffff;
   --card-foreground: #0F172A;
   --popover: #ffffff;
   --popover-foreground: #0F172A;
-  --primary: #FF5A12;
+  --primary: #0D9488;
   --primary-foreground: #ffffff;
-  --secondary: #0F172A;
+  --secondary: #1E3A5F;
   --secondary-foreground: #ffffff;
-  --muted: #E8E4DE;
-  --muted-foreground: #5C6570;
-  --accent: #FFF0E6;
-  --accent-foreground: #FF5A12;
+  --muted: #E8EEF2;
+  --muted-foreground: #5B6B7C;
+  --accent: #ECFDF5;
+  --accent-foreground: #0F766E;
   --destructive: #E11D48;
   --destructive-foreground: #ffffff;
-  --border: #E5E0D8;
+  --border: #D9E4EC;
   --input: transparent;
-  --input-background: #F3EFEA;
+  --input-background: #F1F6F9;
   --switch-background: #cbced4;
   --font-weight-medium: 500;
   --font-weight-normal: 400;
-  --ring: #FF5A12;
-  --chart-1: oklch(0.68 0.22 40);
-  --chart-2: oklch(0.62 0.12 185);
-  --chart-3: oklch(0.55 0.14 250);
-  --chart-4: oklch(0.78 0.14 75);
-  --chart-5: oklch(0.65 0.16 15);
+  --ring: #0D9488;
+  --chart-1: oklch(0.62 0.12 175);
+  --chart-2: oklch(0.58 0.14 245);
+  --chart-3: oklch(0.7 0.1 200);
+  --chart-4: oklch(0.55 0.1 160);
+  --chart-5: oklch(0.65 0.12 230);
   --radius: 0.625rem;
   --sidebar: #ffffff;
   --sidebar-foreground: #0F172A;
-  --sidebar-primary: #FF5A12;
+  --sidebar-primary: #0D9488;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #F6F3EF;
+  --sidebar-accent: #F0FDFA;
   --sidebar-accent-foreground: #0F172A;
-  --sidebar-border: #E5E0D8;
-  --sidebar-ring: #FF5A12;
+  --sidebar-border: #D9E4EC;
+  --sidebar-ring: #0D9488;
 }
 
 .dark {
@@ -52,14 +52,14 @@
   --card-foreground: oklch(0.985 0 0);
   --popover: oklch(0.145 0 0);
   --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.985 0 0);
-  --primary-foreground: oklch(0.205 0 0);
+  --primary: #14B8A6;
+  --primary-foreground: #042F2E;
   --secondary: oklch(0.269 0 0);
   --secondary-foreground: oklch(0.985 0 0);
   --muted: oklch(0.269 0 0);
   --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
+  --accent: #134E4A;
+  --accent-foreground: #CCFBF1;
   --destructive: oklch(0.396 0.141 25.723);
   --destructive-foreground: oklch(0.637 0.237 25.331);
   --border: oklch(0.269 0 0);
@@ -74,12 +74,12 @@
   --chart-5: oklch(0.645 0.246 16.439);
   --sidebar: #1e293b;
   --sidebar-foreground: #f1f5f9;
-  --sidebar-primary: #FF5A12;
+  --sidebar-primary: #0D9488;
   --sidebar-primary-foreground: #ffffff;
   --sidebar-accent: #0f172a;
   --sidebar-accent-foreground: #f1f5f9;
   --sidebar-border: #334155;
-  --sidebar-ring: #FF5A12;
+  --sidebar-ring: #0D9488;
 
   /* Tailwind background/border tokens for dark mode (surfaces stay dark, text handled by CSS rules) */
   --color-white: #1e293b;
@@ -89,7 +89,7 @@
 }
 
 /* ─── Dark mode surface overrides ─── */
-.dark .bg-\[\#F6F3EF\] { background-color: #0f172a !important; }
+.dark .bg-\[\#F8FBFC\] { background-color: #0f172a !important; }
 .dark .bg-\[\#F8F8F8\] { background-color: #0f172a !important; }
 .dark .border-slate-900 { border-color: #0f172a !important; }
 
@@ -118,19 +118,19 @@
 .dark .text-slate-300 { color: #ffffff !important; }
 .dark .text-slate-200 { color: #ffffff !important; }
 
-/* Keep brand accent texts vivid coral */
-.dark .text-\[\#FF5A12\],
-.dark .text-\[\#FF5A12\] { color: #FF5A12 !important; }
-.dark .text-orange-500   { color: #FF5A12 !important; }
+/* Keep brand accent texts vivid teal */
+.dark .text-\[\#0D9488\],
+.dark .text-\[\#0D9488\] { color: #2DD4BF !important; }
+.dark .text-orange-500   { color: #2DD4BF !important; }
 
 /* Keep status/semantic colors */
 .dark .text-emerald-600, .dark .text-green-600 { color: #34d399 !important; }
 .dark .text-red-500, .dark .text-rose-500      { color: #f87171 !important; }
-.dark .text-amber-500, .dark .text-amber-400   { color: #fbbf24 !important; }
+.dark .text-amber-500, .dark .text-amber-400   { color: #38BDF8 !important; }
 .dark .text-blue-500, .dark .text-sky-500      { color: #60a5fa !important; }
 
-/* ─── Light mode: headings brand coral, body near-black ─── */
-h1, h2, h3 { color: #FF5A12; }
+/* ─── Light mode: headings brand teal, body near-black ─── */
+h1, h2, h3 { color: #0D9488; }
 h4          { color: #0F172A; }
 
 /* ─── Card / input surfaces in dark ─── */

@@ -14,6 +14,7 @@ export const SCREEN_PT: Record<string, string> = {
   'common.dailyFrom': 'Diária a partir de',
   'common.visitFrom': 'Visita a partir de',
   'common.hire': 'Contratar',
+  'common.message': 'Mensagem',
   'common.upTo': 'Até',
   'common.clear': 'Limpar',
   'common.services': 'serviços',
@@ -42,6 +43,10 @@ export const SCREEN_PT: Record<string, string> = {
   'chat.reply3': 'Claro! Sem problema nenhum.',
   'chat.reply4': 'Combinado! Qualquer dúvida, pode chamar.',
   'chat.reply5': 'Perfeito, anotado aqui.',
+  'chat.emptyTitle': 'Nenhuma conversa ainda',
+  'chat.emptyHint': 'Encontre um profissional na busca e envie uma mensagem.',
+  'chat.noMessages': 'Envie a primeira mensagem para começar.',
+  'chat.loadError': 'Não foi possível carregar as conversas.',
   'hire.title': 'Fazer uma proposta',
   'hire.describe': 'Descreva o serviço *',
   'hire.describePh': 'Ex: Preciso instalar um chuveiro elétrico no banheiro...',
@@ -199,6 +204,8 @@ export const SCREEN_PT: Record<string, string> = {
   'prochat.serviceDone': 'Serviço confirmado como concluído',
   'prochat.clientAccepted': 'Cliente aceitou a proposta!',
   'prochat.selectHintClient': 'Escolha um cliente para ver o histórico e responder mensagens.',
+  'prochat.emptyTitle': 'Nenhuma conversa ainda',
+  'prochat.emptyHint': 'Quando um cliente entrar em contato, a conversa aparecerá aqui.',
 };
 
 export const SCREEN_EN: Record<string, string> = {
@@ -215,6 +222,7 @@ export const SCREEN_EN: Record<string, string> = {
   'common.dailyFrom': 'Daily rate from',
   'common.visitFrom': 'Visit from',
   'common.hire': 'Hire',
+  'common.message': 'Message',
   'common.upTo': 'Up to',
   'common.clear': 'Clear',
   'common.services': 'services',
@@ -243,6 +251,10 @@ export const SCREEN_EN: Record<string, string> = {
   'chat.reply3': 'Sure! No problem at all.',
   'chat.reply4': 'Agreed! Feel free to reach out anytime.',
   'chat.reply5': 'Perfect, noted.',
+  'chat.emptyTitle': 'No conversations yet',
+  'chat.emptyHint': 'Find a professional in search and send them a message.',
+  'chat.noMessages': 'Send the first message to get started.',
+  'chat.loadError': 'Could not load conversations.',
   'hire.title': 'Make an offer',
   'hire.describe': 'Describe the service *',
   'hire.describePh': 'E.g.: I need to install an electric shower and check the breaker panel...',
@@ -400,6 +412,8 @@ export const SCREEN_EN: Record<string, string> = {
   'prochat.serviceDone': 'Service marked as completed',
   'prochat.clientAccepted': 'Client accepted the proposal!',
   'prochat.selectHintClient': 'Choose a client to view history and reply to messages.',
+  'prochat.emptyTitle': 'No conversations yet',
+  'prochat.emptyHint': 'When a client reaches out, the conversation will appear here.',
 };
 
 export const SCREEN_ES: Record<string, string> = {
@@ -416,6 +430,7 @@ export const SCREEN_ES: Record<string, string> = {
   'common.dailyFrom': 'Tarifa diaria desde',
   'common.visitFrom': 'Visita desde',
   'common.hire': 'Contratar',
+  'common.message': 'Mensaje',
   'common.upTo': 'Hasta',
   'common.clear': 'Limpiar',
   'common.services': 'servicios',
@@ -444,6 +459,10 @@ export const SCREEN_ES: Record<string, string> = {
   'chat.reply3': '¡Claro! Sin problema.',
   'chat.reply4': '¡De acuerdo! Cualquier duda, escríbeme.',
   'chat.reply5': 'Perfecto, anotado.',
+  'chat.emptyTitle': 'Aún no tienes conversaciones',
+  'chat.emptyHint': 'Encuentra un profesional en la búsqueda y envíale un mensaje.',
+  'chat.noMessages': 'Envía el primer mensaje para comenzar.',
+  'chat.loadError': 'No se pudieron cargar las conversaciones.',
   'hire.title': 'Hacer una propuesta',
   'hire.describe': 'Describe el servicio *',
   'hire.describePh': 'Ej.: Necesito instalar una ducha eléctrica y revisar el panel...',
@@ -601,4 +620,6 @@ export const SCREEN_ES: Record<string, string> = {
   'prochat.serviceDone': 'Servicio confirmado como completado',
   'prochat.clientAccepted': '¡El cliente aceptó la propuesta!',
   'prochat.selectHintClient': 'Elige un cliente para ver el historial y responder mensajes.',
+  'prochat.emptyTitle': 'Aún no tienes conversaciones',
+  'prochat.emptyHint': 'Cuando un cliente te contacte, la conversación aparecerá aquí.',
 };

@@ -89,7 +89,7 @@ function WithdrawModal({ balance, onClose }: { balance: number; onClose: () => v
         <p className="text-xs text-slate-400 mb-6">
           {form.method === 'pix' ? 'Crédito em até 30 minutos.' : 'Crédito em até 1 dia útil.'}
         </p>
-        <button onClick={onClose} className="w-full bg-[#FF5A12] hover:bg-[#E04E0E] text-white font-semibold py-3 rounded-2xl text-sm transition-colors">
+        <button onClick={onClose} className="w-full bg-[#0D9488] hover:bg-[#0F766E] text-white font-semibold py-3 rounded-2xl text-sm transition-colors">
           Fechar
         </button>
       </div>
@@ -118,7 +118,7 @@ function WithdrawModal({ balance, onClose }: { balance: number; onClose: () => v
           <button onClick={() => setStep('form')} className="flex-1 py-2.5 rounded-2xl bg-slate-100 text-slate-600 text-sm font-semibold hover:bg-slate-200 transition-colors">
             Voltar
           </button>
-          <button onClick={() => setStep('success')} className="flex-1 py-2.5 rounded-2xl bg-[#FF5A12] hover:bg-[#E04E0E] text-white text-sm font-semibold transition-colors">
+          <button onClick={() => setStep('success')} className="flex-1 py-2.5 rounded-2xl bg-[#0D9488] hover:bg-[#0F766E] text-white text-sm font-semibold transition-colors">
             Confirmar
           </button>
         </div>
@@ -137,9 +137,9 @@ function WithdrawModal({ balance, onClose }: { balance: number; onClose: () => v
 
         <div className="px-6 py-5 space-y-5 overflow-y-auto max-h-[70vh]">
           {/* balance */}
-          <div className="bg-[#FFF0E6] rounded-2xl px-4 py-3 flex items-center justify-between">
+          <div className="bg-[#ECFDF5] rounded-2xl px-4 py-3 flex items-center justify-between">
             <span className="text-sm text-slate-600">Saldo disponível</span>
-            <span className="text-base font-extrabold text-[#FF5A12]">{fmt(balance)}</span>
+            <span className="text-base font-extrabold text-[#0D9488]">{fmt(balance)}</span>
           </div>
 
           {/* amount */}
@@ -150,7 +150,7 @@ function WithdrawModal({ balance, onClose }: { balance: number; onClose: () => v
               value={form.amount}
               onChange={e => set('amount', e.target.value)}
               placeholder="0,00"
-              className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#FF5A12] focus:ring-2 focus:ring-[#FF5A12]/15 transition-all"
+              className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#0D9488] focus:ring-2 focus:ring-[#0D9488]/15 transition-all"
             />
             {amt > balance && (
               <p className="text-xs text-red-500 mt-1 flex items-center gap-1"><AlertCircle className="w-3 h-3" />Valor acima do saldo disponível.</p>
@@ -182,8 +182,8 @@ function WithdrawModal({ balance, onClose }: { balance: number; onClose: () => v
                   onClick={() => set('method', m)}
                   className={`flex items-center justify-center gap-2 py-2.5 rounded-xl border text-sm font-semibold transition-all ${
                     form.method === m
-                      ? 'bg-[#FF5A12] border-[#FF5A12] text-white shadow-sm'
-                      : 'bg-white border-slate-200 text-slate-600 hover:border-[#FF5A12]'
+                      ? 'bg-[#0D9488] border-[#0D9488] text-white shadow-sm'
+                      : 'bg-white border-slate-200 text-slate-600 hover:border-[#0D9488]'
                   }`}
                 >
                   {m === 'pix' ? <Zap className="w-4 h-4" /> : <Building2 className="w-4 h-4" />}
@@ -201,7 +201,7 @@ function WithdrawModal({ balance, onClose }: { balance: number; onClose: () => v
                 <select
                   value={form.pixKeyType}
                   onChange={e => set('pixKeyType', e.target.value)}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#FF5A12] transition-all"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#0D9488] transition-all"
                 >
                   <option value="cpf">CPF</option>
                   <option value="cnpj">CNPJ</option>
@@ -216,7 +216,7 @@ function WithdrawModal({ balance, onClose }: { balance: number; onClose: () => v
                   value={form.pixKey}
                   onChange={e => set('pixKey', e.target.value)}
                   placeholder={form.pixKeyType === 'email' ? 'seu@email.com' : form.pixKeyType === 'telefone' ? '+55 11 99999-9999' : 'Digite sua chave'}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#FF5A12] focus:ring-2 focus:ring-[#FF5A12]/15 transition-all"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#0D9488] focus:ring-2 focus:ring-[#0D9488]/15 transition-all"
                 />
               </div>
               <div className="flex items-start gap-2 bg-blue-50 border border-blue-100 rounded-xl p-3">
@@ -233,20 +233,20 @@ function WithdrawModal({ balance, onClose }: { balance: number; onClose: () => v
                 <label className="text-xs font-semibold text-slate-500 block mb-1.5">Banco</label>
                 <input value={form.bankName} onChange={e => set('bankName', e.target.value)}
                   placeholder="Ex: Itaú, Bradesco, Nubank..."
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#FF5A12] focus:ring-2 focus:ring-[#FF5A12]/15 transition-all" />
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#0D9488] focus:ring-2 focus:ring-[#0D9488]/15 transition-all" />
               </div>
               <div className="grid grid-cols-2 gap-2">
                 <div>
                   <label className="text-xs font-semibold text-slate-500 block mb-1.5">Agência</label>
                   <input value={form.agency} onChange={e => set('agency', e.target.value)}
                     placeholder="0001"
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#FF5A12] transition-all" />
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#0D9488] transition-all" />
                 </div>
                 <div>
                   <label className="text-xs font-semibold text-slate-500 block mb-1.5">Conta</label>
                   <input value={form.account} onChange={e => set('account', e.target.value)}
                     placeholder="12345-6"
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#FF5A12] transition-all" />
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#0D9488] transition-all" />
                 </div>
               </div>
               <div>
@@ -255,7 +255,7 @@ function WithdrawModal({ balance, onClose }: { balance: number; onClose: () => v
                   {(['corrente', 'poupanca'] as const).map(t => (
                     <button key={t} onClick={() => set('accountType', t)}
                       className={`py-2 rounded-xl border text-xs font-semibold transition-colors ${
-                        form.accountType === t ? 'bg-[#FF5A12] border-[#FF5A12] text-white' : 'bg-white border-slate-200 text-slate-600 hover:border-[#FF5A12]'
+                        form.accountType === t ? 'bg-[#0D9488] border-[#0D9488] text-white' : 'bg-white border-slate-200 text-slate-600 hover:border-[#0D9488]'
                       }`}>
                       {t === 'corrente' ? 'Corrente' : 'Poupança'}
                     </button>
@@ -266,7 +266,7 @@ function WithdrawModal({ balance, onClose }: { balance: number; onClose: () => v
                 <label className="text-xs font-semibold text-slate-500 block mb-1.5">CPF do titular</label>
                 <input value={form.cpf} onChange={e => set('cpf', e.target.value)}
                   placeholder="000.000.000-00"
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#FF5A12] focus:ring-2 focus:ring-[#FF5A12]/15 transition-all" />
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#0D9488] focus:ring-2 focus:ring-[#0D9488]/15 transition-all" />
               </div>
               <div className="flex items-start gap-2 bg-amber-50 border border-amber-100 rounded-xl p-3">
                 <Clock className="w-3.5 h-3.5 text-amber-500 flex-shrink-0 mt-0.5" />
@@ -281,7 +281,7 @@ function WithdrawModal({ balance, onClose }: { balance: number; onClose: () => v
           <button
             disabled={!canSubmit}
             onClick={() => setStep('confirm')}
-            className="w-full bg-[#FF5A12] disabled:opacity-50 hover:bg-[#E04E0E] text-white font-bold py-3.5 rounded-2xl text-sm transition-colors flex items-center justify-center gap-2"
+            className="w-full bg-[#0D9488] disabled:opacity-50 hover:bg-[#0F766E] text-white font-bold py-3.5 rounded-2xl text-sm transition-colors flex items-center justify-center gap-2"
           >
             Continuar <ArrowRight className="w-4 h-4" />
           </button>
@@ -375,7 +375,7 @@ export function ProFinancialScreen() {
 
         {/* balance hero */}
         <div className="bg-[#0F172A] px-6 pt-6 pb-8 relative overflow-hidden">
-          <div className="absolute -right-6 -top-6 w-32 h-32 bg-[#FF5A12]/10 rounded-full blur-2xl" />
+          <div className="absolute -right-6 -top-6 w-32 h-32 bg-[#0D9488]/10 rounded-full blur-2xl" />
           <p className="text-sm text-slate-400 mb-1">Saldo disponível</p>
           <p className="text-4xl font-extrabold text-white tracking-tight">
             {fmt(balance)}
@@ -385,7 +385,7 @@ export function ProFinancialScreen() {
           <div className="mt-5 flex gap-3">
             <button
               onClick={() => setShowWithdraw(true)}
-              className="flex-1 bg-[#FF5A12] hover:bg-[#E04E0E] text-white font-bold py-3 rounded-2xl text-sm flex items-center justify-center gap-2 transition-colors"
+              className="flex-1 bg-[#0D9488] hover:bg-[#0F766E] text-white font-bold py-3 rounded-2xl text-sm flex items-center justify-center gap-2 transition-colors"
             >
               <Banknote className="w-4 h-4" /> Sacar
             </button>
@@ -423,7 +423,7 @@ export function ProFinancialScreen() {
           {/* fee explainer */}
           <div className="bg-white border border-slate-200 rounded-2xl p-4">
             <div className="flex items-center gap-2 mb-3">
-              <Percent className="w-4 h-4 text-[#FF5A12]" />
+              <Percent className="w-4 h-4 text-[#0D9488]" />
               <span className="text-sm font-bold text-slate-800">Como a taxa é calculada</span>
             </div>
             <div className="flex items-center gap-2">
@@ -437,9 +437,9 @@ export function ProFinancialScreen() {
                 <p className="text-sm font-bold text-red-500">{fmt(14)}</p>
               </div>
               <span className="text-slate-300 text-lg">=</span>
-              <div className="flex-1 bg-[#FFF0E6] border border-[#FF5A12]/30 rounded-xl p-2.5 text-center">
-                <p className="text-[10px] text-[#FF5A12]">Você recebe</p>
-                <p className="text-sm font-bold text-[#FF5A12]">{fmt(186)}</p>
+              <div className="flex-1 bg-[#ECFDF5] border border-[#0D9488]/30 rounded-xl p-2.5 text-center">
+                <p className="text-[10px] text-[#0D9488]">Você recebe</p>
+                <p className="text-sm font-bold text-[#0D9488]">{fmt(186)}</p>
               </div>
             </div>
           </div>

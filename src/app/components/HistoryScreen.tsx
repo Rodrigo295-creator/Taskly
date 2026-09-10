@@ -108,7 +108,7 @@ const HISTORY: ServiceRecord[] = [
 const STATUS_STYLE: Record<Status, { icon: React.ElementType; color: string; bg: string; labelKey: string }> = {
   concluido:    { labelKey: 'status.completed', icon: CheckCircle, color: 'text-green-700',  bg: 'bg-green-50 border-green-100' },
   cancelado:    { labelKey: 'status.cancelled', icon: XCircle,     color: 'text-red-600',    bg: 'bg-red-50 border-red-100' },
-  em_andamento: { labelKey: 'status.inProgress', icon: Clock,       color: 'text-[#FF5A12]',  bg: 'bg-orange-50 border-orange-100' },
+  em_andamento: { labelKey: 'status.inProgress', icon: Clock,       color: 'text-[#0D9488]',  bg: 'bg-orange-50 border-orange-100' },
 };
 
 
@@ -118,7 +118,7 @@ function Stars({ rating }: { rating: number }) {
       {[1, 2, 3, 4, 5].map(i => (
         <Star
           key={i}
-          className={`w-3.5 h-3.5 ${i <= rating ? 'fill-[#FF5A12] text-[#FF5A12]' : 'fill-slate-200 text-slate-200'}`}
+          className={`w-3.5 h-3.5 ${i <= rating ? 'fill-[#0D9488] text-[#0D9488]' : 'fill-slate-200 text-slate-200'}`}
         />
       ))}
     </div>
@@ -223,8 +223,8 @@ export function HistoryScreen() {
 
         {/* Summary cards */}
         <div className="grid grid-cols-3 gap-3 mb-4">
-          <div className="bg-[#FFF0E6] rounded-xl p-3">
-            <p className="text-[10px] text-[#FF5A12] font-semibold uppercase tracking-wide">{t('history.totalSpent')}</p>
+          <div className="bg-[#ECFDF5] rounded-xl p-3">
+            <p className="text-[10px] text-[#0D9488] font-semibold uppercase tracking-wide">{t('history.totalSpent')}</p>
             <p className="text-base font-bold text-slate-800 mt-1">
               {fmt(totalPaid)}
             </p>
@@ -249,8 +249,8 @@ export function HistoryScreen() {
               onClick={() => setFilter(f)}
               className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-colors border ${
                 filter === f
-                  ? 'bg-[#FF5A12] text-white border-[#FF5A12]'
-                  : 'bg-white text-slate-500 border-slate-200 hover:border-[#FF5A12] hover:text-[#FF5A12]'
+                  ? 'bg-[#0D9488] text-white border-[#0D9488]'
+                  : 'bg-white text-slate-500 border-slate-200 hover:border-[#0D9488] hover:text-[#0D9488]'
               }`}
             >
               {f === 'todos' ? t('common.all') : t(STATUS_STYLE[f].labelKey)}

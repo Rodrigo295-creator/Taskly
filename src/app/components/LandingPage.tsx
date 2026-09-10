@@ -36,15 +36,17 @@ interface Props {
   onSignIn: () => void;
   onStart: (userType: AuthUserType, mode: 'login' | 'signup') => void;
   onEnterApp?: () => void;
+  /** Opens the dedicated professional portal login (`/pro/login`). */
+  onProPortal?: () => void;
 }
 
 const FEATURE_KEYS = [
   { icon: MessageCircle, title: 'landing.features.chat.title', desc: 'landing.features.chat.desc', accent: 'from-teal-600 to-teal-800' },
   { icon: Wallet, title: 'landing.features.pay.title', desc: 'landing.features.pay.desc', accent: 'from-emerald-600 to-teal-700' },
   { icon: Search, title: 'landing.features.track.title', desc: 'landing.features.track.desc', accent: 'from-sky-600 to-blue-700' },
-  { icon: Shield, title: 'landing.features.verify.title', desc: 'landing.features.verify.desc', accent: 'from-amber-500 to-[#FF5A12]' },
-  { icon: LayoutDashboard, title: 'landing.features.dash.title', desc: 'landing.features.dash.desc', accent: 'from-rose-500 to-[#E04E0E]' },
-  { icon: Star, title: 'landing.features.grow.title', desc: 'landing.features.grow.desc', accent: 'from-[#FF5A12] to-amber-500' },
+  { icon: Shield, title: 'landing.features.verify.title', desc: 'landing.features.verify.desc', accent: 'from-sky-500 to-[#0D9488]' },
+  { icon: LayoutDashboard, title: 'landing.features.dash.title', desc: 'landing.features.dash.desc', accent: 'from-sky-600 to-[#0F766E]' },
+  { icon: Star, title: 'landing.features.grow.title', desc: 'landing.features.grow.desc', accent: 'from-[#0D9488] to-sky-500' },
 ] as const;
 
 const CATEGORIES = [
@@ -58,13 +60,13 @@ const CATEGORIES = [
     key: 'landing.cat.repair',
     icon: Wrench,
     image: 'https://images.unsplash.com/photo-1504149922750-4d6b49f71155?w=800&q=80&auto=format&fit=crop',
-    tint: 'from-amber-600/90 to-orange-900/80',
+    tint: 'from-sky-600/90 to-slate-900/80',
   },
   {
     key: 'landing.cat.beauty',
     icon: Scissors,
     image: 'https://images.unsplash.com/photo-1560066984-138dadb4c035?w=800&q=80&auto=format&fit=crop',
-    tint: 'from-rose-600/90 to-rose-950/80',
+    tint: 'from-teal-600/90 to-slate-900/80',
   },
   {
     key: 'landing.cat.moving',
@@ -82,7 +84,7 @@ const CATEGORIES = [
     key: 'landing.cat.pet',
     icon: PawPrint,
     image: 'https://images.unsplash.com/photo-1450778869180-41d0601e046e?w=800&q=80&auto=format&fit=crop',
-    tint: 'from-[#FF5A12]/90 to-amber-900/80',
+    tint: 'from-[#0D9488]/90 to-sky-950/80',
   },
 ] as const;
 
@@ -134,7 +136,7 @@ function FaqItem({ question, answer }: { question: string; answer: string }) {
       >
         <span className="pr-2">{question}</span>
         <ChevronDown
-          className={`w-5 h-5 shrink-0 text-[#FF5A12] transition-transform ${open ? 'rotate-180' : ''}`}
+          className={`w-5 h-5 shrink-0 text-[#0D9488] transition-transform ${open ? 'rotate-180' : ''}`}
         />
       </button>
       {open && (
@@ -146,7 +148,7 @@ function FaqItem({ question, answer }: { question: string; answer: string }) {
   );
 }
 
-export function LandingPage({ onSignIn, onStart, onEnterApp }: Props) {
+export function LandingPage({ onSignIn, onStart, onEnterApp, onProPortal }: Props) {
   const { t, resolvedTheme, fmt, reduceMotion, animations } = useAppSettings();
   const isDark = resolvedTheme === 'dark';
   const motionEnabled = animations && !reduceMotion;
@@ -157,15 +159,15 @@ export function LandingPage({ onSignIn, onStart, onEnterApp }: Props) {
   const examplePayout = calcServicePayout(exampleGross, 7);
 
   const stats = [
-    { value: '2.400+', label: t('landing.stats.verified'), color: 'text-[#FF5A12]' },
+    { value: '2.400+', label: t('landing.stats.verified'), color: 'text-[#0D9488]' },
     { value: '40+', label: t('landing.stats.categories'), color: 'text-teal-600' },
     { value: '100%', label: t('landing.stats.secure'), color: 'text-emerald-600' },
-    { value: '4,8', label: t('landing.stats.rating'), color: 'text-amber-600' },
+    { value: '4,8', label: t('landing.stats.rating'), color: 'text-sky-600' },
   ];
 
   const steps = [
     { icon: Search, n: '01', title: 'landing.how.step1.title', desc: 'landing.how.step1.desc', ring: 'ring-teal-500/30 bg-teal-500/10 text-teal-700' },
-    { icon: MessageCircle, n: '02', title: 'landing.how.step2.title', desc: 'landing.how.step2.desc', ring: 'ring-[#FF5A12]/30 bg-[#FFF0E6] text-[#C2410C]' },
+    { icon: MessageCircle, n: '02', title: 'landing.how.step2.title', desc: 'landing.how.step2.desc', ring: 'ring-[#0D9488]/30 bg-[#ECFDF5] text-[#115E59]' },
     { icon: Shield, n: '03', title: 'landing.how.step3.title', desc: 'landing.how.step3.desc', ring: 'ring-emerald-500/30 bg-emerald-500/10 text-emerald-700' },
   ] as const;
 
@@ -180,7 +182,7 @@ export function LandingPage({ onSignIn, onStart, onEnterApp }: Props) {
   return (
     <div
       className={`min-h-screen flex flex-col overflow-x-hidden ${
-        isDark ? 'dark bg-[#020617] text-slate-100' : 'bg-[#F6F3EF] text-[#0F172A]'
+        isDark ? 'dark bg-[#020617] text-slate-100' : 'bg-[#F8FBFC] text-[#0F172A]'
       }`}
     >
       {/* Header */}
@@ -204,15 +206,23 @@ export function LandingPage({ onSignIn, onStart, onEnterApp }: Props) {
           <div className="flex items-center gap-2">
             <button
               type="button"
+              onClick={onProPortal ?? (() => onStart('pro', 'login'))}
+              className="hidden md:inline-flex items-center gap-1.5 px-3 py-2 text-sm font-semibold text-teal-300 hover:text-teal-200 transition-colors"
+            >
+              <Briefcase className="w-4 h-4" />
+              {t('landing.nav.proLogin')}
+            </button>
+            <button
+              type="button"
               onClick={onEnterApp ?? onSignIn}
-              className="hidden sm:inline-flex px-4 py-2 text-sm font-semibold text-slate-200 hover:text-[#FFB070] transition-colors"
+              className="hidden sm:inline-flex px-4 py-2 text-sm font-semibold text-slate-200 hover:text-[#5EEAD4] transition-colors"
             >
               {t('landing.nav.signIn')}
             </button>
             <button
               type="button"
               onClick={onEnterApp ?? onSignIn}
-              className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full text-sm font-semibold bg-gradient-to-r from-[#FF5A12] via-[#FB923C] to-amber-400 text-white hover:opacity-95 shadow-lg shadow-[#FF5A12]/40 transition-opacity"
+              className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full text-sm font-semibold bg-gradient-to-r from-[#0D9488] via-[#0EA5E9] to-sky-300 text-white hover:opacity-95 shadow-lg shadow-[#0D9488]/40 transition-opacity"
             >
               {t('landing.nav.enterApp')}
               <ChevronRight className="w-4 h-4" />
@@ -226,8 +236,8 @@ export function LandingPage({ onSignIn, onStart, onEnterApp }: Props) {
         <LandingAnimatedBackground slideIndex={slideIndex} onSlideIndexChange={setSlideIndex} />
 
         <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 py-20 w-full">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-[#FF5A12]/25 to-teal-500/15 border border-white/20 text-xs font-semibold uppercase tracking-wider text-[#FFB070] mb-6">
-            <Sparkles className="w-3.5 h-3.5 text-amber-300" />
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-[#0D9488]/25 to-teal-500/15 border border-white/20 text-xs font-semibold uppercase tracking-wider text-[#5EEAD4] mb-6">
+            <Sparkles className="w-3.5 h-3.5 text-sky-300" />
             {t('landing.hero.badge')}
           </div>
 
@@ -235,7 +245,7 @@ export function LandingPage({ onSignIn, onStart, onEnterApp }: Props) {
             <div>
               <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-black tracking-tight leading-[1.05] max-w-2xl">
                 {t('landing.hero.title')}{' '}
-                <span className="text-[#FF5A12]">
+                <span className="text-[#0D9488]">
                   {t('landing.hero.titleHighlight')}
                 </span>
               </h1>
@@ -246,7 +256,7 @@ export function LandingPage({ onSignIn, onStart, onEnterApp }: Props) {
                 <button
                   type="button"
                   onClick={() => onStart('client', 'signup')}
-                  className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-2xl bg-gradient-to-r from-[#FF5A12] to-amber-400 text-[#0F172A] font-bold hover:scale-[1.02] active:scale-[0.98] shadow-xl shadow-[#FF5A12]/40 transition-transform"
+                  className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-2xl bg-gradient-to-r from-[#0D9488] to-[#0EA5E9] text-white font-bold hover:scale-[1.02] active:scale-[0.98] shadow-xl shadow-[#0D9488]/40 transition-transform"
                 >
                   {t('landing.hero.ctaClient')}
                   <ArrowRight className="w-5 h-5" />
@@ -289,12 +299,12 @@ export function LandingPage({ onSignIn, onStart, onEnterApp }: Props) {
                       key={plan.id}
                       className={`p-3 rounded-xl border ${
                         plan.popular
-                          ? 'border-[#FF5A12]/50 bg-[#FF5A12]/15'
+                          ? 'border-[#0D9488]/50 bg-[#0D9488]/15'
                           : 'border-white/10 bg-[#0F172A]/40'
                       }`}
                     >
                       <p className="text-[10px] uppercase tracking-wider text-slate-400">{t(PLAN_LABELS[plan.id])}</p>
-                      <p className="text-2xl font-black text-[#FFB070]">{plan.feePercent}%</p>
+                      <p className="text-2xl font-black text-[#5EEAD4]">{plan.feePercent}%</p>
                       <p className="text-[10px] text-slate-400">{t('landing.fees.perService')}</p>
                     </div>
                   ))}
@@ -303,7 +313,7 @@ export function LandingPage({ onSignIn, onStart, onEnterApp }: Props) {
                   {[
                     { icon: UserCheck, label: t('auth.client.bullet4'), color: 'text-emerald-400' },
                     { icon: MessageCircle, label: t('auth.client.bullet3'), color: 'text-teal-300' },
-                    { icon: Shield, label: t('landing.fees.holdBody'), color: 'text-amber-300' },
+                    { icon: Shield, label: t('landing.fees.holdBody'), color: 'text-sky-300' },
                   ].map(({ icon: Icon, label, color }) => (
                     <div key={label} className="flex items-start gap-3 p-3 rounded-xl bg-[#0F172A]/50 border border-white/5">
                       <Icon className={`w-4 h-4 shrink-0 mt-0.5 ${color}`} />
@@ -324,7 +334,7 @@ export function LandingPage({ onSignIn, onStart, onEnterApp }: Props) {
                 aria-label={`Slide ${i + 1}`}
                 onClick={() => setSlideIndex(i)}
                 className={`h-1.5 rounded-full transition-all duration-500 ${
-                  i === slideIndex ? 'w-10 bg-[#FF5A12]' : 'w-3 bg-white/30 hover:bg-white/50'
+                  i === slideIndex ? 'w-10 bg-[#0D9488]' : 'w-3 bg-white/30 hover:bg-white/50'
                 }`}
               />
             ))}
@@ -333,7 +343,7 @@ export function LandingPage({ onSignIn, onStart, onEnterApp }: Props) {
       </section>
 
       {/* Stats — gradient band */}
-      <section className="relative bg-gradient-to-r from-[#FF5A12] via-amber-500 to-teal-600 text-white">
+      <section className="relative bg-gradient-to-r from-[#0D9488] via-sky-500 to-teal-600 text-white">
         <div className="absolute inset-0 bg-[#0F172A]/10" />
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6 py-10 grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
           {stats.map(({ value, label }) => (
@@ -347,7 +357,7 @@ export function LandingPage({ onSignIn, onStart, onEnterApp }: Props) {
 
       {/* How it works */}
       <section id="how-it-works" className="scroll-mt-20 py-16 sm:py-24 relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-teal-500/5 via-transparent to-[#FF5A12]/5 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-b from-teal-500/5 via-transparent to-[#0D9488]/5 pointer-events-none" />
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6">
           <div className="text-center max-w-2xl mx-auto mb-12">
             <h2 className="text-2xl sm:text-3xl font-black tracking-tight">{t('landing.how.title')}</h2>
@@ -374,11 +384,11 @@ export function LandingPage({ onSignIn, onStart, onEnterApp }: Props) {
       {/* Pricing / Fees */}
       <section id="pricing" className="scroll-mt-20 py-16 sm:py-24 bg-[#0F172A] text-white relative overflow-hidden">
         {motionEnabled && (
-          <div className="landing-orb absolute -top-20 -right-20 w-96 h-96 rounded-full bg-[#FF5A12]/20 blur-3xl" />
+          <div className="landing-orb absolute -top-20 -right-20 w-96 h-96 rounded-full bg-[#0D9488]/20 blur-3xl" />
         )}
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6">
           <div className="flex items-center gap-3 mb-4">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-[#FF5A12] to-amber-400 text-[#0F172A]">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-[#0D9488] to-[#0EA5E9] text-white">
               <Percent className="w-5 h-5" />
             </div>
             <div>
@@ -425,9 +435,9 @@ export function LandingPage({ onSignIn, onStart, onEnterApp }: Props) {
                   <span className="font-semibold text-emerald-400">{fmt(examplePayout.net)}</span>
                 </div>
                 <div className="h-px bg-white/10" />
-                <div className="flex justify-between items-center p-3 rounded-xl bg-gradient-to-r from-[#FF5A12]/20 to-amber-500/10 border border-[#FF5A12]/30">
+                <div className="flex justify-between items-center p-3 rounded-xl bg-gradient-to-r from-[#0D9488]/20 to-sky-500/10 border border-[#0D9488]/30">
                   <span className="text-sm font-bold">{t('landing.fees.exampleClientPays')}</span>
-                  <span className="text-xl font-black text-[#FFB070]">{fmt(exampleGross)}</span>
+                  <span className="text-xl font-black text-[#5EEAD4]">{fmt(exampleGross)}</span>
                 </div>
               </div>
             </div>
@@ -442,9 +452,9 @@ export function LandingPage({ onSignIn, onStart, onEnterApp }: Props) {
                   </div>
                 </div>
               </div>
-              <div className="p-5 rounded-2xl border border-amber-500/30 bg-amber-500/10">
+              <div className="p-5 rounded-2xl border border-sky-500/30 bg-sky-500/10">
                 <div className="flex items-start gap-3">
-                  <Clock className="w-5 h-5 text-amber-300 shrink-0 mt-0.5" />
+                  <Clock className="w-5 h-5 text-sky-300 shrink-0 mt-0.5" />
                   <div>
                     <p className="font-bold text-sm">{t('landing.fees.cancelTitle')}</p>
                     <p className="mt-1 text-xs text-slate-300 leading-relaxed">{t('landing.fees.cancelBody')}</p>
@@ -473,17 +483,17 @@ export function LandingPage({ onSignIn, onStart, onEnterApp }: Props) {
                   key={plan.id}
                   className={`relative p-6 rounded-2xl border transition-transform hover:-translate-y-1 ${
                     plan.popular
-                      ? 'border-[#FF5A12] bg-gradient-to-b from-[#FF5A12]/20 to-[#FF5A12]/5 shadow-lg shadow-[#FF5A12]/20'
+                      ? 'border-[#0D9488] bg-gradient-to-b from-[#0D9488]/20 to-[#0D9488]/5 shadow-lg shadow-[#0D9488]/20'
                       : 'border-white/10 bg-white/5'
                   }`}
                 >
                   {plan.popular && (
-                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-[#FF5A12] text-[10px] font-bold uppercase tracking-wider">
+                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-[#0D9488] text-[10px] font-bold uppercase tracking-wider">
                       {t('landing.fees.popular')}
                     </span>
                   )}
                   <p className="text-sm font-semibold text-slate-300">{t(PLAN_LABELS[plan.id])}</p>
-                  <p className="mt-2 text-4xl font-black text-[#FF5A12]">
+                  <p className="mt-2 text-4xl font-black text-[#0D9488]">
                     {plan.feePercent}%
                   </p>
                   <p className="text-xs text-slate-400 mt-1">{t('landing.fees.perService')}</p>
@@ -501,7 +511,7 @@ export function LandingPage({ onSignIn, onStart, onEnterApp }: Props) {
       <LandingAppShowcase />
 
       {/* FAQ */}
-      <section id="faq" className="scroll-mt-20 py-16 sm:py-24 bg-[#F6F3EF] dark:bg-[#020617] border-y border-slate-200/80 dark:border-slate-800">
+      <section id="faq" className="scroll-mt-20 py-16 sm:py-24 bg-[#F8FBFC] dark:bg-[#020617] border-y border-slate-200/80 dark:border-slate-800">
         <div className="max-w-3xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-10">
             <h2 className="text-2xl sm:text-3xl font-black tracking-tight text-[#0F172A] dark:text-white">
@@ -580,7 +590,7 @@ export function LandingPage({ onSignIn, onStart, onEnterApp }: Props) {
 
       {/* Audience split */}
       <section id="for-pros" className="scroll-mt-20 py-16 sm:py-24 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0F172A] via-[#1a2332] to-[#FF5A12]/30" />
+        <div className="absolute inset-0 bg-gradient-to-br from-[#0F172A] via-[#1a2332] to-[#0D9488]/30" />
         {motionEnabled && (
           <div className="landing-orb absolute bottom-0 right-0 w-[30rem] h-[30rem] rounded-full bg-teal-500/15 blur-3xl" />
         )}
@@ -597,13 +607,13 @@ export function LandingPage({ onSignIn, onStart, onEnterApp }: Props) {
               <ArrowRight className="w-4 h-4" />
             </button>
           </article>
-          <article className="p-8 rounded-3xl border border-[#FF5A12]/40 bg-gradient-to-br from-[#FF5A12]/25 to-amber-500/10 backdrop-blur-sm">
+          <article className="p-8 rounded-3xl border border-[#0D9488]/40 bg-gradient-to-br from-[#0D9488]/25 to-sky-500/10 backdrop-blur-sm">
             <h3 className="text-xl font-bold">{t('landing.audience.pro.title')}</h3>
             <p className="mt-3 text-sm text-slate-100 leading-relaxed">{t('landing.audience.pro.desc')}</p>
             <button
               type="button"
               onClick={() => onStart('pro', 'signup')}
-              className="mt-6 inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#FF5A12] to-amber-400 text-[#0F172A] text-sm font-bold hover:opacity-95 transition-opacity"
+              className="mt-6 inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#0D9488] to-[#0EA5E9] text-white text-sm font-bold hover:opacity-95 transition-opacity"
             >
               {t('landing.audience.pro.cta')}
               <ArrowRight className="w-4 h-4" />
@@ -614,7 +624,7 @@ export function LandingPage({ onSignIn, onStart, onEnterApp }: Props) {
 
       {/* Final CTA */}
       <section className="py-16 sm:py-24 relative">
-        <div className="absolute inset-0 bg-gradient-to-r from-[#FF5A12]/12 via-amber-400/10 to-teal-500/10" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0D9488]/12 via-sky-400/10 to-teal-500/10" />
         <div className="relative max-w-3xl mx-auto px-4 sm:px-6 text-center">
           <h2 className="text-2xl sm:text-4xl font-black tracking-tight">{t('landing.cta.title')}</h2>
           <p className="mt-4 text-slate-600 dark:text-slate-400">{t('landing.cta.subtitle')}</p>
@@ -622,14 +632,14 @@ export function LandingPage({ onSignIn, onStart, onEnterApp }: Props) {
             <button
               type="button"
               onClick={() => onStart('client', 'signup')}
-              className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-[#FF5A12] via-amber-400 to-yellow-300 text-[#0F172A] font-bold hover:scale-[1.02] shadow-xl shadow-[#FF5A12]/30 transition-transform"
+              className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-[#0D9488] via-[#0EA5E9] to-sky-300 text-white font-bold hover:scale-[1.02] shadow-xl shadow-[#0D9488]/30 transition-transform"
             >
               {t('landing.cta.primary')}
             </button>
             <button
               type="button"
               onClick={onSignIn}
-              className="w-full sm:w-auto px-8 py-4 rounded-2xl border-2 border-slate-300 dark:border-slate-600 font-bold hover:border-[#FF5A12] transition-colors"
+              className="w-full sm:w-auto px-8 py-4 rounded-2xl border-2 border-slate-300 dark:border-slate-600 font-bold hover:border-[#0D9488] transition-colors"
             >
               {t('landing.cta.secondary')}
             </button>
@@ -653,7 +663,7 @@ export function LandingPage({ onSignIn, onStart, onEnterApp }: Props) {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={t('landing.footer.instagram')}
-                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full border border-white/15 bg-white/5 text-white text-sm font-semibold hover:border-[#FF5A12]/60 hover:bg-[#FF5A12]/15 hover:text-[#FFB070] transition-colors"
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full border border-white/15 bg-white/5 text-white text-sm font-semibold hover:border-[#0D9488]/60 hover:bg-[#0D9488]/15 hover:text-[#5EEAD4] transition-colors"
               >
                 <InstagramIcon />
                 Instagram

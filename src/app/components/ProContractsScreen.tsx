@@ -394,7 +394,7 @@ function NewContractModal({ onSave, onClose }: {
             Cancelar
           </button>
           <button disabled={!valid} onClick={save}
-            className="flex-1 py-3 rounded-2xl bg-[#FF5A12] disabled:opacity-50 hover:bg-[#E04E0E] text-white text-sm font-semibold transition-colors flex items-center justify-center gap-2">
+            className="flex-1 py-3 rounded-2xl bg-[#0D9488] disabled:opacity-50 hover:bg-[#0F766E] text-white text-sm font-semibold transition-colors flex items-center justify-center gap-2">
             <FileText className="w-4 h-4" /> Gerar contrato
           </button>
         </div>
@@ -416,7 +416,7 @@ function Field({ label, value, onChange, placeholder, textarea, type }: {
   label: string; value: string; onChange: (v: string) => void;
   placeholder?: string; textarea?: boolean; type?: string;
 }) {
-  const cls = "w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm outline-none focus:border-[#FF5A12] focus:ring-2 focus:ring-[#FF5A12]/15 transition-all placeholder:text-slate-400 resize-none";
+  const cls = "w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm outline-none focus:border-[#0D9488] focus:ring-2 focus:ring-[#0D9488]/15 transition-all placeholder:text-slate-400 resize-none";
   return (
     <div>
       <label className="text-xs font-semibold text-slate-500 block mb-1">{label}</label>
@@ -491,7 +491,7 @@ function ContractViewer({ contract, onClose, onSend }: {
             onClick={() => setShowLegal(o => !o)}
             className="flex items-center justify-between w-full text-sm font-semibold text-slate-700 hover:text-slate-900"
           >
-            <span className="flex items-center gap-2"><FileText className="w-4 h-4 text-[#FF5A12]" />Ver texto completo do contrato</span>
+            <span className="flex items-center gap-2"><FileText className="w-4 h-4 text-[#0D9488]" />Ver texto completo do contrato</span>
             {showLegal ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
           </button>
         </div>
@@ -510,7 +510,7 @@ function ContractViewer({ contract, onClose, onSend }: {
           {contract.status === 'rascunho' && (
             <button
               onClick={() => onSend(contract.id)}
-              className="flex-1 py-3 rounded-2xl bg-[#FF5A12] hover:bg-[#E04E0E] text-white text-sm font-bold transition-colors flex items-center justify-center gap-2"
+              className="flex-1 py-3 rounded-2xl bg-[#0D9488] hover:bg-[#0F766E] text-white text-sm font-bold transition-colors flex items-center justify-center gap-2"
             >
               <Send className="w-4 h-4" /> Enviar para cliente
             </button>
@@ -545,7 +545,7 @@ function ContractCard({ contract, onView }: { contract: Contract; onView: () => 
       <div className="flex flex-wrap gap-x-4 gap-y-1 mt-3">
         <span className="text-xs text-slate-400">📅 {contract.startDate}{contract.endDate !== contract.startDate ? ` → ${contract.endDate}` : ''}</span>
         <span className="text-xs text-slate-400">📍 {contract.location}</span>
-        <span className="text-xs font-semibold text-[#FF5A12]">R$ {contract.value.toFixed(2)}</span>
+        <span className="text-xs font-semibold text-[#0D9488]">R$ {contract.value.toFixed(2)}</span>
       </div>
       {contract.signedAt && (
         <div className="flex items-center gap-1 mt-2">
@@ -600,7 +600,7 @@ export function ProContractsScreen() {
             </div>
             <button
               onClick={() => setShowNew(true)}
-              className="flex items-center gap-2 bg-[#FF5A12] hover:bg-[#E04E0E] text-white text-xs font-bold px-4 py-2.5 rounded-xl transition-colors"
+              className="flex items-center gap-2 bg-[#0D9488] hover:bg-[#0F766E] text-white text-xs font-bold px-4 py-2.5 rounded-xl transition-colors"
             >
               <Plus className="w-4 h-4" /> Novo
             </button>
@@ -639,8 +639,8 @@ export function ProContractsScreen() {
               <button key={f} onClick={() => setFilter(f)}
                 className={`px-3 py-1.5 rounded-xl text-xs font-semibold border whitespace-nowrap transition-colors ${
                   filter === f
-                    ? 'bg-[#FF5A12] text-white border-[#FF5A12]'
-                    : 'bg-white text-slate-500 border-slate-200 hover:border-[#FF5A12] hover:text-[#FF5A12]'
+                    ? 'bg-[#0D9488] text-white border-[#0D9488]'
+                    : 'bg-white text-slate-500 border-slate-200 hover:border-[#0D9488] hover:text-[#0D9488]'
                 }`}>
                 {f === 'todos' ? 'Todos' : STATUS_CONFIG[f].label}
               </button>

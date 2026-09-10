@@ -1,6 +1,11 @@
 import type { AuthError, Session, User } from '@supabase/supabase-js';
 import type { AuthProvider, AuthSession, AuthUserType, ProfileRole } from '@/lib/auth-session';
-import { applyAdminMasterPlan } from '@/lib/pro-plan-session';
+import {
+  applyAdminMasterPlan,
+  clearProPlanSubscription,
+  saveProPlanSubscription,
+  type PaymentFrequency,
+} from '@/lib/pro-plan-session';
 import { isOAuthProviderEnabled, type OAuthProvider } from '@/lib/auth-oauth-config';
 import { supabase, supabaseConfigured } from '@/lib/supabase';
 
@@ -18,14 +23,21 @@ function parseProfileRole(value: unknown): ProfileRole | undefined {
   return undefined;
 }
 
-function buildSession(user: User, provider: AuthProvider, profileRole?: ProfileRole): AuthSession {
+function buildSession(
+  user: User,
+  provider: AuthProvider,
+  profileRole?: ProfileRole,
+  userTypeOverride?: AuthUserType,
+): AuthSession {
   const meta = user.user_metadata ?? {};
   const roleFromMeta = parseProfileRole(meta[PROFILE_ROLE_KEY]);
   const role = profileRole ?? roleFromMeta;
   const isAdminMaster = role === 'admin_master';
+  // Sidebar mode follows login choice (client | pro). admin_master keeps privileges
+  // via isAdminMaster but can still open the app as either mode.
   const session: AuthSession = {
     userId: user.id,
-    userType: isAdminMaster ? 'pro' : parseUserType(meta[USER_TYPE_KEY]),
+    userType: userTypeOverride ?? parseUserType(meta[USER_TYPE_KEY]),
     provider,
     email: user.email ?? undefined,
     name:
@@ -42,8 +54,32 @@ function buildSession(user: User, provider: AuthProvider, profileRole?: ProfileR
 export function sessionFromSupabaseUser(
   user: User,
   provider: AuthProvider,
+  userTypeOverride?: AuthUserType,
 ): AuthSession {
-  return buildSession(user, provider);
+  return buildSession(user, provider, undefined, userTypeOverride);
+}
+
+/**
+ * Plano do profissional: fonte de verdade em `professional_profiles.plan_tier`
+ * (alterável só pelo service role). O sessionStorage é apenas cache de exibição.
+ */
+async function syncProPlanFromBackend(userId: string, isAdminMaster: boolean) {
+  if (!supabase || isAdminMaster) return;
+  const { data } = await supabase
+    .from('professional_profiles')
+    .select('plan_tier, plan_frequency, plan_subscribed_at')
+    .eq('id', userId)
+    .maybeSingle();
+  const tier = data?.plan_tier;
+  if (tier === 'pro' || tier === 'premium') {
+    saveProPlanSubscription({
+      tier,
+      frequency: (data?.plan_frequency ?? 'monthly') as PaymentFrequency,
+      subscribedAt: data?.plan_subscribed_at ?? new Date().toISOString(),
+    });
+  } else {
+    clearProPlanSubscription();
+  }
 }
 
 /** Sincroniza `profiles.role` do banco na sessão (ex.: admin_master). */
@@ -51,8 +87,39 @@ export async function enrichSessionWithProfile(user: User, session: AuthSession)
   if (!supabase || !user.id) return session;
   const { data } = await supabase.from('profiles').select('role').eq('id', user.id).maybeSingle();
   const role = parseProfileRole(data?.role);
-  if (!role) return session;
-  return buildSession(user, session.provider, role);
+  // Keep the login-chosen userType; only refresh role / admin flags from DB.
+  const enriched = role
+    ? buildSession(user, session.provider, role, session.userType)
+    : session;
+  await syncProPlanFromBackend(user.id, Boolean(enriched.isAdminMaster));
+  return enriched;
+}
+
+/**
+ * Persist the chosen client/pro mode on the Auth user and rebuild the app session.
+ * Same account can enter either mode; sidebar follows this value.
+ */
+async function applyLoginUserType(
+  user: User,
+  provider: AuthProvider,
+  userType: AuthUserType,
+): Promise<AuthSession> {
+  let nextUser = user;
+  const current = user.user_metadata?.[USER_TYPE_KEY];
+  if (supabase && current !== userType) {
+    const { data } = await supabase.auth.updateUser({
+      data: { [USER_TYPE_KEY]: userType },
+    });
+    if (data.user) nextUser = data.user;
+  }
+  if (supabase && userType === 'pro') {
+    const { error } = await supabase.rpc('ensure_professional_profile');
+    if (error && import.meta.env.DEV) {
+      console.warn('[Taskly] ensure_professional_profile:', error.message);
+    }
+  }
+  const base = sessionFromSupabaseUser(nextUser, provider, userType);
+  return enrichSessionWithProfile(nextUser, base);
 }
 
 export function sessionFromSupabaseSession(
@@ -96,13 +163,13 @@ export async function getSupabaseAuthSession(): Promise<AuthSession | null> {
 export async function signInWithEmail(
   email: string,
   password: string,
+  userType: AuthUserType,
 ): Promise<{ session: AuthSession | null; error: AuthError | null; needsConfirmation?: boolean }> {
   if (!supabase) return { session: null, error: null };
   const { data, error } = await supabase.auth.signInWithPassword({ email, password });
   if (error) return { session: null, error };
   if (!data.session) return { session: null, error: null };
-  const base = sessionFromSupabaseSession(data.session, 'email');
-  const session = await enrichSessionWithProfile(data.session.user, base);
+  const session = await applyLoginUserType(data.session.user, 'email', userType);
   return { session, error: null };
 }
 
@@ -120,6 +187,8 @@ export async function signUpWithEmail(
       data: {
         full_name: name.trim(),
         [USER_TYPE_KEY]: userType,
+        // Legacy key still read by older handle_new_user variants
+        role: userType === 'pro' ? 'professional' : 'client',
       },
     },
   });
@@ -127,8 +196,7 @@ export async function signUpWithEmail(
   if (!data.session) {
     return { session: null, error: null, needsConfirmation: true };
   }
-  const base = sessionFromSupabaseSession(data.session, 'email');
-  const session = await enrichSessionWithProfile(data.session.user, base);
+  const session = await applyLoginUserType(data.session.user, 'email', userType);
   return { session, error: null };
 }
 
@@ -153,7 +221,7 @@ export async function signInWithOAuth(provider: OAuthProvider, userType: AuthUse
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider,
     options: {
-      redirectTo: `${window.location.origin}/`,
+      redirectTo: `${window.location.origin}/app`,
       skipBrowserRedirect: true,
       queryParams: provider === 'google' ? { prompt: 'select_account' } : undefined,
     },
@@ -165,39 +233,58 @@ export async function signInWithOAuth(provider: OAuthProvider, userType: AuthUse
   return { error: null };
 }
 
-export function consumeOAuthUserType(): AuthUserType {
+/** Peek + clear the OAuth login mode chosen before redirect. */
+export function consumeOAuthUserType(): AuthUserType | null {
   try {
     const v =
       sessionStorage.getItem('taskly-oauth-user-type') ??
       sessionStorage.getItem('job4you-oauth-user-type');
     sessionStorage.removeItem('taskly-oauth-user-type');
     sessionStorage.removeItem('job4you-oauth-user-type');
-    return v === 'pro' ? 'pro' : 'client';
+    if (v === 'pro' || v === 'client') return v;
+    return null;
   } catch {
-    return 'client';
+    return null;
   }
 }
 
+/**
+ * After OAuth redirect, always apply the intended client/pro mode when present
+ * (even if the account already had a previous user_type).
+ */
 export async function ensureOAuthUserType(user: User): Promise<User> {
-  const current = user.user_metadata?.[USER_TYPE_KEY];
-  if (current === 'client' || current === 'pro') return user;
-  const userType = consumeOAuthUserType();
-  if (!supabase) return user;
-  const { data } = await supabase.auth.updateUser({
-    data: { [USER_TYPE_KEY]: userType },
-  });
-  return data.user ?? user;
+  const intended = consumeOAuthUserType();
+  if (!intended || !supabase) return user;
+  let nextUser = user;
+  if (user.user_metadata?.[USER_TYPE_KEY] !== intended) {
+    const { data } = await supabase.auth.updateUser({
+      data: {
+        [USER_TYPE_KEY]: intended,
+        role: intended === 'pro' ? 'professional' : 'client',
+      },
+    });
+    if (data.user) nextUser = data.user;
+  }
+  if (intended === 'pro') {
+    const { error } = await supabase.rpc('ensure_professional_profile');
+    if (error && import.meta.env.DEV) {
+      console.warn('[Taskly] ensure_professional_profile:', error.message);
+    }
+  }
+  return nextUser;
 }
 
 export async function signOutSupabase() {
+  clearProPlanSubscription();
   if (!supabase) return;
   await supabase.auth.signOut();
 }
 
-export async function resetPasswordForEmail(email: string) {
+export async function resetPasswordForEmail(email: string, redirectPath = '/login') {
   if (!supabase) return { error: null };
+  const path = redirectPath.startsWith('/') ? redirectPath : `/${redirectPath}`;
   const { error } = await supabase.auth.resetPasswordForEmail(email, {
-    redirectTo: `${window.location.origin}/`,
+    redirectTo: `${window.location.origin}${path}`,
   });
   return { error };
 }

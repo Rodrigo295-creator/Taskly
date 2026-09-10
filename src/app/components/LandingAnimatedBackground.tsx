@@ -43,8 +43,8 @@ export function LandingAnimatedBackground({
 
   const overlayClass =
     variant === 'auth'
-      ? 'from-[#0F172A]/94 via-[#1a2332]/90 to-[#FF5A12]/42'
-      : 'from-[#0F172A]/95 via-[#1a2332]/88 to-[#FF5A12]/45';
+      ? 'from-[#0F172A]/94 via-[#1a2332]/90 to-[#0D9488]/42'
+      : 'from-[#0F172A]/95 via-[#1a2332]/88 to-[#0D9488]/45';
 
   return (
     <div aria-hidden className={`pointer-events-none absolute inset-0 overflow-hidden ${className}`}>
@@ -65,16 +65,16 @@ export function LandingAnimatedBackground({
 
       <div className={`absolute inset-0 bg-gradient-to-br ${overlayClass}`} />
       <div
-        className={`absolute inset-0 opacity-60 mix-blend-screen bg-gradient-to-tr from-teal-500/25 via-transparent to-amber-400/20 ${
+        className={`absolute inset-0 opacity-60 mix-blend-screen bg-gradient-to-tr from-teal-500/25 via-transparent to-sky-400/22 ${
           motionEnabled ? 'landing-gradient-drift' : ''
         }`}
       />
 
       {motionEnabled && (
         <>
-          <div className="landing-orb absolute top-20 right-[10%] h-72 w-72 rounded-full bg-[#FF5A12]/30 blur-3xl" />
-          <div className="landing-orb landing-orb-delay absolute bottom-10 left-[5%] h-96 w-96 rounded-full bg-teal-500/22 blur-3xl" />
-          <div className="landing-orb absolute top-1/2 left-1/2 h-64 w-64 -translate-x-1/2 rounded-full bg-amber-400/18 blur-3xl" />
+          <div className="landing-orb absolute top-20 right-[10%] h-72 w-72 rounded-full bg-[#0D9488]/30 blur-3xl" />
+          <div className="landing-orb landing-orb-delay absolute bottom-10 left-[5%] h-96 w-96 rounded-full bg-sky-500/22 blur-3xl" />
+          <div className="landing-orb absolute top-1/2 left-1/2 h-64 w-64 -translate-x-1/2 rounded-full bg-emerald-400/18 blur-3xl" />
         </>
       )}
     </div>

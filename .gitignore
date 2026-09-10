@@ -7,5 +7,8 @@ dist/
 .env.local
 .env.*.local
 .vercel
-.cursor/
+.cursor/*
+!.cursor/hooks.json
+!.cursor/hooks/
+!.cursor/hooks/**
 .github-push-batches/

@@ -4,7 +4,6 @@ import {
   type DirectoryProfessional,
 } from '../data/mockDirectory';
 import { supabase, supabaseConfigured } from '@/lib/supabase';
-import { normalizeProfile } from '@/lib/supabase-profile';
 
 const FALLBACK_IMG =
   'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&q=80';
@@ -20,7 +19,7 @@ export function useProfessionals(): {
   loading: boolean;
 } {
   const [professionalList, setProfessionalList] =
-    useState<DirectoryProfessional[]>(ALL_PROFESSIONALS);
+    useState<DirectoryProfessional[]>(() => (supabaseConfigured ? [] : ALL_PROFESSIONALS));
   const [loading, setLoading] = useState(() => supabaseConfigured);
 
   const fetchRemote = useCallback(async () => {
@@ -37,20 +36,16 @@ export function useProfessionals(): {
       is_online: boolean;
       rating_avg: number | string;
       completed_jobs_count: number;
-      profiles:
-        | { full_name: string; avatar_url: string | null }
-        | { full_name: string; avatar_url: string | null }[]
-        | null
-        | undefined;
-      categories:
-        | { label: string; slug: string }
-        | { label: string; slug: string }[]
-        | null
-        | undefined;
+      full_name: string | null;
+      avatar_url: string | null;
+      category_label: string | null;
+      category_slug: string | null;
     };
 
+    // View pública restrita às colunas do diretório (RLS bloqueia
+    // leitura direta de `profiles` de terceiros).
     const { data: rows, error: qErr } = await supabase
-      .from('professional_profiles')
+      .from('professional_directory')
       .select(
         `
           id,
@@ -61,14 +56,17 @@ export function useProfessionals(): {
           is_online,
           rating_avg,
           completed_jobs_count,
-          profiles(full_name, avatar_url),
-          categories(label, slug)
+          full_name,
+          avatar_url,
+          category_label,
+          category_slug
         `,
       );
 
     if (qErr) {
-      console.warn('[Taskly] Supabase professionals:', qErr.message);
-      setProfessionalList(ALL_PROFESSIONALS);
+      if (import.meta.env.DEV) console.warn('[Taskly] Supabase professionals:', qErr.message);
+      // Prefer empty over mock UUIDs when Supabase is configured.
+      setProfessionalList([]);
       setLoading(false);
       return;
     }
@@ -76,16 +74,16 @@ export function useProfessionals(): {
     const rawRows = (rows ?? []) as Row[];
 
     if (rawRows.length === 0) {
-      setProfessionalList(ALL_PROFESSIONALS);
+      // Live backend with an empty directory: do not fall back to mock IDs
+      // (they break start_conversation / chat RPCs that expect real UUIDs).
+      setProfessionalList([]);
       setLoading(false);
       return;
     }
 
     const list: DirectoryProfessional[] = rawRows.map((row) => {
-      const profile = normalizeProfile(row.profiles);
-      const category = normalizeProfile(row.categories);
-      const name = profile?.full_name?.trim() || 'Profissional';
-      const categoryLabel = category?.label?.trim() || 'Serviços';
+      const name = row.full_name?.trim() || 'Profissional';
+      const categoryLabel = row.category_label?.trim() || 'Serviços';
       return {
         id: row.id,
         name,
@@ -101,7 +99,7 @@ export function useProfessionals(): {
             ? parseFloat(row.price_amount) || 0
             : Number(row.price_amount) || 0,
         priceUnit: formatPriceUnit(row.price_unit ?? 'hora'),
-        image: profile?.avatar_url?.trim() || FALLBACK_IMG,
+        image: row.avatar_url?.trim() || FALLBACK_IMG,
         isOnline: row.is_online,
         completedJobs: row.completed_jobs_count,
       };

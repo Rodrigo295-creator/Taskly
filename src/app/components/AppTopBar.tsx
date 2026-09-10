@@ -30,7 +30,7 @@ export function AppTopBar({
     'inline-flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-semibold transition-colors shrink-0';
   const actionIdle =
     'text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-white/5';
-  const actionActive = 'bg-[#FFF0E6] text-[#FF5A12] dark:bg-[#FF5A12]/15';
+  const actionActive = 'bg-[#ECFDF5] text-[#0D9488] dark:bg-[#0D9488]/15';
 
   return (
     <header className="sticky top-0 z-20 flex h-14 shrink-0 items-center gap-2 sm:gap-3 border-b border-slate-200/80 bg-white/90 px-4 backdrop-blur-md dark:border-slate-700/80 dark:bg-[#0f172a]/90 sm:px-6">
@@ -72,8 +72,8 @@ export function AppTopBar({
         <button
           type="button"
           onClick={onPlans}
-          className={`${actionBtn} bg-[#FF5A12] text-white shadow-md shadow-[#FF5A12]/30 hover:bg-[#E04E0E] ${
-            plansActive ? 'ring-2 ring-[#FF5A12]/40 ring-offset-2 ring-offset-white dark:ring-offset-[#0f172a]' : ''
+          className={`${actionBtn} bg-[#0D9488] text-white shadow-md shadow-[#0D9488]/30 hover:bg-[#0F766E] ${
+            plansActive ? 'ring-2 ring-[#0D9488]/40 ring-offset-2 ring-offset-white dark:ring-offset-[#0f172a]' : ''
           }`}
           title={t('nav.topbar.plans')}
         >

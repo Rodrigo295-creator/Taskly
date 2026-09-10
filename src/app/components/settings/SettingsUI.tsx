@@ -49,7 +49,7 @@ export function Row({
   right,
   onClick,
   disabled,
-  color = 'text-[#FF5A12]',
+  color = 'text-[#0D9488]',
 }: {
   icon: ElementType;
   label: string;
@@ -74,7 +74,7 @@ export function Row({
       aria-disabled={disabled || undefined}
       className={`flex flex-col gap-3 sm:flex-row sm:items-center w-full min-w-0 px-4 py-4 sm:py-3.5 text-left transition-colors ${
         interactive
-          ? 'hover:bg-slate-50 dark:hover:bg-white/5 active:bg-slate-100 dark:active:bg-white/10 cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[#FF5A12]'
+          ? 'hover:bg-slate-50 dark:hover:bg-white/5 active:bg-slate-100 dark:active:bg-white/10 cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[#0D9488]'
           : disabled
             ? 'opacity-70 cursor-default'
             : ''
@@ -104,7 +104,7 @@ export function ToggleRow({
   sublabel,
   value,
   onChange,
-  color = 'text-[#FF5A12]',
+  color = 'text-[#0D9488]',
 }: {
   icon: ElementType;
   label: string;
@@ -144,7 +144,7 @@ export function Toggle({ value, onChange }: { value: boolean; onChange: (v: bool
       type="button"
       onClick={() => onChange(!value)}
       className={`settings-toggle relative rounded-full transition-colors shrink-0 ${track} ${
-        value ? 'bg-[#FF5A12]' : 'bg-slate-200 dark:bg-slate-700'
+        value ? 'bg-[#0D9488]' : 'bg-slate-200 dark:bg-slate-700'
       }`}
       aria-pressed={value}
       aria-label={value ? 'Ativado' : 'Desativado'}
@@ -185,7 +185,7 @@ export function ChipSelect<T extends string>({
           onClick={() => onChange(opt.value)}
           className={`w-full min-w-0 px-3 py-2.5 sm:py-2 rounded-xl sm:rounded-full text-xs sm:text-sm font-medium border transition-colors text-center break-words leading-snug ${
             value === opt.value
-              ? 'border-[#FF5A12] bg-[#FFF0E6] text-[#FF5A12] dark:bg-[#FF5A12]/15 dark:text-[#FF5A12]'
+              ? 'border-[#0D9488] bg-[#ECFDF5] text-[#0D9488] dark:bg-[#0D9488]/15 dark:text-[#0D9488]'
               : 'border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:border-slate-300 dark:hover:bg-white/5 active:bg-slate-50 dark:active:bg-white/10'
           }`}
         >
@@ -243,7 +243,7 @@ export function Subsection({ title, description, children }: { title: string; de
 export function Modal({ title, onClose, children }: { title: string; onClose: () => void; children: ReactNode }) {
   const { t } = useAppSettings();
   return (
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/40 backdrop-blur-sm p-4">
+    <div className="fixed inset-0 z-[80] flex items-end sm:items-center justify-center bg-black/40 backdrop-blur-sm p-4">
       <div className="bg-white dark:bg-slate-900 w-full max-w-md rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh] border border-slate-200 dark:border-slate-700">
         <div className="flex items-center justify-between px-6 pt-5 pb-4 border-b border-slate-100 dark:border-slate-800 shrink-0">
           <h3 className="font-bold text-slate-900 dark:text-white text-base">{title}</h3>

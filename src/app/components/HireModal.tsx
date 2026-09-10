@@ -36,7 +36,7 @@ export function HireModal({ professional, onClose }: HireModalProps) {
   const today = new Date().toISOString().split('T')[0];
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center">
+    <div className="fixed inset-0 z-[80] flex items-end sm:items-center justify-center">
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
 
       <div className={`relative w-full sm:max-w-md sm:rounded-3xl rounded-t-3xl shadow-2xl overflow-hidden max-h-[92vh] flex flex-col ${isDark ? 'bg-[#0f172a]' : 'bg-white'}`}>
@@ -47,7 +47,7 @@ export function HireModal({ professional, onClose }: HireModalProps) {
 
         {/* Header */}
         <div className={`flex items-center justify-between px-5 pt-3 pb-4 border-b ${isDark ? 'border-slate-800' : 'border-slate-100'}`}>
-          <h2 className={`text-base font-bold ${isDark ? 'text-[#FF5A12]' : 'text-slate-800'}`}>{t('hire.title')}</h2>
+          <h2 className={`text-base font-bold ${isDark ? 'text-[#0D9488]' : 'text-slate-800'}`}>{t('hire.title')}</h2>
           <button
             onClick={onClose}
             className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors ${isDark ? 'bg-slate-800 hover:bg-slate-700' : 'bg-slate-100 hover:bg-slate-200'}`}
@@ -74,8 +74,8 @@ export function HireModal({ professional, onClose }: HireModalProps) {
             <p className={`text-sm font-semibold truncate ${isDark ? 'text-white' : 'text-slate-800'}`}>{professional.name}</p>
             <p className={`text-xs truncate ${isDark ? 'text-white' : 'text-slate-500'}`}>{professional.role}</p>
           </div>
-          <div className={`flex items-center gap-1 px-2 py-1 rounded-lg border flex-shrink-0 ${isDark ? 'bg-[#FF5A12]/10 border-[#FF5A12]/30' : 'bg-amber-50 border-amber-100'}`}>
-            <Star className="w-3 h-3 fill-[#FF5A12] text-[#FF5A12]" />
+          <div className={`flex items-center gap-1 px-2 py-1 rounded-lg border flex-shrink-0 ${isDark ? 'bg-[#0D9488]/10 border-[#0D9488]/30' : 'bg-sky-50 border-sky-100'}`}>
+            <Star className="w-3 h-3 fill-[#0D9488] text-[#0D9488]" />
             <span className={`text-xs font-semibold ${isDark ? 'text-white' : 'text-slate-700'}`}>{professional.rating}</span>
           </div>
         </div>
@@ -92,7 +92,7 @@ export function HireModal({ professional, onClose }: HireModalProps) {
               onChange={e => setDescription(e.target.value.slice(0, 500))}
               placeholder={t('hire.describePh')}
               rows={4}
-              className={`w-full px-4 py-3 rounded-xl border text-sm outline-none focus:border-[#FF5A12] focus:ring-2 focus:ring-[#FF5A12]/15 resize-none transition-all ${isDark ? 'border-slate-700 bg-slate-900 text-white placeholder:text-slate-500' : 'border-slate-200 bg-slate-50 text-slate-800 placeholder:text-slate-400'}`}
+              className={`w-full px-4 py-3 rounded-xl border text-sm outline-none focus:border-[#0D9488] focus:ring-2 focus:ring-[#0D9488]/15 resize-none transition-all ${isDark ? 'border-slate-700 bg-slate-900 text-white placeholder:text-slate-500' : 'border-slate-200 bg-slate-50 text-slate-800 placeholder:text-slate-400'}`}
             />
             <p className={`text-[10px] mt-1 text-right ${isDark ? 'text-white' : 'text-slate-400'}`}>{description.length}/500</p>
           </div>
@@ -107,7 +107,7 @@ export function HireModal({ professional, onClose }: HireModalProps) {
               value={date}
               min={today}
               onChange={e => setDate(e.target.value)}
-              className={`w-full px-4 py-2.5 rounded-xl border text-sm outline-none focus:border-[#FF5A12] focus:ring-2 focus:ring-[#FF5A12]/15 transition-all ${isDark ? 'border-slate-700 bg-slate-900 text-white [color-scheme:dark]' : 'border-slate-200 bg-slate-50 text-slate-800'}`}
+              className={`w-full px-4 py-2.5 rounded-xl border text-sm outline-none focus:border-[#0D9488] focus:ring-2 focus:ring-[#0D9488]/15 transition-all ${isDark ? 'border-slate-700 bg-slate-900 text-white [color-scheme:dark]' : 'border-slate-200 bg-slate-50 text-slate-800'}`}
             />
           </div>
 
@@ -126,7 +126,7 @@ export function HireModal({ professional, onClose }: HireModalProps) {
                 min={0}
                 onChange={e => setOffer(e.target.value)}
                 placeholder={String(suggestedBase)}
-                className={`w-full pl-9 pr-4 py-2.5 rounded-xl border text-sm outline-none focus:border-[#FF5A12] focus:ring-2 focus:ring-[#FF5A12]/15 transition-all ${isDark ? 'border-slate-700 bg-slate-900 text-white placeholder:text-slate-500' : 'border-slate-200 bg-slate-50 text-slate-800 placeholder:text-slate-400'}`}
+                className={`w-full pl-9 pr-4 py-2.5 rounded-xl border text-sm outline-none focus:border-[#0D9488] focus:ring-2 focus:ring-[#0D9488]/15 transition-all ${isDark ? 'border-slate-700 bg-slate-900 text-white placeholder:text-slate-500' : 'border-slate-200 bg-slate-50 text-slate-800 placeholder:text-slate-400'}`}
               />
             </div>
             <p className={`text-[10px] mb-2 ${isDark ? 'text-white' : 'text-slate-400'}`}>
@@ -143,10 +143,10 @@ export function HireModal({ professional, onClose }: HireModalProps) {
                     onClick={() => setOffer(String(val))}
                     className={`flex-1 py-2 rounded-xl text-xs font-semibold border transition-all ${
                       active
-                        ? 'bg-[#FF5A12] text-white border-[#FF5A12] shadow-[0_2px_8px_rgba(249,115,22,0.3)]'
+                        ? 'bg-[#0D9488] text-white border-[#0D9488] shadow-[0_2px_8px_rgba(249,115,22,0.3)]'
                         : isDark
-                          ? 'bg-slate-900 text-white border-slate-700 hover:border-[#FF5A12]/50'
-                          : 'bg-white text-slate-600 border-slate-200 hover:border-[#FF5A12]/50 hover:text-[#FF5A12]'
+                          ? 'bg-slate-900 text-white border-slate-700 hover:border-[#0D9488]/50'
+                          : 'bg-white text-slate-600 border-slate-200 hover:border-[#0D9488]/50 hover:text-[#0D9488]'
                     }`}
                   >
                     {symbol}{val}
@@ -175,7 +175,7 @@ export function HireModal({ professional, onClose }: HireModalProps) {
               <div className={`w-12 h-12 rounded-full flex items-center justify-center mb-2 ${isDark ? 'bg-green-500/20' : 'bg-green-100'}`}>
                 <Send className={`w-5 h-5 ${isDark ? 'text-green-400' : 'text-green-600'}`} />
               </div>
-              <p className={`text-sm font-bold ${isDark ? 'text-[#FF5A12]' : 'text-slate-800'}`}>{t('hire.sent')}</p>
+              <p className={`text-sm font-bold ${isDark ? 'text-[#0D9488]' : 'text-slate-800'}`}>{t('hire.sent')}</p>
               <p className={`text-xs mt-1 text-center ${isDark ? 'text-white' : 'text-slate-500'}`}>
                 {t('hire.sentHint', { name: professional.name })}
               </p>
@@ -191,7 +191,7 @@ export function HireModal({ professional, onClose }: HireModalProps) {
               <button
                 onClick={handleSend}
                 disabled={!description.trim()}
-                className="flex-1 py-3 rounded-xl bg-[#FF5A12] text-white text-sm font-semibold hover:bg-[#E04E0E] disabled:opacity-40 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2 shadow-[0_4px_14px_rgba(249,115,22,0.35)]"
+                className="flex-1 py-3 rounded-xl bg-[#0D9488] text-white text-sm font-semibold hover:bg-[#0F766E] disabled:opacity-40 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2 shadow-[0_4px_14px_rgba(249,115,22,0.35)]"
               >
                 <Send className="w-4 h-4" />
                 {t('hire.send')}

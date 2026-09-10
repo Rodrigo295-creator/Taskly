@@ -176,7 +176,7 @@ function Stars({ n }: { n: number }) {
   return (
     <div className="flex gap-0.5">
       {[1,2,3,4,5].map(i => (
-        <Star key={i} className={`w-3.5 h-3.5 ${i <= n ? 'fill-[#FF5A12] text-[#FF5A12]' : 'fill-slate-200 text-slate-200'}`} />
+        <Star key={i} className={`w-3.5 h-3.5 ${i <= n ? 'fill-[#0D9488] text-[#0D9488]' : 'fill-slate-200 text-slate-200'}`} />
       ))}
     </div>
   );
@@ -285,7 +285,7 @@ function RecordCard({ rec }: { rec: ServiceRecord }) {
             </div>
             <div className="bg-white border border-slate-100 rounded-xl p-2 text-center">
               <p className="text-[10px] text-slate-400">Por hora</p>
-              <p className="text-xs font-bold text-[#FF5A12] mt-0.5">
+              <p className="text-xs font-bold text-[#0D9488] mt-0.5">
                 {fmt(rec.charged / (rec.durationMin / 60), { decimals: 0 })}/h
               </p>
             </div>
@@ -322,10 +322,10 @@ export function ProHistoryScreen() {
 
         {/* KPI strip */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
-          <div className="bg-[#FFF0E6] rounded-2xl p-3">
+          <div className="bg-[#ECFDF5] rounded-2xl p-3">
             <div className="flex items-center gap-1.5 mb-1">
-              <Banknote className="w-3.5 h-3.5 text-[#FF5A12]" />
-              <p className="text-[10px] font-semibold text-[#FF5A12] uppercase tracking-wide">Faturado</p>
+              <Banknote className="w-3.5 h-3.5 text-[#0D9488]" />
+              <p className="text-[10px] font-semibold text-[#0D9488] uppercase tracking-wide">Faturado</p>
             </div>
             <p className="text-base font-extrabold text-slate-800">{fmt(totalCharged)}</p>
             <p className="text-[10px] text-slate-500 mt-0.5">Líq. {fmt(totalNet)}</p>
@@ -364,8 +364,8 @@ export function ProHistoryScreen() {
               onClick={() => setFilter(f)}
               className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-colors ${
                 filter === f
-                  ? 'bg-[#FF5A12] text-white border-[#FF5A12]'
-                  : 'bg-white text-slate-500 border-slate-200 hover:border-[#FF5A12] hover:text-[#FF5A12]'
+                  ? 'bg-[#0D9488] text-white border-[#0D9488]'
+                  : 'bg-white text-slate-500 border-slate-200 hover:border-[#0D9488] hover:text-[#0D9488]'
               }`}
             >
               {f === 'todos' ? 'Todos' : f === 'concluido' ? 'Concluídos' : 'Cancelados'}

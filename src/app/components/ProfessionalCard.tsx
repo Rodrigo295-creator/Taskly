@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Star } from 'lucide-react';
+import { Star, MessageCircle } from 'lucide-react';
 import { useAppSettings } from '../context/AppSettings';
 import { HireModal } from './HireModal';
 
@@ -12,10 +12,12 @@ interface ProfessionalCardProps {
   priceUnit: string;
   image: string;
   isOnline: boolean;
+  /** Opens (or creates) a chat conversation with this professional */
+  onMessage?: () => void;
 }
 
 export function ProfessionalCard({
-  name, role, description, rating, price, priceUnit, image, isOnline,
+  name, role, description, rating, price, priceUnit, image, isOnline, onMessage,
 }: ProfessionalCardProps) {
   const { fmt, t } = useAppSettings();
   const [showModal, setShowModal] = useState(false);
@@ -35,7 +37,7 @@ export function ProfessionalCard({
                 <p className="text-xs text-slate-500 mt-0.5">{role}</p>
               </div>
               <div className="flex items-center gap-1 bg-slate-50 px-2 py-1 rounded-lg border border-slate-100">
-                <Star className="text-[#F97316] w-[14px] h-[14px] fill-current" />
+                <Star className="text-[#0D9488] w-[14px] h-[14px] fill-current" />
                 <span className="text-xs font-medium text-slate-700">{rating}</span>
               </div>
             </div>
@@ -50,12 +52,24 @@ export function ProfessionalCard({
                   <span className="text-xs text-slate-400 font-normal">{priceUnit}</span>
                 </p>
               </div>
-              <button
-                onClick={() => setShowModal(true)}
-                className={`${isOnline ? 'bg-[#F97316] hover:bg-[#EA6A0A]' : 'bg-[#1E2A38] hover:bg-slate-800'} text-white px-5 py-2 rounded-xl text-[14px] font-semibold transition-colors shadow-[0_1px_3px_rgba(0,0,0,0.06)]`}
-              >
-                {t('common.hire')}
-              </button>
+              <div className="flex items-center gap-2">
+                {onMessage && (
+                  <button
+                    onClick={onMessage}
+                    aria-label={t('common.message')}
+                    title={t('common.message')}
+                    className="w-9 h-9 rounded-xl border border-[#0D9488]/30 bg-[#ECFDF5]/60 hover:bg-[#ECFDF5] text-[#0D9488] flex items-center justify-center transition-colors"
+                  >
+                    <MessageCircle className="w-4 h-4" />
+                  </button>
+                )}
+                <button
+                  onClick={() => setShowModal(true)}
+                  className={`${isOnline ? 'bg-[#0D9488] hover:bg-[#0F766E]' : 'bg-[#1E2A38] hover:bg-slate-800'} text-white px-5 py-2 rounded-xl text-[14px] font-semibold transition-colors shadow-[0_1px_3px_rgba(0,0,0,0.06)]`}
+                >
+                  {t('common.hire')}
+                </button>
+              </div>
             </div>
           </div>
         </div>

@@ -4,7 +4,10 @@ import { ProPayoutBreakdown } from './ProPayoutBreakdown';
 import {
   Send, ArrowLeft, Circle, CheckCircle,
   Clock, MapPin, DollarSign, X, ClipboardList, ChevronRight,
+  Loader2, MessageCircle,
 } from 'lucide-react';
+import { supabaseConfigured } from '@/lib/supabase';
+import { formatChatTime, useConversations, useMessages } from '@/hooks/useChat';
 
 /* ── types ───────────────────────────────────────────────────────── */
 
@@ -139,7 +142,7 @@ const INITIAL_CONVOS: ClientConvo[] = [
 ];
 
 const TAG_CONFIG = {
-  novo:      { label: 'Novo',      color: 'bg-[#FEF0E6] text-[#F97316]' },
+  novo:      { label: 'Novo',      color: 'bg-[#ECFDF5] text-[#0D9488]' },
   agendado:  { label: 'Agendado',  color: 'bg-blue-50 text-blue-600' },
   concluido: { label: 'Concluído', color: 'bg-green-50 text-green-600' },
 };
@@ -174,7 +177,7 @@ function ProposalModal({ onSend, onClose }: {
               value={form.service}
               onChange={e => set('service', e.target.value)}
               placeholder={t('prochat.servicePh')}
-              className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm outline-none focus:border-[#F97316] focus:ring-2 focus:ring-[#F97316]/15"
+              className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm outline-none focus:border-[#0D9488] focus:ring-2 focus:ring-[#0D9488]/15"
             />
           </div>
           <div className="grid grid-cols-2 gap-2">
@@ -184,7 +187,7 @@ function ProposalModal({ onSend, onClose }: {
                 value={form.date}
                 onChange={e => set('date', e.target.value)}
                 placeholder="16 mai. 2026"
-                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm outline-none focus:border-[#F97316] focus:ring-2 focus:ring-[#F97316]/15"
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm outline-none focus:border-[#0D9488] focus:ring-2 focus:ring-[#0D9488]/15"
               />
             </div>
             <div>
@@ -193,7 +196,7 @@ function ProposalModal({ onSend, onClose }: {
                 value={form.time}
                 onChange={e => set('time', e.target.value)}
                 placeholder="09:00"
-                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm outline-none focus:border-[#F97316] focus:ring-2 focus:ring-[#F97316]/15"
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm outline-none focus:border-[#0D9488] focus:ring-2 focus:ring-[#0D9488]/15"
               />
             </div>
           </div>
@@ -205,7 +208,7 @@ function ProposalModal({ onSend, onClose }: {
                 value={form.price || ''}
                 onChange={e => set('price', Number(e.target.value))}
                 placeholder="200"
-                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm outline-none focus:border-[#F97316] focus:ring-2 focus:ring-[#F97316]/15"
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm outline-none focus:border-[#0D9488] focus:ring-2 focus:ring-[#0D9488]/15"
               />
             </div>
             <div>
@@ -214,7 +217,7 @@ function ProposalModal({ onSend, onClose }: {
                 value={form.location}
                 onChange={e => set('location', e.target.value)}
                 placeholder="Bairro, SP"
-                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm outline-none focus:border-[#F97316] focus:ring-2 focus:ring-[#F97316]/15"
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm outline-none focus:border-[#0D9488] focus:ring-2 focus:ring-[#0D9488]/15"
               />
             </div>
           </div>
@@ -229,7 +232,7 @@ function ProposalModal({ onSend, onClose }: {
           <button
             disabled={!valid}
             onClick={() => valid && onSend({ ...form, status: 'pending' })}
-            className="flex-1 py-2.5 rounded-xl bg-[#F97316] disabled:opacity-50 text-white text-sm font-semibold hover:bg-[#EA6A0A] transition-colors"
+            className="flex-1 py-2.5 rounded-xl bg-[#0D9488] disabled:opacity-50 text-white text-sm font-semibold hover:bg-[#0F766E] transition-colors"
           >
             {t('prochat.sendProposal')}
           </button>
@@ -249,15 +252,15 @@ function ProposalBubble({ proposal, fromPro }: { proposal: Proposal; fromPro: bo
     <div className={`rounded-2xl border overflow-hidden text-sm w-[230px] ${
       accepted ? 'border-green-200 bg-green-50' :
       declined ? 'border-red-100 bg-red-50' :
-      'border-[#F97316]/30 bg-[#FEF0E6]/60'
+      'border-[#0D9488]/30 bg-[#ECFDF5]/60'
     }`}>
       <div className={`px-3 py-2 flex items-center gap-2 border-b ${
         accepted ? 'border-green-200 bg-green-100/50' :
         declined ? 'border-red-100 bg-red-100/50' :
-        'border-[#F97316]/20 bg-[#F97316]/10'
+        'border-[#0D9488]/20 bg-[#0D9488]/10'
       }`}>
-        <ClipboardList className={`w-3.5 h-3.5 flex-shrink-0 ${accepted ? 'text-green-600' : declined ? 'text-red-500' : 'text-[#F97316]'}`} />
-        <span className={`text-xs font-bold ${accepted ? 'text-green-700' : declined ? 'text-red-600' : 'text-[#F97316]'}`}>
+        <ClipboardList className={`w-3.5 h-3.5 flex-shrink-0 ${accepted ? 'text-green-600' : declined ? 'text-red-500' : 'text-[#0D9488]'}`} />
+        <span className={`text-xs font-bold ${accepted ? 'text-green-700' : declined ? 'text-red-600' : 'text-[#0D9488]'}`}>
           {accepted ? t('prochat.proposalAccepted') : declined ? t('prochat.proposalDeclined') : t('prochat.proposal')}
         </span>
       </div>
@@ -277,7 +280,7 @@ function ProposalBubble({ proposal, fromPro }: { proposal: Proposal; fromPro: bo
           </div>
         ) : (
           <div className="flex items-center gap-1 text-[11px] font-bold text-slate-800 mt-1">
-            <DollarSign className="w-3 h-3 text-[#F97316]" />
+            <DollarSign className="w-3 h-3 text-[#0D9488]" />
             {fmt(proposal.price)}
           </div>
         )}
@@ -317,7 +320,7 @@ function PastServicesPanel({ services, clientName }: { services: PastService[]; 
       </div>
       <div className="mt-2 pt-2 border-t border-slate-100 flex justify-between items-center">
         <span className="text-[11px] text-slate-400">Total recebido</span>
-        <span className="text-xs font-bold text-[#F97316]">R$ {total}</span>
+        <span className="text-xs font-bold text-[#0D9488]">R$ {total}</span>
       </div>
     </div>
   );
@@ -325,8 +328,14 @@ function PastServicesPanel({ services, clientName }: { services: PastService[]; 
 
 /* ── main component ──────────────────────────────────────────────── */
 
-export function ProChatScreen() {
-  const { t } = useAppSettings();
+interface ProChatScreenProps {
+  /** Supabase user id — when present (and Supabase configured) the chat is live */
+  userId?: string;
+}
+
+export function ProChatScreen({ userId }: ProChatScreenProps) {
+  const { t, locale } = useAppSettings();
+  const realMode = supabaseConfigured && Boolean(userId);
   const [convos, setConvos]       = useState<ClientConvo[]>(INITIAL_CONVOS);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [inputText, setInputText]  = useState('');
@@ -334,7 +343,45 @@ export function ProChatScreen() {
   const [showHistory, setShowHistory]  = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  const selected = convos.find(c => c.id === selectedId) ?? null;
+  const {
+    conversations: realConvos,
+    loading: convosLoading,
+    error: convosError,
+  } = useConversations(realMode ? userId : undefined);
+  const {
+    messages: realMessages,
+    loading: messagesLoading,
+    sending,
+    sendMessage: sendRealMessage,
+  } = useMessages(realMode ? selectedId ?? undefined : undefined, userId);
+
+  const displayConvos: ClientConvo[] = realMode
+    ? realConvos.map((c) => ({
+        id: c.id,
+        clientName: c.peer.name,
+        clientImage: c.peer.avatarUrl ?? '',
+        isOnline: false,
+        unread: c.unread,
+        lastMessage: c.lastMessage ?? '',
+        lastTime: formatChatTime(c.lastMessageAt, locale),
+        messages: [],
+        pastServices: [],
+      }))
+    : convos;
+
+  const selectedBase = displayConvos.find(c => c.id === selectedId) ?? null;
+  const selected: ClientConvo | null = realMode
+    ? selectedBase && {
+        ...selectedBase,
+        messages: realMessages.map((m): Message => ({
+          id: m.id,
+          text: m.content,
+          sender: m.senderId === userId ? 'pro' : 'client',
+          time: formatChatTime(m.createdAt, locale),
+          type: 'text',
+        })),
+      }
+    : selectedBase;
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -343,7 +390,9 @@ export function ProChatScreen() {
   const openConvo = (id: string) => {
     setSelectedId(id);
     setShowHistory(false);
-    setConvos(prev => prev.map(c => c.id === id ? { ...c, unread: 0 } : c));
+    if (!realMode) {
+      setConvos(prev => prev.map(c => c.id === id ? { ...c, unread: 0 } : c));
+    }
   };
 
   const pushMessage = (msg: Omit<Message, 'id'>) => {
@@ -357,6 +406,15 @@ export function ProChatScreen() {
 
   const sendText = () => {
     if (!inputText.trim() || !selectedId) return;
+    if (realMode) {
+      if (sending) return;
+      const text = inputText.trim();
+      setInputText('');
+      void sendRealMessage(text).then((ok) => {
+        if (!ok) setInputText(text);
+      });
+      return;
+    }
     const t = now();
     pushMessage({ text: inputText.trim(), sender: 'pro', time: t, type: 'text' });
     setInputText('');
@@ -389,7 +447,7 @@ export function ProChatScreen() {
     }, 1400);
   };
 
-  const totalUnread = convos.reduce((s, c) => s + c.unread, 0);
+  const totalUnread = displayConvos.reduce((s, c) => s + c.unread, 0);
 
   /* ── conversation list ─────────── */
   const SideList = (
@@ -401,12 +459,29 @@ export function ProChatScreen() {
         </p>
       </div>
       <div className="flex-1 overflow-y-auto" style={{ scrollbarWidth: 'none' }}>
-        {convos.map(conv => (
+        {realMode && convosLoading && (
+          <div className="flex justify-center py-10">
+            <Loader2 className="w-6 h-6 animate-spin text-[#0D9488]" />
+          </div>
+        )}
+        {realMode && !convosLoading && convosError && (
+          <p className="text-xs text-slate-400 text-center px-6 py-8">{t('chat.loadError')}</p>
+        )}
+        {realMode && !convosLoading && !convosError && displayConvos.length === 0 && (
+          <div className="flex flex-col items-center text-center px-6 py-10">
+            <div className="w-12 h-12 bg-[#ECFDF5] rounded-2xl flex items-center justify-center mb-3">
+              <MessageCircle className="w-5 h-5 text-[#0D9488]" />
+            </div>
+            <p className="text-sm font-semibold text-slate-700 mb-1">{t('prochat.emptyTitle')}</p>
+            <p className="text-xs text-slate-400">{t('prochat.emptyHint')}</p>
+          </div>
+        )}
+        {displayConvos.map(conv => (
           <button
             key={conv.id}
             onClick={() => openConvo(conv.id)}
             className={`w-full flex items-center gap-3 px-4 py-3.5 text-left border-b border-slate-50 transition-colors ${
-              selectedId === conv.id ? 'bg-[#FEF0E6]' : 'hover:bg-slate-50'
+              selectedId === conv.id ? 'bg-[#ECFDF5]' : 'hover:bg-slate-50'
             }`}
           >
             <div className="relative flex-shrink-0">
@@ -429,7 +504,7 @@ export function ProChatScreen() {
                     </span>
                   )}
                   {conv.unread > 0 && (
-                    <span className="w-4 h-4 bg-[#F97316] text-white text-[9px] font-bold rounded-full flex items-center justify-center">
+                    <span className="w-4 h-4 bg-[#0D9488] text-white text-[9px] font-bold rounded-full flex items-center justify-center">
                       {conv.unread}
                     </span>
                   )}
@@ -465,29 +540,39 @@ export function ProChatScreen() {
               : 'Offline'}
           </p>
         </div>
-        {/* History toggle */}
+        {/* History toggle (mock demo only — service history is not backed yet) */}
+        {!realMode && (
         <button
           onClick={() => setShowHistory(h => !h)}
           className={`flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-xl border transition-colors ${
             showHistory
-              ? 'bg-[#F97316] text-white border-[#F97316]'
-              : 'bg-white text-slate-500 border-slate-200 hover:border-[#F97316] hover:text-[#F97316]'
+              ? 'bg-[#0D9488] text-white border-[#0D9488]'
+              : 'bg-white text-slate-500 border-slate-200 hover:border-[#0D9488] hover:text-[#0D9488]'
           }`}
         >
           <ClipboardList className="w-3.5 h-3.5" />
           <span className="hidden sm:inline">Histórico</span>
         </button>
+        )}
       </div>
 
       {/* History drawer */}
-      {showHistory && (
+      {!realMode && showHistory && (
         <div className="border-b border-slate-100 bg-slate-50/70 max-h-48 overflow-y-auto flex-shrink-0">
           <PastServicesPanel services={selected.pastServices} clientName={selected.clientName} />
         </div>
       )}
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto px-4 py-4 space-y-3 bg-[#F8F8F6]" style={{ scrollbarWidth: 'none' }}>
+      <div className="flex-1 overflow-y-auto px-4 py-4 space-y-3 bg-white/40 dark:bg-slate-900/30 backdrop-blur-[2px]" style={{ scrollbarWidth: 'none' }}>
+        {realMode && messagesLoading && (
+          <div className="flex justify-center py-8">
+            <Loader2 className="w-5 h-5 animate-spin text-[#0D9488]" />
+          </div>
+        )}
+        {realMode && !messagesLoading && selected.messages.length === 0 && (
+          <p className="text-xs text-slate-400 text-center py-8">{t('chat.noMessages')}</p>
+        )}
         {selected.messages.map((msg, i) => {
           const isPro = msg.sender === 'pro';
           const prevSender = i > 0 ? selected.messages[i - 1].sender : null;
@@ -507,9 +592,9 @@ export function ProChatScreen() {
           if (msg.type === 'proposal_accepted' && !isPro) {
             return (
               <div key={msg.id} className="flex justify-center">
-                <div className="flex items-center gap-2 bg-[#FEF0E6] border border-[#F97316]/30 rounded-full px-4 py-1.5">
-                  <CheckCircle className="w-3.5 h-3.5 text-[#F97316]" />
-                  <span className="text-xs font-semibold text-[#F97316]">{t('prochat.clientAccepted')}</span>
+                <div className="flex items-center gap-2 bg-[#ECFDF5] border border-[#0D9488]/30 rounded-full px-4 py-1.5">
+                  <CheckCircle className="w-3.5 h-3.5 text-[#0D9488]" />
+                  <span className="text-xs font-semibold text-[#0D9488]">{t('prochat.clientAccepted')}</span>
                 </div>
               </div>
             );
@@ -530,7 +615,7 @@ export function ProChatScreen() {
                 ) : (
                   <div className={`px-3.5 py-2.5 rounded-2xl text-sm leading-relaxed ${
                     isPro
-                      ? 'bg-[#F97316] text-white rounded-br-sm'
+                      ? 'bg-[#0D9488] text-white rounded-br-sm'
                       : 'bg-white border border-slate-200 text-slate-800 rounded-bl-sm'
                   }`}>
                     {msg.text}
@@ -546,16 +631,18 @@ export function ProChatScreen() {
 
       {/* Input */}
       <div className="px-4 py-3 border-t border-slate-100 bg-white flex-shrink-0 space-y-2">
-        {/* Quick action */}
+        {/* Quick action (mock demo only — proposals are not backed yet) */}
+        {!realMode && (
         <button
           onClick={() => setShowProposal(true)}
-          className="flex items-center gap-2 text-xs font-semibold text-[#F97316] border border-[#F97316]/30 bg-[#FEF0E6]/60 hover:bg-[#FEF0E6] rounded-xl px-3 py-1.5 transition-colors"
+          className="flex items-center gap-2 text-xs font-semibold text-[#0D9488] border border-[#0D9488]/30 bg-[#ECFDF5]/60 hover:bg-[#ECFDF5] rounded-xl px-3 py-1.5 transition-colors"
         >
           <ClipboardList className="w-3.5 h-3.5" />
           {t('prochat.sendProposalBtn')}
           <ChevronRight className="w-3.5 h-3.5" />
         </button>
-        <div className="flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-2xl px-4 py-2 focus-within:border-[#F97316] focus-within:ring-2 focus-within:ring-[#F97316]/15 transition-all">
+        )}
+        <div className="flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-2xl px-4 py-2 focus-within:border-[#0D9488] focus-within:ring-2 focus-within:ring-[#0D9488]/15 transition-all">
           <input
             type="text"
             value={inputText}
@@ -566,14 +653,16 @@ export function ProChatScreen() {
           />
           <button
             onClick={sendText}
-            disabled={!inputText.trim()}
+            disabled={!inputText.trim() || (realMode && sending)}
             className={`w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0 transition-all ${
-              inputText.trim()
-                ? 'bg-[#F97316] hover:bg-[#EA6A0A] text-white shadow-sm'
+              inputText.trim() && !(realMode && sending)
+                ? 'bg-[#0D9488] hover:bg-[#0F766E] text-white shadow-sm'
                 : 'bg-slate-200 text-slate-400 cursor-not-allowed'
             }`}
           >
-            <Send className="w-3.5 h-3.5" />
+            {realMode && sending
+              ? <Loader2 className="w-3.5 h-3.5 animate-spin" />
+              : <Send className="w-3.5 h-3.5" />}
           </button>
         </div>
       </div>
@@ -584,9 +673,9 @@ export function ProChatScreen() {
       )}
     </div>
   ) : (
-    <div className="hidden sm:flex flex-col items-center justify-center h-full text-center px-8 bg-[#F8F8F6]">
-      <div className="w-16 h-16 bg-[#FEF0E6] rounded-2xl flex items-center justify-center mb-4">
-        <Send className="w-7 h-7 text-[#F97316]" />
+    <div className="hidden sm:flex flex-col items-center justify-center h-full text-center px-8 bg-white/35 dark:bg-slate-900/25 backdrop-blur-[2px]">
+      <div className="w-16 h-16 bg-[#ECFDF5] rounded-2xl flex items-center justify-center mb-4">
+        <Send className="w-7 h-7 text-[#0D9488]" />
       </div>
       <p className="font-semibold text-slate-700 mb-1">{t('prochat.select')}</p>
       <p className="text-sm text-slate-400">{t('prochat.selectHintClient')}</p>

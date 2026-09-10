@@ -6,6 +6,7 @@
   "scripts": {
     "build": "vite build",
     "dev": "vite",
+    "dev:ensure": "bash scripts/ensure-dev-server.sh",
     "auth:configure": "bash scripts/supabase-configure-oauth.sh",
     "auth:activate": "node scripts/activate-oauth.mjs",
     "auth:activate:interactive": "bash scripts/activate-oauth-interactive.sh"

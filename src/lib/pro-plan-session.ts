@@ -53,6 +53,14 @@ export function saveProPlanSubscription(sub: ProPlanSubscription) {
   }
 }
 
+export function clearProPlanSubscription() {
+  try {
+    sessionStorage.removeItem(PRO_PLAN_KEY);
+  } catch {
+    /* ignore */
+  }
+}
+
 /** Plano premium automático para contas admin_master */
 export function applyAdminMasterPlan() {
   saveProPlanSubscription({

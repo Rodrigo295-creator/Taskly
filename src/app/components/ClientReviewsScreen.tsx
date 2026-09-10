@@ -18,7 +18,7 @@ export function ClientReviewsScreen() {
               <p className="text-sm text-slate-500">{item.professionalName} · {item.date}</p>
               <button
                 type="button"
-                className="mt-3 px-4 py-2 rounded-xl bg-[#FF5A12] text-white text-sm font-bold hover:bg-[#E04E0E]"
+                className="mt-3 px-4 py-2 rounded-xl bg-[#0D9488] text-white text-sm font-bold hover:bg-[#0F766E]"
               >
                 {t('clientReviews.cta.rate')}
               </button>

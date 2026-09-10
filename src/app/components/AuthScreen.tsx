@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Check, Loader2, User, Briefcase } from 'lucide-react';
+import { Check, Loader2, User, Briefcase, ArrowLeft } from 'lucide-react';
+import { LandingAnimatedBackground } from './LandingAnimatedBackground';
 import { BrandName, Logo, LogoMark } from './Logo';
 import { useAppSettings } from '../context/AppSettings';
 import { consumeLoginIntent, type AuthProvider, type AuthSession, type AuthUserType } from '@/lib/auth-session';
@@ -11,11 +12,18 @@ import {
   resetPasswordForEmail,
   supabaseConfigured,
 } from '@/lib/auth-supabase';
+import { authMockEnabled } from '@/lib/supabase';
+import { useAuthProviders } from '@/hooks/useAuthProviders';
 
 type AuthMode = 'login' | 'signup';
+export type AuthPortal = 'client' | 'pro';
 
 interface Props {
+  /** Dedicated portal — locks role (client `/login` vs pro `/pro/login`). */
+  portal: AuthPortal;
   onAuthenticated: (session: AuthSession) => void;
+  onBackToLanding?: () => void;
+  onSwitchPortal?: () => void;
 }
 
 function GoogleIcon() {
@@ -49,21 +57,21 @@ function AppleIcon({ className = 'w-5 h-5' }: { className?: string }) {
   );
 }
 
-export function AuthScreen({ onAuthenticated }: Props) {
+export function AuthScreen({ portal, onAuthenticated, onBackToLanding, onSwitchPortal }: Props) {
   const { t, resolvedTheme } = useAppSettings();
   const isDark = resolvedTheme === 'dark';
+  const { providers, loading: providersLoading } = useAuthProviders();
+  // Em dev sem Supabase os botões sociais usam o mock; em produção só aparecem se o provider estiver ativo.
+  const showGoogle = authMockEnabled || (!providersLoading && providers.google);
+  const showApple = authMockEnabled || (!providersLoading && providers.apple);
+  const showSocial = showGoogle || showApple;
 
-  const [userType, setUserType] = useState<AuthUserType>('client');
+  const userType: AuthUserType = portal === 'pro' ? 'pro' : 'client';
   const [mode, setMode] = useState<AuthMode>('login');
-  const [proLoginOnly, setProLoginOnly] = useState(false);
 
   useEffect(() => {
     const intent = consumeLoginIntent();
-    if (intent) {
-      setUserType(intent.userType);
-      if (intent.mode) setMode(intent.mode);
-      if (intent.userType === 'pro') setProLoginOnly(true);
-    }
+    if (intent?.mode) setMode(intent.mode);
   }, []);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -73,6 +81,7 @@ export function AuthScreen({ onAuthenticated }: Props) {
   const [loading, setLoading] = useState<AuthProvider | 'submit' | null>(null);
 
   const isClient = userType === 'client';
+  const resetRedirect = portal === 'pro' ? '/pro/login' : '/login';
   const bullets = isClient
     ? [
         t('auth.client.bullet1'),
@@ -105,7 +114,11 @@ export function AuthScreen({ onAuthenticated }: Props) {
 
   const handleSocial = async (provider: 'google' | 'apple') => {
     if (!supabaseConfigured) {
-      completeAuthMock(provider, email || undefined, name || undefined);
+      if (authMockEnabled) {
+        completeAuthMock(provider, email || undefined, name || undefined);
+      } else {
+        setError(t('auth.error.backendUnavailable'));
+      }
       return;
     }
     setLoading(provider);
@@ -128,7 +141,7 @@ export function AuthScreen({ onAuthenticated }: Props) {
     }
     setLoading('submit');
     setError(null);
-    const { error } = await resetPasswordForEmail(email.trim());
+    const { error } = await resetPasswordForEmail(email.trim(), resetRedirect);
     setLoading(null);
     if (error) setError(t(authErrorKey(error)));
     else setError(t('auth.resetEmailSent'));
@@ -158,6 +171,10 @@ export function AuthScreen({ onAuthenticated }: Props) {
     }
 
     if (!supabaseConfigured) {
+      if (!authMockEnabled) {
+        setError(t('auth.error.backendUnavailable'));
+        return;
+      }
       setLoading('submit');
       window.setTimeout(() => {
         onAuthenticated({
@@ -174,7 +191,7 @@ export function AuthScreen({ onAuthenticated }: Props) {
     setLoading('submit');
     const result =
       mode === 'login'
-        ? await signInWithEmail(email.trim(), password)
+        ? await signInWithEmail(email.trim(), password, userType)
         : await signUpWithEmail(email.trim(), password, name.trim(), userType);
 
     if (result.error) {
@@ -197,15 +214,17 @@ export function AuthScreen({ onAuthenticated }: Props) {
   };
 
   const inputClass =
-    'w-full px-4 py-3 text-sm rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#F97316]/40 focus:border-[#F97316]/50 transition-shadow';
+    'w-full px-4 py-3 text-sm rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0D9488]/40 focus:border-[#0D9488]/50 transition-shadow';
 
   return (
-    <div className={`min-h-screen flex flex-col lg:flex-row ${isDark ? 'dark bg-[#020617]' : 'bg-white'}`}>
+    <div
+      className={`relative min-h-screen flex flex-col lg:flex-row overflow-hidden bg-[#0F172A] ${isDark ? 'dark text-slate-100' : 'text-[#0F172A]'}`}
+    >
+      <LandingAnimatedBackground variant="auth" />
+
       {/* Left — value proposition */}
-      <div className="relative lg:w-[48%] xl:w-[52%] shrink-0 overflow-hidden bg-[#0F172A] text-white">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0F172A] via-[#1e293b] to-[#F97316]/30" />
-        <div className="absolute -right-24 -bottom-24 w-96 h-96 rounded-full bg-[#F97316]/20 blur-3xl" />
-        <div className="absolute -left-16 top-20 w-64 h-64 rounded-full bg-[#F97316]/10 blur-2xl" />
+      <div className="relative z-10 lg:w-[48%] xl:w-[52%] shrink-0 overflow-hidden text-white">
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0F172A]/55 via-[#0F172A]/25 to-transparent lg:to-[#0F172A]/10" />
 
         <div className="relative z-10 flex flex-col min-h-[280px] lg:min-h-screen p-6 sm:p-10 lg:p-12">
           <div className="flex items-center gap-3 mb-8 lg:mb-12">
@@ -218,35 +237,16 @@ export function AuthScreen({ onAuthenticated }: Props) {
             </div>
           </div>
 
-          {!proLoginOnly ? (
-            <div className="inline-flex p-1 rounded-xl bg-white/10 backdrop-blur-sm border border-white/10 self-start mb-8">
-              <button
-                type="button"
-                onClick={() => setUserType('client')}
-                className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all ${
-                  isClient ? 'bg-[#F97316] text-white shadow-lg' : 'text-slate-300 hover:text-white'
-                }`}
-              >
-                <User className="w-4 h-4" />
-                {t('auth.role.client')}
-              </button>
-              <button
-                type="button"
-                onClick={() => setUserType('pro')}
-                className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all ${
-                  !isClient ? 'bg-[#F97316] text-white shadow-lg' : 'text-slate-300 hover:text-white'
-                }`}
-              >
-                <Briefcase className="w-4 h-4" />
-                {t('auth.role.pro')}
-              </button>
-            </div>
-          ) : (
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#F97316]/20 border border-[#F97316]/30 self-start mb-8 text-sm font-semibold text-[#F97316]">
-              <Briefcase className="w-4 h-4" />
-              {t('auth.role.pro')}
-            </div>
-          )}
+          <div
+            className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl self-start mb-8 text-sm font-semibold border ${
+              isClient
+                ? 'bg-[#0D9488]/20 border-[#0D9488]/30 text-[#5EEAD4]'
+                : 'bg-teal-500/20 border-teal-400/40 text-teal-200'
+            }`}
+          >
+            {isClient ? <User className="w-4 h-4" /> : <Briefcase className="w-4 h-4" />}
+            {t(isClient ? 'auth.portal.clientBadge' : 'auth.portal.proBadge')}
+          </div>
 
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight leading-tight max-w-lg">
             {isClient ? t('auth.client.title') : t('auth.pro.title')}
@@ -258,7 +258,7 @@ export function AuthScreen({ onAuthenticated }: Props) {
           <ul className="mt-8 space-y-3 flex-1">
             {bullets.map((text) => (
               <li key={text} className="flex items-start gap-3 text-sm text-slate-200">
-                <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#F97316]/20 text-[#F97316]">
+                <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#0D9488]/20 text-[#0D9488]">
                   <Check className="w-3 h-3" strokeWidth={3} />
                 </span>
                 <span>{text}</span>
@@ -271,10 +271,35 @@ export function AuthScreen({ onAuthenticated }: Props) {
       </div>
 
       {/* Right — auth form */}
-      <div className="flex-1 flex flex-col justify-center px-6 py-10 sm:px-12 lg:px-16 xl:px-20 bg-[#F8F8F6] dark:bg-[#020617]">
-        <div className="w-full max-w-md mx-auto">
-          <div className="lg:hidden mb-8">
+      <div className="relative z-10 flex-1 flex flex-col justify-center overflow-hidden">
+        <div
+          className={`absolute inset-0 backdrop-blur-xl ${
+            isDark ? 'bg-[#020617]/82' : 'bg-white/86'
+          }`}
+        />
+        <div className="relative z-10 w-full max-w-md mx-auto px-6 py-10 sm:px-12 lg:px-16 xl:px-20">
+          {onBackToLanding && (
+            <button
+              type="button"
+              onClick={onBackToLanding}
+              className="mb-6 inline-flex items-center gap-2 text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-[#0D9488] transition-colors"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              {t('auth.backToHome')}
+            </button>
+          )}
+          <div className="lg:hidden mb-6">
             <Logo />
+            <div
+              className={`mt-4 inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold border ${
+                isClient
+                  ? 'bg-[#ECFDF5] border-[#0D9488]/25 text-[#115E59]'
+                  : 'bg-teal-50 dark:bg-teal-950/40 border-teal-200 dark:border-teal-800 text-teal-700 dark:text-teal-300'
+              }`}
+            >
+              {isClient ? <User className="w-3.5 h-3.5" /> : <Briefcase className="w-3.5 h-3.5" />}
+              {t(isClient ? 'auth.portal.clientBadge' : 'auth.portal.proBadge')}
+            </div>
           </div>
 
           <div className="flex gap-1 p-1 rounded-xl bg-slate-200/60 dark:bg-slate-800/80 mb-8">
@@ -288,7 +313,7 @@ export function AuthScreen({ onAuthenticated }: Props) {
                 }}
                 className={`flex-1 py-2.5 rounded-lg text-sm font-semibold transition-colors ${
                   mode === m
-                    ? 'bg-white dark:bg-slate-900 text-[#F97316] shadow-sm'
+                    ? 'bg-white dark:bg-slate-900 text-[#0D9488] shadow-sm'
                     : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                 }`}
               >
@@ -297,40 +322,48 @@ export function AuthScreen({ onAuthenticated }: Props) {
             ))}
           </div>
 
-          <div className="space-y-3">
-            <button
-              type="button"
-              disabled={loading !== null}
-              onClick={() => handleSocial('google')}
-              className="flex w-full items-center justify-center gap-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-4 py-3 text-sm font-semibold text-slate-800 dark:text-slate-100 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors disabled:opacity-60"
-            >
-              {loading === 'google' ? <Loader2 className="w-5 h-5 animate-spin" /> : <GoogleIcon />}
-              {t('auth.continueGoogle')}
-            </button>
-
-            <button
-              type="button"
-              disabled={loading !== null}
-              onClick={() => handleSocial('apple')}
-              className="flex w-full items-center justify-center gap-3 rounded-xl bg-[#0F172A] dark:bg-white px-4 py-3 text-sm font-semibold text-white dark:text-[#0F172A] hover:opacity-90 transition-opacity disabled:opacity-60"
-            >
-              {loading === 'apple' ? (
-                <Loader2 className="w-5 h-5 animate-spin" />
-              ) : (
-                <AppleIcon className="w-5 h-5 dark:text-[#0F172A]" />
+          {showSocial && (
+            <div className="space-y-3">
+              {showGoogle && (
+                <button
+                  type="button"
+                  disabled={loading !== null}
+                  onClick={() => handleSocial('google')}
+                  className="flex w-full items-center justify-center gap-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-4 py-3 text-sm font-semibold text-slate-800 dark:text-slate-100 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors disabled:opacity-60"
+                >
+                  {loading === 'google' ? <Loader2 className="w-5 h-5 animate-spin" /> : <GoogleIcon />}
+                  {t('auth.continueGoogle')}
+                </button>
               )}
-              {t('auth.continueApple')}
-            </button>
-          </div>
 
-          <div className="relative my-8">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-slate-200 dark:border-slate-700" />
+              {showApple && (
+                <button
+                  type="button"
+                  disabled={loading !== null}
+                  onClick={() => handleSocial('apple')}
+                  className="flex w-full items-center justify-center gap-3 rounded-xl bg-[#0F172A] dark:bg-white px-4 py-3 text-sm font-semibold text-white dark:text-[#0F172A] hover:opacity-90 transition-opacity disabled:opacity-60"
+                >
+                  {loading === 'apple' ? (
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                  ) : (
+                    <AppleIcon className="w-5 h-5 dark:text-[#0F172A]" />
+                  )}
+                  {t('auth.continueApple')}
+                </button>
+              )}
             </div>
-            <div className="relative flex justify-center text-xs uppercase tracking-wider">
-              <span className="bg-[#F8F8F6] dark:bg-[#020617] px-3 text-slate-500">{t('auth.orEmail')}</span>
+          )}
+
+          {showSocial && (
+            <div className="relative my-8">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-slate-200 dark:border-slate-700" />
+              </div>
+              <div className="relative flex justify-center text-xs uppercase tracking-wider">
+                <span className="bg-white/70 dark:bg-slate-900/60 backdrop-blur-sm px-3 text-slate-500">{t('auth.orEmail')}</span>
+              </div>
             </div>
-          </div>
+          )}
 
           {error && (
             <div className="mb-4 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200/80 dark:border-rose-900/50 px-4 py-3 text-sm text-rose-700 dark:text-rose-300">
@@ -409,7 +442,7 @@ export function AuthScreen({ onAuthenticated }: Props) {
                 <button
                   type="button"
                   onClick={() => void handleForgotPassword()}
-                  className="text-xs font-semibold text-[#F97316] hover:underline"
+                  className="text-xs font-semibold text-[#0D9488] hover:underline"
                 >
                   {t('auth.forgotPassword')}
                 </button>
@@ -419,12 +452,22 @@ export function AuthScreen({ onAuthenticated }: Props) {
             <button
               type="submit"
               disabled={loading !== null}
-              className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#F97316] px-4 py-3.5 text-sm font-bold text-white hover:bg-[#EA6C10] transition-colors disabled:opacity-60 shadow-lg shadow-[#F97316]/25"
+              className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#0D9488] px-4 py-3.5 text-sm font-bold text-white hover:bg-[#0F766E] transition-colors disabled:opacity-60 shadow-lg shadow-[#0D9488]/25"
             >
               {loading === 'submit' && <Loader2 className="w-5 h-5 animate-spin" />}
               {t(mode === 'login' ? 'auth.submit.login' : 'auth.submit.signup')}
             </button>
           </form>
+
+          {onSwitchPortal && (
+            <button
+              type="button"
+              onClick={onSwitchPortal}
+              className="mt-6 w-full text-center text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-[#0D9488] transition-colors"
+            >
+              {t(isClient ? 'auth.portal.switchToPro' : 'auth.portal.switchToClient')}
+            </button>
+          )}
 
           <p className="mt-8 text-center text-[11px] leading-relaxed text-slate-500 dark:text-slate-400">
             {t('auth.terms')}

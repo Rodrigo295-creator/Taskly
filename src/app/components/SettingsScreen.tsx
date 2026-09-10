@@ -45,7 +45,6 @@ import {
   InlineBlock,
   ChipSelect,
   SavedBanner,
-  Subsection,
 } from './settings/SettingsUI';
 import { LangModal, CurrencyModal } from './settings/settings-modals';
 
@@ -141,9 +140,6 @@ export function SettingsScreen({ initialTab = 'general', onOpenTerms, onOpenPriv
   const [personalizedAds, setPersonalizedAds] = useState(initialPrivacy.personalizedAds);
   const [locationAccess, setLocationAccess] = useState(initialPrivacy.locationAccess);
 
-  const [biometric, setBiometric] = useState(false);
-  const [loginAlerts, setLoginAlerts] = useState(true);
-
   useEffect(() => {
     writeNotificationPrefs({
       push: pushNotif,
@@ -207,7 +203,7 @@ export function SettingsScreen({ initialTab = 'general', onOpenTerms, onOpenPriv
               onClick={() => setTab(id)}
               className={`whitespace-nowrap text-left px-3.5 py-2.5 rounded-xl text-sm font-medium transition-colors shrink-0 xl:w-full ${
                 tab === id
-                  ? 'bg-[#FEF0E6] text-[#F97316] dark:bg-[#F97316]/15 shadow-sm'
+                  ? 'bg-[#ECFDF5] text-[#0D9488] dark:bg-[#0D9488]/15 shadow-sm'
                   : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-white/5'
               }`}
             >
@@ -255,7 +251,7 @@ export function SettingsScreen({ initialTab = 'general', onOpenTerms, onOpenPriv
                       icon={ScrollText}
                       label={t('terms.button')}
                       sublabel={t('terms.buttonSub')}
-                      color="text-[#F97316]"
+                      color="text-[#0D9488]"
                       onClick={onOpenTerms}
                     />
                   )}
@@ -284,7 +280,7 @@ export function SettingsScreen({ initialTab = 'general', onOpenTerms, onOpenPriv
                       onClick={() => setTheme(value)}
                       className={`flex flex-col items-center justify-center gap-1.5 py-3.5 sm:py-3 px-2 rounded-xl border text-xs sm:text-sm font-medium transition-colors min-w-0 w-full ${
                         theme === value
-                          ? 'border-[#F97316] bg-[#FEF0E6] text-[#F97316] dark:bg-[#F97316]/15'
+                          ? 'border-[#0D9488] bg-[#ECFDF5] text-[#0D9488] dark:bg-[#0D9488]/15'
                           : 'border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
                       }`}
                     >
@@ -303,12 +299,12 @@ export function SettingsScreen({ initialTab = 'general', onOpenTerms, onOpenPriv
                       onClick={() => setFontSize(value)}
                       className={`flex flex-col items-center justify-center gap-1 py-3.5 sm:py-3 px-2 rounded-xl border transition-colors min-w-0 w-full ${
                         fontSize === value
-                          ? 'border-[#F97316] bg-[#FEF0E6] dark:bg-[#F97316]/15'
+                          ? 'border-[#0D9488] bg-[#ECFDF5] dark:bg-[#0D9488]/15'
                           : 'border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800'
                       }`}
                     >
                       <span className={`font-bold text-slate-900 dark:text-white ${size}`}>Aa</span>
-                      <span className={`text-xs font-medium ${fontSize === value ? 'text-[#F97316]' : 'text-slate-500'}`}>{label}</span>
+                      <span className={`text-xs font-medium ${fontSize === value ? 'text-[#0D9488]' : 'text-slate-500'}`}>{label}</span>
                     </button>
                   ))}
                 </div>
@@ -345,7 +341,7 @@ export function SettingsScreen({ initialTab = 'general', onOpenTerms, onOpenPriv
                     sublabel={sub}
                     value={notifPrefs[key]}
                     onChange={(v) => setNotifPrefs((p) => ({ ...p, [key]: v }))}
-                    color="text-[#F97316]"
+                    color="text-[#0D9488]"
                   />
                 ))}
               </Section>
@@ -400,36 +396,20 @@ export function SettingsScreen({ initialTab = 'general', onOpenTerms, onOpenPriv
                 color="text-teal-500"
                 disabled
               />
-              <ToggleRow icon={Fingerprint} label={t('settings.security.biometric')} sublabel={t('settings.security.biometricSub')} value={biometric} onChange={setBiometric} color="text-indigo-500" />
-              <ToggleRow icon={Mail} label={t('settings.security.loginAlerts')} sublabel={t('settings.security.loginAlertsSub')} value={loginAlerts} onChange={setLoginAlerts} color="text-blue-500" />
-              <Subsection title={t('settings.security.sessions')} description={t('settings.security.sessionsSub')}>
-                <div className="space-y-2">
-                  <div className="flex flex-wrap items-center justify-between gap-3 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/80">
-                    <div className="flex items-center gap-3 min-w-0 flex-1">
-                      <Laptop className="w-5 h-5 text-[#F97316] shrink-0" />
-                      <div className="min-w-0">
-                        <p className="text-sm font-medium text-slate-900 dark:text-white">{t('settings.security.sessionThis')}</p>
-                        <p className="text-xs text-slate-500">Chrome · macOS</p>
-                      </div>
-                    </div>
-                    <span className="text-[10px] font-semibold text-emerald-600 bg-emerald-50 dark:bg-emerald-950/50 px-2 py-0.5 rounded-full shrink-0">
-                      {t('settings.security.sessionActive')}
-                    </span>
-                  </div>
-                  <div className="flex flex-wrap items-center justify-between gap-3 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/80">
-                    <div className="flex items-center gap-3 min-w-0 flex-1">
-                      <Smartphone className="w-5 h-5 text-slate-400 shrink-0" />
-                      <div className="min-w-0">
-                        <p className="text-sm font-medium text-slate-900 dark:text-white">{t('settings.security.sessionOther')}</p>
-                        <p className="text-xs text-slate-500">{t('settings.security.sessionLastSeen')}</p>
-                      </div>
-                    </div>
-                    <button type="button" className="text-xs font-semibold text-rose-500 shrink-0">
-                      {t('settings.security.revoke')}
-                    </button>
-                  </div>
-                </div>
-              </Subsection>
+              <Row
+                icon={Fingerprint}
+                label={t('settings.security.biometric')}
+                sublabel={t('settings.rowSoon')}
+                color="text-indigo-500"
+                disabled
+              />
+              <Row
+                icon={Laptop}
+                label={t('settings.security.sessions')}
+                sublabel={t('settings.rowSoon')}
+                color="text-slate-500"
+                disabled
+              />
             </Section>
           )}
 
@@ -448,7 +428,7 @@ export function SettingsScreen({ initialTab = 'general', onOpenTerms, onOpenPriv
             <Section title={t('settings.billing.methods')} description={t('settings.billing.methodsSub')}>
               <Row icon={CreditCard} label={t('settings.billing.cardDefault')} sublabel={t('settings.billing.cardExpiry')} color="text-indigo-500" disabled />
               <Row icon={Wallet} label={t('settings.billing.pix')} sublabel={t('settings.billing.pixSub')} color="text-emerald-600" disabled />
-              <Row icon={CreditCard} label={t('settings.billing.addCard')} color="text-[#F97316]" disabled />
+              <Row icon={CreditCard} label={t('settings.billing.addCard')} color="text-[#0D9488]" disabled />
               <Row icon={FileText} label={t('settings.billing.invoices')} sublabel={t('settings.billing.invoicesSub')} color="text-slate-500" disabled />
               <Row icon={Mail} label={t('settings.billing.invoiceEmail')} sublabel="lucas.ferreira@email.com" color="text-blue-500" disabled />
             </Section>
@@ -456,7 +436,7 @@ export function SettingsScreen({ initialTab = 'general', onOpenTerms, onOpenPriv
 
           {tab === 'about' && (
             <Section title={t('settings.tab.about')}>
-              <Row icon={Sparkles} label={t('settings.about.version')} sublabel="1.0.0 (build 2025.05)" color="text-[#F97316]" />
+              <Row icon={Sparkles} label={t('settings.about.version')} sublabel="1.0.0 (build 2025.05)" color="text-[#0D9488]" />
               <Row
                 icon={Scale}
                 label={t('settings.about.terms')}

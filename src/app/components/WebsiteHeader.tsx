@@ -90,7 +90,7 @@ export function WebsiteHeader({ screen, setScreen }: Props) {
         onClick={() => (onClick ? onClick() : go(id))}
         className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
           active
-            ? 'text-[#FF5A12] bg-[#FFF0E6] dark:bg-[#FF5A12]/15'
+            ? 'text-[#0D9488] bg-[#ECFDF5] dark:bg-[#0D9488]/15'
             : 'text-slate-600 dark:text-slate-300 hover:text-[#0F172A] dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5'
         }`}
       >
@@ -120,7 +120,7 @@ export function WebsiteHeader({ screen, setScreen }: Props) {
   return (
     <header className="sticky top-0 z-[60] border-b border-slate-200/80 dark:border-slate-700/80 bg-white/90 dark:bg-[#0f172a]/90 backdrop-blur-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 sm:h-16 flex items-center justify-between gap-4">
-        <button type="button" onClick={() => go('home')} className="shrink-0 text-left rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF5A12]/40">
+        <button type="button" onClick={() => go('home')} className="shrink-0 text-left rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0D9488]/40">
           <Logo />
         </button>
 
@@ -134,7 +134,7 @@ export function WebsiteHeader({ screen, setScreen }: Props) {
               onClick={() => setProOpen(!proOpen)}
               className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                 proActive || proOpen
-                  ? 'text-[#FF5A12] bg-[#FFF0E6] dark:bg-[#FF5A12]/15'
+                  ? 'text-[#0D9488] bg-[#ECFDF5] dark:bg-[#0D9488]/15'
                   : 'text-slate-600 dark:text-slate-300 hover:text-[#0F172A] dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5'
               }`}
             >
@@ -150,7 +150,7 @@ export function WebsiteHeader({ screen, setScreen }: Props) {
                     onClick={() => go(id)}
                     className={`flex items-center gap-2 w-full px-4 py-2.5 text-sm text-left transition-colors ${
                       screen === id
-                        ? 'text-[#FF5A12] bg-[#FFF0E6]/80 dark:bg-[#FF5A12]/10'
+                        ? 'text-[#0D9488] bg-[#ECFDF5]/80 dark:bg-[#0D9488]/10'
                         : 'text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-white/5'
                     }`}
                   >
@@ -169,8 +169,8 @@ export function WebsiteHeader({ screen, setScreen }: Props) {
             onClick={() => go('settings')}
             className={`hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold border transition-colors ${
               screen === 'settings'
-                ? 'border-[#FF5A12] text-[#FF5A12] bg-[#FFF0E6]/50 dark:bg-[#FF5A12]/10'
-                : 'border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-200 hover:border-[#FF5A12]/50'
+                ? 'border-[#0D9488] text-[#0D9488] bg-[#ECFDF5]/50 dark:bg-[#0D9488]/10'
+                : 'border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-200 hover:border-[#0D9488]/50'
             }`}
           >
             <UserCircle className="w-4 h-4" />

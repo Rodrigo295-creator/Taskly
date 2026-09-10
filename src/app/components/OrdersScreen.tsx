@@ -35,7 +35,7 @@ export function OrdersScreen() {
             onClick={() => setTab(id)}
             className={`px-4 py-2 rounded-xl text-sm font-semibold transition-colors ${
               tab === id
-                ? 'bg-[#FF5A12] text-white'
+                ? 'bg-[#0D9488] text-white'
                 : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'
             }`}
           >
@@ -58,7 +58,7 @@ export function OrdersScreen() {
             >
               <div className="flex justify-between gap-3 items-start">
                 <div>
-                  <span className="text-[10px] font-semibold uppercase tracking-wider text-[#FF5A12]">
+                  <span className="text-[10px] font-semibold uppercase tracking-wider text-[#0D9488]">
                     {order.category}
                   </span>
                   <h3 className="font-bold text-slate-900 dark:text-white mt-1">{order.title}</h3>
@@ -82,7 +82,7 @@ export function OrdersScreen() {
                 </div>
                 <button
                   type="button"
-                  className="inline-flex items-center gap-1 text-sm font-semibold text-[#FF5A12] hover:underline"
+                  className="inline-flex items-center gap-1 text-sm font-semibold text-[#0D9488] hover:underline"
                 >
                   {t('orders.cta.view')}
                   <ChevronRight className="w-4 h-4" />

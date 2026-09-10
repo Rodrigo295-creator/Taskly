@@ -1,6 +1,8 @@
-import { useState, useRef, useEffect } from 'react';
-import { Send, ArrowLeft, Circle } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import { Send, ArrowLeft, Circle, Loader2, MessageCircle } from 'lucide-react';
 import { useAppSettings } from '../context/AppSettings';
+import { supabaseConfigured } from '@/lib/supabase';
+import { formatChatTime, useConversations, useMessages } from '@/hooks/useChat';
 
 interface Message {
   id: string;
@@ -95,30 +97,117 @@ const INITIAL_CONVERSATIONS: Conversation[] = [
   },
 ];
 
-export function ChatScreen() {
-  const { t } = useAppSettings();
-  const [conversations, setConversations] = useState<Conversation[]>(INITIAL_CONVERSATIONS);
-  const [selectedId, setSelectedId] = useState<string | null>(null);
+/* View-model shared by mock and real (Supabase) modes */
+interface ListItem {
+  id: string;
+  name: string;
+  role: string;
+  image: string;
+  isOnline: boolean;
+  unread: number;
+  lastMessage: string;
+  lastTime: string;
+}
+
+interface ThreadMsg {
+  id: string;
+  text: string;
+  fromMe: boolean;
+  time: string;
+}
+
+interface ChatScreenProps {
+  /** Supabase user id — when present (and Supabase configured) the chat is live */
+  userId?: string;
+  /** Conversation to open right away (e.g. after "message professional" CTA) */
+  initialConversationId?: string | null;
+}
+
+export function ChatScreen({ userId, initialConversationId }: ChatScreenProps) {
+  const { t, locale } = useAppSettings();
+  const realMode = supabaseConfigured && Boolean(userId);
+
+  /* mock state (demo without Supabase) */
+  const [mockConversations, setMockConversations] = useState<Conversation[]>(INITIAL_CONVERSATIONS);
+
+  /* shared UI state */
+  const [selectedId, setSelectedId] = useState<string | null>(
+    realMode ? initialConversationId ?? null : null,
+  );
   const [inputText, setInputText] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const selected = conversations.find(c => c.id === selectedId) ?? null;
+  /* real data */
+  const {
+    conversations: realConversations,
+    loading: convosLoading,
+    error: convosError,
+  } = useConversations(realMode ? userId : undefined);
+  const {
+    messages: realMessages,
+    loading: messagesLoading,
+    sending,
+    sendMessage: sendRealMessage,
+  } = useMessages(realMode ? selectedId ?? undefined : undefined, userId);
+
+  const listItems: ListItem[] = realMode
+    ? realConversations.map((c) => ({
+        id: c.id,
+        name: c.peer.name,
+        role: c.peer.title ?? '',
+        image: c.peer.avatarUrl ?? '',
+        isOnline: false,
+        unread: c.unread,
+        lastMessage: c.lastMessage
+          ? c.lastMessageFromMe
+            ? `${t('common.you')}: ${c.lastMessage}`
+            : c.lastMessage
+          : '',
+        lastTime: formatChatTime(c.lastMessageAt, locale),
+      }))
+    : mockConversations.map((c) => ({
+        id: c.id,
+        name: c.name,
+        role: c.role,
+        image: c.image,
+        isOnline: c.isOnline,
+        unread: c.unread,
+        lastMessage: c.lastMessage,
+        lastTime: c.lastTime,
+      }));
+
+  const selected = listItems.find((c) => c.id === selectedId) ?? null;
+  const mockSelected = realMode ? null : mockConversations.find((c) => c.id === selectedId) ?? null;
+
+  const threadMessages: ThreadMsg[] = realMode
+    ? realMessages.map((m) => ({
+        id: m.id,
+        text: m.content,
+        fromMe: m.senderId === userId,
+        time: formatChatTime(m.createdAt, locale),
+      }))
+    : (mockSelected?.messages ?? []).map((m) => ({
+        id: m.id,
+        text: m.text,
+        fromMe: m.sender === 'user',
+        time: m.time,
+      }));
 
   useEffect(() => {
-    if (selected) {
+    if (selectedId) {
       messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     }
-  }, [selected?.messages.length, selectedId]);
+  }, [threadMessages.length, selectedId]);
 
   const openConversation = (id: string) => {
     setSelectedId(id);
-    setConversations(prev =>
-      prev.map(c => c.id === id ? { ...c, unread: 0 } : c)
-    );
+    if (!realMode) {
+      setMockConversations((prev) => prev.map((c) => (c.id === id ? { ...c, unread: 0 } : c)));
+    }
   };
 
-  const sendMessage = () => {
+  const sendMockMessage = () => {
     if (!inputText.trim() || !selectedId) return;
     const now = new Date();
     const timeStr = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
@@ -128,17 +217,17 @@ export function ChatScreen() {
       sender: 'user',
       time: timeStr,
     };
-    setConversations(prev =>
-      prev.map(c =>
+    setMockConversations((prev) =>
+      prev.map((c) =>
         c.id === selectedId
           ? { ...c, messages: [...c.messages, newMsg], lastMessage: `${t('common.you')}: ${newMsg.text}`, lastTime: timeStr }
-          : c
-      )
+          : c,
+      ),
     );
     setInputText('');
     setTimeout(() => messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' }), 50);
 
-    // Simulated reply after 1.2s
+    // Simulated reply (demo only — never in real mode)
     setTimeout(() => {
       const replies = [
         t('chat.reply1'),
@@ -153,18 +242,31 @@ export function ChatScreen() {
         sender: 'pro',
         time: timeStr,
       };
-      setConversations(prev =>
-        prev.map(c =>
+      setMockConversations((prev) =>
+        prev.map((c) =>
           c.id === selectedId
             ? { ...c, messages: [...c.messages, reply], lastMessage: reply.text, lastTime: timeStr }
-            : c
-        )
+            : c,
+        ),
       );
       setTimeout(() => messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' }), 50);
     }, 1200);
   };
 
-  const totalUnread = conversations.reduce((sum, c) => sum + c.unread, 0);
+  const sendMessage = () => {
+    if (realMode) {
+      const text = inputText.trim();
+      if (!text || !selectedId || sending) return;
+      setInputText('');
+      void sendRealMessage(text).then((ok) => {
+        if (!ok) setInputText(text);
+      });
+      return;
+    }
+    sendMockMessage();
+  };
+
+  const totalUnread = listItems.reduce((sum, c) => sum + c.unread, 0);
 
   /* ── Conversation list ─────────────────────────────────────── */
   const ConversationList = (
@@ -178,12 +280,29 @@ export function ChatScreen() {
         )}
       </div>
       <div className="flex-1 overflow-y-auto" style={{ scrollbarWidth: 'none' }}>
-        {conversations.map(conv => (
+        {realMode && convosLoading && (
+          <div className="flex justify-center py-10">
+            <Loader2 className="w-6 h-6 animate-spin text-[#0D9488]" />
+          </div>
+        )}
+        {realMode && !convosLoading && convosError && (
+          <p className="text-xs text-slate-400 text-center px-6 py-8">{t('chat.loadError')}</p>
+        )}
+        {realMode && !convosLoading && !convosError && listItems.length === 0 && (
+          <div className="flex flex-col items-center text-center px-6 py-10">
+            <div className="w-12 h-12 bg-[#ECFDF5] rounded-2xl flex items-center justify-center mb-3">
+              <MessageCircle className="w-5 h-5 text-[#0D9488]" />
+            </div>
+            <p className="text-sm font-semibold text-slate-700 mb-1">{t('chat.emptyTitle')}</p>
+            <p className="text-xs text-slate-400">{t('chat.emptyHint')}</p>
+          </div>
+        )}
+        {listItems.map((conv) => (
           <button
             key={conv.id}
             onClick={() => openConversation(conv.id)}
             className={`w-full flex items-center gap-3 px-4 py-3.5 transition-colors text-left border-b border-slate-50 ${
-              selectedId === conv.id ? 'bg-[#FEF0E6]' : 'hover:bg-slate-50'
+              selectedId === conv.id ? 'bg-[#ECFDF5]' : 'hover:bg-slate-50'
             }`}
           >
             <div className="relative flex-shrink-0">
@@ -203,10 +322,10 @@ export function ChatScreen() {
               </div>
               <div className="flex items-center justify-between gap-2 mt-0.5">
                 <p className={`text-xs truncate ${conv.unread > 0 ? 'text-slate-700' : 'text-slate-400'}`}>
-                  {conv.lastMessage}
+                  {conv.lastMessage || t('chat.noMessages')}
                 </p>
                 {conv.unread > 0 && (
-                  <span className="w-5 h-5 bg-[#F97316] text-white text-[10px] font-bold rounded-full flex items-center justify-center flex-shrink-0">
+                  <span className="w-5 h-5 bg-[#0D9488] text-white text-[10px] font-bold rounded-full flex items-center justify-center flex-shrink-0">
                     {conv.unread}
                   </span>
                 )}
@@ -246,10 +365,18 @@ export function ChatScreen() {
 
       {/* Messages */}
       <div className="flex-1 overflow-y-auto px-4 py-4 space-y-3" style={{ scrollbarWidth: 'none' }}>
-        {selected.messages.map((msg, i) => {
-          const isUser = msg.sender === 'user';
-          const prevSender = i > 0 ? selected.messages[i - 1].sender : null;
-          const showAvatar = !isUser && msg.sender !== prevSender;
+        {realMode && messagesLoading && (
+          <div className="flex justify-center py-8">
+            <Loader2 className="w-5 h-5 animate-spin text-[#0D9488]" />
+          </div>
+        )}
+        {realMode && !messagesLoading && threadMessages.length === 0 && (
+          <p className="text-xs text-slate-400 text-center py-8">{t('chat.noMessages')}</p>
+        )}
+        {threadMessages.map((msg, i) => {
+          const isUser = msg.fromMe;
+          const prevFromMe = i > 0 ? threadMessages[i - 1].fromMe : null;
+          const showAvatar = !isUser && msg.fromMe !== prevFromMe;
           return (
             <div key={msg.id} className={`flex items-end gap-2 ${isUser ? 'flex-row-reverse' : 'flex-row'}`}>
               {!isUser && (
@@ -262,7 +389,7 @@ export function ChatScreen() {
               <div className={`max-w-[72%] ${isUser ? 'items-end' : 'items-start'} flex flex-col gap-1`}>
                 <div className={`px-3.5 py-2.5 rounded-2xl text-sm leading-relaxed ${
                   isUser
-                    ? 'bg-[#F97316] text-white rounded-br-sm'
+                    ? 'bg-[#0D9488] text-white rounded-br-sm'
                     : 'bg-white border border-slate-200 text-slate-800 rounded-bl-sm'
                 }`}>
                   {msg.text}
@@ -277,7 +404,7 @@ export function ChatScreen() {
 
       {/* Input */}
       <div className="px-4 py-3 border-t border-slate-100 bg-white flex-shrink-0">
-        <div className="flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-2xl px-4 py-2 focus-within:border-[#F97316] focus-within:ring-2 focus-within:ring-[#F97316]/15 transition-all">
+        <div className="flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-2xl px-4 py-2 focus-within:border-[#0D9488] focus-within:ring-2 focus-within:ring-[#0D9488]/15 transition-all">
           <input
             ref={inputRef}
             type="text"
@@ -289,14 +416,16 @@ export function ChatScreen() {
           />
           <button
             onClick={sendMessage}
-            disabled={!inputText.trim()}
+            disabled={!inputText.trim() || (realMode && sending)}
             className={`w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0 transition-all ${
-              inputText.trim()
-                ? 'bg-[#F97316] hover:bg-[#EA6A0A] text-white shadow-sm'
+              inputText.trim() && !(realMode && sending)
+                ? 'bg-[#0D9488] hover:bg-[#0F766E] text-white shadow-sm'
                 : 'bg-slate-200 text-slate-400 cursor-not-allowed'
             }`}
           >
-            <Send className="w-3.5 h-3.5" />
+            {realMode && sending
+              ? <Loader2 className="w-3.5 h-3.5 animate-spin" />
+              : <Send className="w-3.5 h-3.5" />}
           </button>
         </div>
       </div>
@@ -304,8 +433,8 @@ export function ChatScreen() {
   ) : (
     /* Empty state when no chat selected (desktop) */
     <div className="hidden sm:flex flex-col items-center justify-center h-full text-center px-8">
-      <div className="w-16 h-16 bg-[#FEF0E6] rounded-2xl flex items-center justify-center mb-4">
-        <Send className="w-7 h-7 text-[#F97316]" />
+      <div className="w-16 h-16 bg-[#ECFDF5] rounded-2xl flex items-center justify-center mb-4">
+        <Send className="w-7 h-7 text-[#0D9488]" />
       </div>
       <p className="font-semibold text-slate-700 mb-1">{t('chat.selectTitle')}</p>
       <p className="text-sm text-slate-400">{t('chat.selectHint')}</p>
@@ -320,7 +449,7 @@ export function ChatScreen() {
       </div>
 
       {/* Chat area — hidden on mobile when list is shown */}
-      <div className={`${selectedId ? 'flex' : 'hidden sm:flex'} flex-1 flex-col bg-[#F8F8F6] overflow-hidden`}>
+      <div className={`${selectedId ? 'flex' : 'hidden sm:flex'} flex-1 flex-col bg-white/45 dark:bg-slate-900/35 backdrop-blur-[2px] overflow-hidden`}>
         {ChatWindow}
       </div>
     </div>

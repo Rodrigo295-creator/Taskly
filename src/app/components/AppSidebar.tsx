@@ -153,7 +153,7 @@ export function AppSidebar({
             narrow ? 'justify-center px-2 py-2.5' : 'px-3 py-2.5'
           } ${
             active
-              ? 'bg-[#FFF0E6] text-[#FF5A12] dark:bg-[#FF5A12]/15 dark:text-[#FF5A12]'
+              ? 'bg-[#ECFDF5] text-[#0D9488] dark:bg-[#0D9488]/15 dark:text-[#0D9488]'
               : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5 hover:text-slate-900 dark:hover:text-white'
           }`}
         >
@@ -176,8 +176,8 @@ export function AppSidebar({
         >
           <button
             type="button"
-            onClick={() => go('home')}
-            className="rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF5A12]/40 min-w-0"
+            onClick={() => go(isProfessional ? 'pro-dashboard' : 'home')}
+            className="rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0D9488]/40 min-w-0"
           >
             {narrow ? <LogoMark size={36} /> : <Logo />}
           </button>
@@ -197,15 +197,15 @@ export function AppSidebar({
           className="flex-1 overflow-y-auto overflow-x-hidden py-4 px-2 space-y-6"
           style={{ scrollbarWidth: 'thin' }}
         >
-          <NavSection title={t('nav.section.client')} narrow={narrow}>
-            {clientLinks.map((link) => (
-              <NavItem key={link.id} {...link} />
-            ))}
-          </NavSection>
-
-          {isProfessional && (
+          {isProfessional ? (
             <NavSection title={t('nav.section.pro')} narrow={narrow}>
               {proLinks.map((link) => (
+                <NavItem key={link.id} {...link} />
+              ))}
+            </NavSection>
+          ) : (
+            <NavSection title={t('nav.section.client')} narrow={narrow}>
+              {clientLinks.map((link) => (
                 <NavItem key={link.id} {...link} />
               ))}
             </NavSection>
@@ -255,20 +255,20 @@ export function AppSidebar({
         type="button"
         aria-label={t('nav.hideSidebar')}
         onClick={onCloseMobile}
-        className={`fixed inset-0 z-40 bg-black/50 backdrop-blur-sm transition-opacity lg:hidden ${
+        className={`fixed inset-0 z-[60] bg-black/50 backdrop-blur-sm transition-opacity lg:hidden ${
           mobileOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}
       />
 
       <div
-        className={`fixed inset-y-0 left-0 z-50 lg:hidden transition-transform duration-300 ease-out ${
+        className={`fixed inset-y-0 left-0 z-[70] lg:hidden transition-transform duration-300 ease-out ${
           mobileOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
         {renderPanel(false, true)}
       </div>
 
-      <div className="hidden lg:block h-screen sticky top-0 shrink-0 z-30">
+      <div className="hidden lg:block h-screen sticky top-0 shrink-0 self-start">
         {renderPanel(collapsed, false)}
       </div>
     </>

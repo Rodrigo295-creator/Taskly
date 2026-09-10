@@ -40,7 +40,7 @@ const body = {
   site_url: env.SUPABASE_SITE_URL || 'https://taskly-rodrigo295.vercel.app/',
   uri_allow_list:
     env.SUPABASE_URI_ALLOW_LIST ||
-    'http://localhost:5173/,https://taskly-rodrigo295.vercel.app/,https://job4you-rho.vercel.app/',
+    'http://localhost:5173/,http://localhost:5173/app,http://localhost:5173/login,https://taskly-rodrigo295.vercel.app/,https://taskly-rodrigo295.vercel.app/app,https://taskly-rodrigo295.vercel.app/login,https://job4you-rho.vercel.app/,https://job4you-rho.vercel.app/app,https://job4you-rho.vercel.app/login',
 };
 
 const gid = env.GOOGLE_CLIENT_ID?.trim();

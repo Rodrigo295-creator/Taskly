@@ -10,7 +10,7 @@ API="https://api.supabase.com/v1/projects/${PROJECT_REF}/config/auth"
 
 SITE_URL="${SUPABASE_SITE_URL:-https://taskly-rodrigo295.vercel.app/}"
 # Comma-separated allow list (Supabase Auth redirect URLs after OAuth)
-URI_ALLOW_LIST="${SUPABASE_URI_ALLOW_LIST:-http://localhost:5173/,https://taskly-rodrigo295.vercel.app/,https://job4you-rho.vercel.app/}"
+URI_ALLOW_LIST="${SUPABASE_URI_ALLOW_LIST:-http://localhost:5173/,http://localhost:5173/app,http://localhost:5173/login,https://taskly-rodrigo295.vercel.app/,https://taskly-rodrigo295.vercel.app/app,https://taskly-rodrigo295.vercel.app/login,https://job4you-rho.vercel.app/,https://job4you-rho.vercel.app/app,https://job4you-rho.vercel.app/login}"
 
 if [[ -z "${SUPABASE_ACCESS_TOKEN:-}" ]]; then
   echo "Error: set SUPABASE_ACCESS_TOKEN (Personal Access Token from Supabase Dashboard → Account → Access Tokens)." >&2
@@ -32,7 +32,7 @@ payload=$(python3 - <<PY
 import json, os
 p = {
     "site_url": os.environ.get("SUPABASE_SITE_URL", "https://taskly-rodrigo295.vercel.app/"),
-    "uri_allow_list": os.environ.get("SUPABASE_URI_ALLOW_LIST", "http://localhost:5173/,https://taskly-rodrigo295.vercel.app/,https://job4you-rho.vercel.app/"),
+    "uri_allow_list": os.environ.get("SUPABASE_URI_ALLOW_LIST", "http://localhost:5173/,http://localhost:5173/app,http://localhost:5173/login,https://taskly-rodrigo295.vercel.app/,https://taskly-rodrigo295.vercel.app/app,https://taskly-rodrigo295.vercel.app/login,https://job4you-rho.vercel.app/,https://job4you-rho.vercel.app/app,https://job4you-rho.vercel.app/login"),
 }
 gid = os.environ.get("GOOGLE_CLIENT_ID", "").strip()
 gsec = os.environ.get("GOOGLE_CLIENT_SECRET", "").strip()

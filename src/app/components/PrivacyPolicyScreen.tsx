@@ -13,7 +13,7 @@ function BulletList({ items }: { items: string[] }) {
     <ul className="space-y-2.5">
       {items.map((text) => (
         <li key={text} className="flex gap-2.5 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-          <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#FF5A12]" aria-hidden />
+          <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#0D9488]" aria-hidden />
           <span>{text}</span>
         </li>
       ))}
@@ -30,7 +30,7 @@ export function PrivacyPolicyScreen({ onBack }: Props) {
       <button
         type="button"
         onClick={onBack}
-        className="mb-6 inline-flex items-center gap-2 text-sm font-medium text-[#FF5A12] hover:underline"
+        className="mb-6 inline-flex items-center gap-2 text-sm font-medium text-[#0D9488] hover:underline"
       >
         <ArrowLeft className="w-4 h-4" />
         {t('privacy.back')}

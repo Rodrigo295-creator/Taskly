@@ -30,7 +30,7 @@ export function Header() {
         <input
           type="text"
           placeholder={t('hdr.searchPh')}
-          className="w-full bg-[#F5F4F0] text-[#1E293B] pl-12 pr-4 h-[50px] rounded-[30px] text-[15px] outline-none shadow-[0_1px_4px_rgba(0,0,0,0.06)] placeholder:text-[#94A3B8] transition-all focus:ring-2 focus:ring-[#FF5A12]/20"
+          className="w-full bg-[#F5F4F0] text-[#1E293B] pl-12 pr-4 h-[50px] rounded-[30px] text-[15px] outline-none shadow-[0_1px_4px_rgba(0,0,0,0.06)] placeholder:text-[#94A3B8] transition-all focus:ring-2 focus:ring-[#0D9488]/20"
         />
       </div>
       </div>

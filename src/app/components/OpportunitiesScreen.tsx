@@ -23,7 +23,7 @@ export function OpportunitiesScreen() {
             >
               <div className="flex justify-between gap-2 items-start">
                 <div>
-                  <span className="text-[10px] font-semibold uppercase tracking-wider text-[#FF5A12]">
+                  <span className="text-[10px] font-semibold uppercase tracking-wider text-[#0D9488]">
                     {op.category}
                   </span>
                   <h3 className="font-bold text-slate-900 dark:text-white mt-1">{op.title}</h3>
@@ -45,7 +45,7 @@ export function OpportunitiesScreen() {
               <div className="flex justify-end mt-4">
                 <button
                   type="button"
-                  className="px-4 py-2 rounded-xl bg-[#FF5A12] text-white text-sm font-bold hover:bg-[#E04E0E] transition-colors"
+                  className="px-4 py-2 rounded-xl bg-[#0D9488] text-white text-sm font-bold hover:bg-[#0F766E] transition-colors"
                 >
                   {t('opportunities.cta')}
                 </button>

@@ -24,6 +24,7 @@ import {
   Laptop,
 } from 'lucide-react';
 import { useAppSettings } from '../context/AppSettings';
+import { LogoMark } from './Logo';
 
 const MOCK = {
   pro: {
@@ -74,11 +75,11 @@ const MOCK = {
   },
   categories: [
     { icon: Sparkles, label: 'Limpeza', color: 'bg-[#D9F5F0] text-[#0F766E]' },
-    { icon: Wrench, label: 'Reparos', color: 'bg-[#FFE8C7] text-[#B45309]' },
+    { icon: Wrench, label: 'Reparos', color: 'bg-[#DBEAFE] text-[#B45309]' },
     { icon: Scissors, label: 'Beleza', color: 'bg-[#FCE7F3] text-[#BE185D]' },
     { icon: Truck, label: 'Mudanças', color: 'bg-[#D1FAE5] text-[#047857]' },
     { icon: Laptop, label: 'Tecnologia', color: 'bg-[#E4E7FF] text-[#3730A3]' },
-    { icon: Zap, label: 'Elétrica', color: 'bg-[#FFE8D6] text-[#C2410C]' },
+    { icon: Zap, label: 'Elétrica', color: 'bg-[#D1FAE5] text-[#115E59]' },
     { icon: LayoutDashboard, label: 'Montagem', color: 'bg-[#D9F3F8] text-[#0E7490]' },
     { icon: Star, label: 'Outros', color: 'bg-[#EEEAE6] text-[#57534E]' },
   ],
@@ -135,11 +136,11 @@ function ProSidebarMini({ active = 'pro-dashboard' }: { active?: string }) {
   return (
     <aside className="flex h-full w-[19%] min-w-[72px] max-w-[140px] shrink-0 flex-col border-r border-slate-200 bg-white">
       <div className="flex items-center gap-2 border-b border-slate-100 px-3 py-2.5">
-        <img src="/taskly-logo.png" alt="" className="h-6 w-6 rounded-[22%]" draggable={false} />
-        <span className="text-[11px] font-bold text-[#FF5A12]">Taskly</span>
+        <LogoMark size={24} />
+        <span className="text-[11px] font-bold text-[#0D9488]">Taskly</span>
       </div>
       <div className="border-b border-slate-100 px-3 py-2">
-        <span className="rounded-full bg-[#FFF0E6] px-2 py-0.5 text-[8px] font-bold uppercase tracking-wide text-[#FF5A12]">
+        <span className="rounded-full bg-[#ECFDF5] px-2 py-0.5 text-[8px] font-bold uppercase tracking-wide text-[#0D9488]">
           {t('nav.proArea')}
         </span>
       </div>
@@ -148,7 +149,7 @@ function ProSidebarMini({ active = 'pro-dashboard' }: { active?: string }) {
           <div
             key={id}
             className={`flex items-center gap-2 rounded-lg px-2 py-1.5 text-[9px] font-semibold ${
-              id === active ? 'bg-[#FFF0E6] text-[#FF5A12]' : 'text-slate-500'
+              id === active ? 'bg-[#ECFDF5] text-[#0D9488]' : 'text-slate-500'
             }`}
           >
             <Icon className="h-3 w-3 shrink-0" />
@@ -179,8 +180,8 @@ function AppPreviewDesktop() {
         <div className="flex min-w-0 flex-1 flex-col">
           <header className="flex h-9 shrink-0 items-center justify-between border-b border-slate-200/80 bg-white/95 px-4">
             <span className="text-[10px] font-semibold text-slate-600">{t('nav.pro.dashboard')}</span>
-            <div className="relative flex h-6 w-6 items-center justify-center rounded-lg bg-[#FFF0E6]">
-              <Bell className="h-3 w-3 text-[#FF5A12]" />
+            <div className="relative flex h-6 w-6 items-center justify-center rounded-lg bg-[#ECFDF5]">
+              <Bell className="h-3 w-3 text-[#0D9488]" />
               <span className="absolute -right-0.5 -top-0.5 flex h-3 w-3 items-center justify-center rounded-full bg-red-500 text-[6px] font-bold text-white">
                 3
               </span>
@@ -189,7 +190,7 @@ function AppPreviewDesktop() {
 
           <div className="flex-1 overflow-hidden">
             <div className="bg-[#0F172A] px-5 py-5 text-white">
-              <p className="text-[8px] font-bold uppercase tracking-[0.2em] text-[#FF5A12]">{t('pro.area')}</p>
+              <p className="text-[8px] font-bold uppercase tracking-[0.2em] text-[#0D9488]">{t('pro.area')}</p>
               <h1 className="mt-1 text-[18px] font-bold leading-tight">{t('pro.panelTitle')}</h1>
               <div className="mt-2 flex items-center gap-2">
                 <img src={MOCK.pro.avatar} alt="" className="h-8 w-8 rounded-full border-2 border-white/20 object-cover" />
@@ -203,7 +204,7 @@ function AppPreviewDesktop() {
                       <Star className="h-2.5 w-2.5 fill-amber-400 text-amber-400" />
                       {MOCK.pro.rating} · {MOCK.pro.reviews} avaliações
                     </span>
-                    <span className="rounded-full bg-[#FF5A12]/20 px-1.5 py-0.5 text-[7px] font-bold text-[#FFB070]">
+                    <span className="rounded-full bg-[#0D9488]/20 px-1.5 py-0.5 text-[7px] font-bold text-[#5EEAD4]">
                       Plano {MOCK.pro.plan}
                     </span>
                   </div>
@@ -219,10 +220,10 @@ function AppPreviewDesktop() {
 
               <div className="grid grid-cols-4 gap-2">
                 {[
-                  { label: t('pro.gross'), value: MOCK.pro.gross, sub: t('pro.grossSub'), icon: TrendingUp, color: 'bg-[#FFE8D6] text-[#C2410C]', trend: 18 },
+                  { label: t('pro.gross'), value: MOCK.pro.gross, sub: t('pro.grossSub'), icon: TrendingUp, color: 'bg-[#D1FAE5] text-[#115E59]', trend: 18 },
                   { label: t('pro.net'), value: MOCK.pro.net, sub: t('pro.netSub', { percent: 7 }), icon: Wallet, color: 'bg-[#D1FAE5] text-[#047857]' },
                   { label: t('pro.completedServices'), value: String(MOCK.pro.completed), sub: t('pro.thisMonth'), icon: CheckCircle, color: 'bg-[#DCEBFF] text-[#1D4ED8]', trend: 8 },
-                  { label: t('pro.avgRating'), value: String(MOCK.pro.rating), sub: t('pro.ratingSub'), icon: Star, color: 'bg-[#FFE8C7] text-[#B45309]' },
+                  { label: t('pro.avgRating'), value: String(MOCK.pro.rating), sub: t('pro.ratingSub'), icon: Star, color: 'bg-[#DBEAFE] text-[#B45309]' },
                 ].map(({ label, value, sub, icon: Icon, color, trend }) => (
                   <div key={label} className="rounded-xl border border-slate-200 bg-white p-2.5 shadow-sm">
                     <div className="mb-1.5 flex items-start justify-between">
@@ -244,7 +245,7 @@ function AppPreviewDesktop() {
                 <div className="rounded-xl border border-slate-200 bg-white p-2.5">
                   <div className="mb-2 flex items-center justify-between">
                     <p className="text-[9px] font-bold text-slate-800">{t('pro.offers')}</p>
-                    <span className="rounded-full bg-[#FF5A12] px-1.5 py-0.5 text-[7px] font-bold text-white">1 nova</span>
+                    <span className="rounded-full bg-[#0D9488] px-1.5 py-0.5 text-[7px] font-bold text-white">1 nova</span>
                   </div>
                   <div className="rounded-lg border border-slate-100 p-2">
                     <div className="flex gap-2">
@@ -261,7 +262,7 @@ function AppPreviewDesktop() {
                           <span className="text-[7px] text-emerald-600">Recebe {MOCK.offer.net}</span>
                         </div>
                         <div className="mt-1.5 flex gap-1">
-                          <span className="flex-1 rounded-md bg-[#FF5A12] py-1 text-center text-[7px] font-bold text-white">
+                          <span className="flex-1 rounded-md bg-[#0D9488] py-1 text-center text-[7px] font-bold text-white">
                             {t('pro.accept')}
                           </span>
                           <span className="flex-1 rounded-md bg-slate-100 py-1 text-center text-[7px] font-semibold text-slate-600">
@@ -309,7 +310,7 @@ function AppPreviewDesktop() {
                         <span className="font-bold text-slate-700">{value}</span>
                       </div>
                       <div className="h-1.5 rounded-full bg-slate-100">
-                        <div className="h-full rounded-full bg-[#FF5A12]" style={{ width }} />
+                        <div className="h-full rounded-full bg-[#0D9488]" style={{ width }} />
                       </div>
                     </div>
                   ))}
@@ -345,17 +346,17 @@ function AppPreviewMobileClient() {
         </div>
 
         <div className="flex-1 overflow-hidden px-3 py-2">
-          <div className="mb-2 flex items-center justify-between rounded-xl border border-[#FF5A12]/10 bg-gradient-to-r from-[#FF5A12]/10 to-transparent p-2.5">
+          <div className="mb-2 flex items-center justify-between rounded-xl border border-[#0D9488]/10 bg-gradient-to-r from-[#0D9488]/10 to-transparent p-2.5">
             <div>
-              <p className="text-[10px] font-bold text-[#FF5A12]">Taskly</p>
+              <p className="text-[10px] font-bold text-[#0D9488]">Taskly</p>
               <p className="text-[8px] leading-snug text-slate-600">{t('home.banner')}</p>
             </div>
-            <Sparkles className="h-4 w-4 text-[#FF5A12]/70" />
+            <Sparkles className="h-4 w-4 text-[#0D9488]/70" />
           </div>
 
           <div className="mb-2 flex items-center justify-between">
-            <p className="text-[10px] font-bold text-[#FF5A12]">{t('home.categories')}</p>
-            <span className="text-[8px] font-semibold text-[#FF5A12]">{t('home.seeAll')}</span>
+            <p className="text-[10px] font-bold text-[#0D9488]">{t('home.categories')}</p>
+            <span className="text-[8px] font-semibold text-[#0D9488]">{t('home.seeAll')}</span>
           </div>
           <div className="mb-3 grid grid-cols-4 gap-1.5">
             {MOCK.categories.map(({ icon: Icon, label, color }) => (
@@ -369,8 +370,8 @@ function AppPreviewMobileClient() {
           </div>
 
           <div className="mb-3 flex items-center gap-2 rounded-xl bg-[#0F172A] p-2.5 text-white">
-            <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[#FF5A12]/20">
-              <MapPin className="h-3.5 w-3.5 text-[#FF5A12]" />
+            <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[#0D9488]/20">
+              <MapPin className="h-3.5 w-3.5 text-[#0D9488]" />
             </div>
             <div className="min-w-0 flex-1">
               <p className="text-[8px] text-slate-300">{t('order.inProgress')}</p>
@@ -380,7 +381,7 @@ function AppPreviewMobileClient() {
           </div>
 
           <div className="mb-1.5 flex items-center justify-between">
-            <p className="text-[10px] font-bold text-[#FF5A12]">{t('home.nearby')}</p>
+            <p className="text-[10px] font-bold text-[#0D9488]">{t('home.nearby')}</p>
             <span className="text-[8px] text-slate-500">{t('home.recommended')}</span>
           </div>
           <div className="space-y-2">
@@ -398,14 +399,14 @@ function AppPreviewMobileClient() {
                         <p className="text-[7px] text-slate-500">{pro.role}</p>
                       </div>
                       <div className="flex items-center gap-0.5 rounded-md bg-slate-50 px-1 py-0.5">
-                        <Star className="h-2.5 w-2.5 fill-[#FF5A12] text-[#FF5A12]" />
+                        <Star className="h-2.5 w-2.5 fill-[#0D9488] text-[#0D9488]" />
                         <span className="text-[7px] font-semibold">{pro.rating}</span>
                       </div>
                     </div>
                     <p className="mt-1 line-clamp-2 text-[7px] leading-snug text-slate-600">{pro.desc}</p>
                     <div className="mt-1.5 flex items-center justify-between border-t border-slate-100 pt-1.5">
                       <span className="text-[8px] font-bold text-slate-800">{pro.price}</span>
-                      <span className="rounded-lg bg-[#FF5A12] px-2 py-1 text-[7px] font-bold text-white">
+                      <span className="rounded-lg bg-[#0D9488] px-2 py-1 text-[7px] font-bold text-white">
                         {t('common.hire')}
                       </span>
                     </div>
@@ -424,8 +425,8 @@ function AppPreviewMobileClient() {
             { icon: User, label: t('nav.profile') },
           ].map(({ icon: Icon, label, active, badge }) => (
             <div key={label} className="relative flex flex-col items-center gap-0.5">
-              <Icon className={`h-4 w-4 ${active ? 'text-[#FF5A12]' : 'text-slate-400'}`} />
-              <span className={`text-[7px] ${active ? 'font-semibold text-[#FF5A12]' : 'text-slate-400'}`}>{label}</span>
+              <Icon className={`h-4 w-4 ${active ? 'text-[#0D9488]' : 'text-slate-400'}`} />
+              <span className={`text-[7px] ${active ? 'font-semibold text-[#0D9488]' : 'text-slate-400'}`}>{label}</span>
               {badge && <span className="absolute -right-0.5 top-0 h-2 w-2 rounded-full bg-red-500" />}
             </div>
           ))}
@@ -441,7 +442,7 @@ function AppPreviewMobilePro() {
     <div className="flex h-full w-full flex-col overflow-hidden bg-[#EEF2F7] text-left select-none">
         <div className="bg-[#0F172A] px-3 py-3 text-white">
           <div className="mb-2 flex items-center justify-between">
-            <span className="text-[8px] font-bold uppercase tracking-wider text-[#FF5A12]">{t('pro.area')}</span>
+            <span className="text-[8px] font-bold uppercase tracking-wider text-[#0D9488]">{t('pro.area')}</span>
             <Bell className="h-3.5 w-3.5" />
           </div>
           <div className="flex items-center gap-2">
@@ -451,7 +452,7 @@ function AppPreviewMobilePro() {
               <p className="text-[8px] text-slate-300">{MOCK.pro.role}</p>
               <div className="mt-0.5 flex items-center gap-1.5">
                 <span className="text-[7px] text-green-400 font-semibold">● online</span>
-                <span className="rounded bg-[#FF5A12]/20 px-1 py-0.5 text-[6px] font-bold text-[#FFB070]">Plano Pro</span>
+                <span className="rounded bg-[#0D9488]/20 px-1 py-0.5 text-[6px] font-bold text-[#5EEAD4]">Plano Pro</span>
               </div>
             </div>
           </div>
@@ -463,7 +464,7 @@ function AppPreviewMobilePro() {
             {[
               { label: t('pro.net'), value: MOCK.pro.net, icon: Wallet, color: 'text-emerald-600 bg-emerald-50' },
               { label: t('pro.completedServices'), value: String(MOCK.pro.completed), icon: CheckCircle, color: 'text-blue-600 bg-blue-50' },
-              { label: t('pro.avgRating'), value: String(MOCK.pro.rating), icon: Star, color: 'text-amber-600 bg-amber-50' },
+              { label: t('pro.avgRating'), value: String(MOCK.pro.rating), icon: Star, color: 'text-sky-600 bg-sky-50' },
               { label: t('pro.acceptRate'), value: `${MOCK.pro.acceptRate}%`, icon: Award, color: 'text-violet-600 bg-violet-50' },
             ].map(({ label, value, icon: Icon, color }) => (
               <div key={label} className="rounded-xl border border-slate-200 bg-white p-2">
@@ -478,7 +479,7 @@ function AppPreviewMobilePro() {
 
           <div className="mb-2 flex items-center justify-between">
             <p className="text-[9px] font-bold text-slate-800">{t('pro.offers')}</p>
-            <span className="rounded-full bg-[#FF5A12] px-1.5 py-0.5 text-[6px] font-bold text-white">1</span>
+            <span className="rounded-full bg-[#0D9488] px-1.5 py-0.5 text-[6px] font-bold text-white">1</span>
           </div>
           <div className="mb-3 rounded-xl border border-slate-200 bg-white p-2">
             <div className="flex gap-2">
@@ -496,7 +497,7 @@ function AppPreviewMobilePro() {
               </div>
             </div>
             <div className="mt-2 flex gap-1">
-              <span className="flex-1 rounded-lg bg-[#FF5A12] py-1.5 text-center text-[7px] font-bold text-white">{t('pro.accept')}</span>
+              <span className="flex-1 rounded-lg bg-[#0D9488] py-1.5 text-center text-[7px] font-bold text-white">{t('pro.accept')}</span>
               <span className="flex-1 rounded-lg bg-slate-100 py-1.5 text-center text-[7px] font-semibold text-slate-600">{t('pro.ignore')}</span>
             </div>
           </div>
@@ -525,7 +526,7 @@ function AppPreviewMobilePro() {
               </div>
               <div className="text-right">
                 <p className="text-[6px] text-slate-400">{MOCK.chat.time}</p>
-                <span className="mt-0.5 inline-flex h-3.5 w-3.5 items-center justify-center rounded-full bg-[#FF5A12] text-[6px] font-bold text-white">
+                <span className="mt-0.5 inline-flex h-3.5 w-3.5 items-center justify-center rounded-full bg-[#0D9488] text-[6px] font-bold text-white">
                   {MOCK.chat.unread}
                 </span>
               </div>
@@ -541,8 +542,8 @@ function AppPreviewMobilePro() {
             { icon: Wallet, label: t('nav.pro.financial') },
           ].map(({ icon: Icon, label, active, badge }) => (
             <div key={label} className="relative flex flex-col items-center gap-0.5">
-              <Icon className={`h-3.5 w-3.5 ${active ? 'text-[#FF5A12]' : 'text-slate-400'}`} />
-              <span className={`max-w-full truncate text-[6px] ${active ? 'font-semibold text-[#FF5A12]' : 'text-slate-400'}`}>{label}</span>
+              <Icon className={`h-3.5 w-3.5 ${active ? 'text-[#0D9488]' : 'text-slate-400'}`} />
+              <span className={`max-w-full truncate text-[6px] ${active ? 'font-semibold text-[#0D9488]' : 'text-slate-400'}`}>{label}</span>
               {badge && <span className="absolute right-2 top-0 h-1.5 w-1.5 rounded-full bg-red-500" />}
             </div>
           ))}
@@ -639,7 +640,7 @@ export function LandingAppShowcase() {
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="mx-auto mb-12 max-w-2xl text-center">
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-[#FF5A12]/30 bg-[#FF5A12]/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-[#FFB070]">
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-[#0D9488]/30 bg-[#0D9488]/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-[#5EEAD4]">
             {t('landing.showcase.badge')}
           </span>
           <h2 className="mt-4 text-2xl font-black tracking-tight sm:text-3xl">{t('landing.showcase.title')}</h2>
@@ -652,7 +653,7 @@ export function LandingAppShowcase() {
             <span className="rounded-full bg-white/10 px-2.5 py-0.5 text-[10px] font-semibold text-slate-300">
               {t('landing.showcase.desktopDevice')}
             </span>
-            <span className="rounded-full bg-[#FF5A12]/20 px-2.5 py-0.5 text-[10px] font-semibold text-[#FFB070]">
+            <span className="rounded-full bg-[#0D9488]/20 px-2.5 py-0.5 text-[10px] font-semibold text-[#5EEAD4]">
               {t('landing.showcase.desktopPro')}
             </span>
           </div>

@@ -43,7 +43,7 @@ export async function fetchAuthProviders(): Promise<AuthProvidersState> {
         },
       });
       if (!res.ok) {
-        console.warn('[auth] settings', res.status);
+        if (import.meta.env.DEV) console.warn('[auth] settings', res.status);
         return fallback;
       }
       const data = (await res.json()) as {
@@ -61,7 +61,7 @@ export async function fetchAuthProviders(): Promise<AuthProvidersState> {
       }
       return state;
     } catch (e) {
-      console.warn('[auth] settings fetch failed', e);
+      if (import.meta.env.DEV) console.warn('[auth] settings fetch failed', e);
       return fallback;
     }
   })();

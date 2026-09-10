@@ -50,7 +50,7 @@ export function AgendaScreen() {
     <SettingsPageShell title={t('agenda.title')} subtitle={t('agenda.subtitle')}>
       <section className="mb-8">
         <h2 className="flex items-center gap-2 text-sm font-semibold text-slate-800 dark:text-slate-200 mb-3">
-          <Calendar className="w-4 h-4 text-[#FF5A12]" />
+          <Calendar className="w-4 h-4 text-[#0D9488]" />
           {t('agenda.today')}
         </h2>
         {renderList(today)}

@@ -92,8 +92,9 @@ export function clearAuthSession() {
   }
 }
 
-/** Dev shortcut: `/?login=1` (also `?login` or `?login=true`) forces the login screen. */
+/** Dev shortcut: `/?login=1` (also `?login` or `?login=true`) opens `/login`. Desabilitado em produção. */
 export function hasForceLoginQuery(): boolean {
+  if (import.meta.env.PROD) return false;
   try {
     const raw = new URLSearchParams(window.location.search).get('login');
     if (raw === null) return false;
@@ -109,9 +110,8 @@ export function consumeForceLoginQuery(): boolean {
     const params = new URLSearchParams(window.location.search);
     params.delete('login');
     const qs = params.toString();
-    const next =
-      window.location.pathname + (qs ? `?${qs}` : '') + window.location.hash;
-    window.history.replaceState({}, '', next || '/');
+    const next = `/login${qs ? `?${qs}` : ''}${window.location.hash}`;
+    window.history.replaceState({}, '', next);
     return true;
   } catch {
     return false;

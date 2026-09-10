@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   User,
   Lock,
@@ -10,45 +10,62 @@ import {
   Link2,
   Smartphone,
 } from 'lucide-react';
+import type { AuthSession } from '@/lib/auth-session';
 import { useAppSettings } from '../context/AppSettings';
 import { BrandName } from './Logo';
 import { SettingsPageShell, Section, Row } from './settings/SettingsUI';
 import { PersonalModal, PasswordModal, type PersonalInfo } from './settings/settings-modals';
 
 interface Props {
+  session?: AuthSession | null;
   onLogout?: () => void;
 }
 
-export function AccountScreen({ onLogout }: Props) {
-  const { t } = useAppSettings();
-  const [personal, setPersonal] = useState<PersonalInfo>({
-    name: 'Lucas Ferreira',
-    email: 'lucas.ferreira@email.com',
-    phone: '(11) 91234-5678',
-    city: 'São Paulo, SP',
-    bio: 'Cliente Taskly desde 2025. Adoro resolver coisas em casa com ajuda de bons profissionais.',
-  });
-  const [modal, setModal] = useState<'personal' | 'password' | null>(null);
-  const [appleLinked, setAppleLinked] = useState(false);
+function personalFromSession(session: AuthSession | null | undefined, fallbackName: string): PersonalInfo {
+  return {
+    name: session?.name?.trim() || fallbackName,
+    email: session?.email?.trim() || '',
+    phone: '',
+    city: '',
+    bio: '',
+  };
+}
 
-  const initials = personal.name
+export function AccountScreen({ session, onLogout }: Props) {
+  const { t } = useAppSettings();
+  const [personal, setPersonal] = useState<PersonalInfo>(() =>
+    personalFromSession(session, t('account.pageTitle')),
+  );
+  const [modal, setModal] = useState<'personal' | 'password' | null>(null);
+
+  useEffect(() => {
+    setPersonal((prev) => ({
+      ...prev,
+      name: session?.name?.trim() || prev.name || t('account.pageTitle'),
+      email: session?.email?.trim() || prev.email,
+    }));
+  }, [session?.name, session?.email, t]);
+
+  const initials = (personal.name || '?')
     .split(' ')
     .map((n) => n[0])
+    .filter(Boolean)
     .slice(0, 2)
-    .join('');
+    .join('')
+    .toUpperCase() || '?';
 
   return (
     <SettingsPageShell title={t('account.pageTitle')} subtitle={t('account.pageSubtitle')}>
       {/* Profile card */}
       <div className="bg-white dark:bg-slate-900/80 rounded-2xl border border-slate-200/80 dark:border-slate-700/80 shadow-sm p-5 sm:p-6 mb-8 flex flex-col sm:flex-row items-start sm:items-center gap-5">
         <div className="relative shrink-0">
-          <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gradient-to-br from-[#F97316] to-[#FB923C] flex items-center justify-center text-white text-2xl font-bold">
+          <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gradient-to-br from-[#0D9488] to-[#0EA5E9] flex items-center justify-center text-white text-2xl font-bold">
             {initials}
           </div>
           <button
             type="button"
             onClick={() => setModal('personal')}
-            className="absolute -bottom-1 -right-1 w-8 h-8 bg-[#F97316] rounded-full flex items-center justify-center shadow-lg"
+            className="absolute -bottom-1 -right-1 w-8 h-8 bg-[#0D9488] rounded-full flex items-center justify-center shadow-lg"
             aria-label={t('settings.edit')}
           >
             <Camera className="w-4 h-4 text-white" />
@@ -69,7 +86,7 @@ export function AccountScreen({ onLogout }: Props) {
         <button
           type="button"
           onClick={() => setModal('personal')}
-          className="text-sm font-semibold text-[#F97316] bg-[#FEF0E6] dark:bg-[#F97316]/15 px-4 py-2 rounded-full shrink-0"
+          className="text-sm font-semibold text-[#0D9488] bg-[#ECFDF5] dark:bg-[#0D9488]/15 px-4 py-2 rounded-full shrink-0"
         >
           {t('settings.edit')}
         </button>
@@ -92,38 +109,27 @@ export function AccountScreen({ onLogout }: Props) {
         <Row
           icon={ShieldCheck}
           label={t('settings.twoFactor')}
-          sublabel={t('settings.twoFactorSub')}
+          sublabel={t('settings.rowSoon')}
           color="text-teal-500"
-          right={
-            <span className="text-xs text-slate-500 bg-slate-100 dark:bg-slate-800 px-2.5 py-1 rounded-full">
-              {t('settings.twoFactorEnable')}
-            </span>
-          }
+          disabled
         />
-        <Row icon={Smartphone} label={t('settings.keepSession')} sublabel={t('settings.keepSessionSub')} color="text-indigo-500" />
+        <Row icon={Smartphone} label={t('settings.keepSession')} sublabel={t('settings.rowSoon')} color="text-indigo-500" disabled />
       </Section>
 
       <Section title={t('account.section.linked')}>
         <Row
           icon={Link2}
           label={t('account.linked.google')}
-          sublabel={t('account.linked.googleSub')}
+          sublabel={t('settings.rowSoon')}
           color="text-red-500"
-          right={
-            <span className="text-xs font-medium text-slate-400">{t('account.linked.disconnect')}</span>
-          }
+          disabled
         />
         <Row
           icon={Link2}
           label={t('account.linked.apple')}
-          sublabel={appleLinked ? t('account.linked.googleSub') : t('account.linked.appleSub')}
+          sublabel={t('settings.rowSoon')}
           color="text-slate-700 dark:text-slate-300"
-          onClick={() => setAppleLinked((v) => !v)}
-          right={
-            <span className="text-xs font-semibold text-[#F97316]">
-              {appleLinked ? t('account.linked.disconnect') : t('account.linked.connect')}
-            </span>
-          }
+          disabled
         />
       </Section>
 
